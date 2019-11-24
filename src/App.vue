@@ -1,11 +1,11 @@
 <template>
-    <el-container>
+    <el-container style="padding: 0">
         <el-header>
             <mainnav></mainnav>
         </el-header>
 
         <el-main>
-            <!-- <mainbox></mainbox> -->
+            <mainbox></mainbox>
         </el-main>
 
         <el-footer>

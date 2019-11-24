@@ -1,7 +1,7 @@
 <template>
-    <div id="Content">
-        <router-view></router-view>
-    </div>
+    <el-container>
+            <router-view></router-view>
+    </el-container>
 </template>
 
 
@@ -12,7 +12,7 @@ export default {
         return {
 
         }
-    } 
+    }
 }
 </script>
 
