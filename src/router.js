@@ -18,7 +18,7 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/Operating.vue')
         },
         {
-            path: '/settle',
+            path: '/settle/:tab',
             name: 'settle',
             component: () => import(/* webpackChunkName: "about" */ './views/Settle.vue')
         },

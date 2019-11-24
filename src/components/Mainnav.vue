@@ -17,7 +17,7 @@
                         </el-menu-item>
 
                         <el-menu-item index="3" class="f-left">
-                            <router-link to="/settle">结算中心</router-link>
+                            <router-link to="/settle/settle">结算中心</router-link>
                         </el-menu-item>
 
                         <el-menu-item index="4" class="f-left">
