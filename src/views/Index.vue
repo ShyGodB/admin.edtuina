@@ -1,6 +1,7 @@
 <template>
-    <div id="index">
-    </div>
+    <el-row id="Index">
+        2312312
+    </el-row>
 </template>
 
 <script>
@@ -8,7 +9,7 @@
 import MainFooter from '../components/Footer.vue'
 
 export default {
-    name: 'home',
+    name: 'Index',
     components: {
         'footer-main': MainFooter
     },

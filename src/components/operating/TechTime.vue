@@ -1,6 +1,6 @@
 <template>
-    <div id="Order">
-        <div class="order-search">
+    <div id="TechTime">
+        <div class="techTime-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
@@ -35,7 +35,7 @@
             </el-form>
         </div>
 
-        <div class="order-table">
+        <div class="techTime-table">
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="date" label="日期" width="180"></el-table-column>
 
@@ -58,13 +58,13 @@
 
 <script>
 export default {
-    name: 'Order',
+    name: 'TechTime',
     data() {
         return {
             tableData: [{
-                date: 'Order',
-                name: 'Order',
-                address: 'Order'
+                date: 'TechTime',
+                name: 'TechTime',
+                address: 'TechTime'
             }],
             ruleForm: {
                 techName: '',

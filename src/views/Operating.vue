@@ -11,6 +11,58 @@
         <el-col :span="20" v-if="tab==='user'">
             <operating-user></operating-user>
         </el-col>
+
+        <el-col :span="20" v-if="tab==='tech'">
+            <operating-tech></operating-tech>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='promote'">
+            <operating-promote></operating-promote>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='comment'">
+            <operating-comment></operating-comment>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='coupon'">
+            <operating-coupon></operating-coupon>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='project'">
+            <operating-project></operating-project>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='complaint'">
+            <operating-complaint></operating-complaint>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='techApply'">
+            <operating-techApply></operating-techApply>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='feedback'">
+            <operating-feedback></operating-feedback>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='review'">
+            <operating-review></operating-review>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='techTime'">
+            <operating-techTime></operating-techTime>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='alarm'">
+            <operating-alarm></operating-alarm>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='apply'">
+            <operating-apply></operating-apply>
+        </el-col>
+
+        <el-col :span="20" v-if="tab==='agent'">
+            <operating-agent></operating-agent>
+        </el-col>
     </el-row>
 </template>
 
@@ -19,14 +71,41 @@
 import axios from 'axios'
 import md5 from 'md5'
 import Nav from '../components/operating/Nav.vue'
+import Agent from '../components/operating/Agent.vue'
+import Alarm from '../components/operating/Alarm.vue'
+import Apply from '../components/operating/Apply.vue'
+import Comment from '../components/operating/Comment.vue'
+import Complaint from '../components/operating/Complaint.vue'
+import Coupon from '../components/operating/Coupon.vue'
+import Feedback from '../components/operating/Feedback.vue'
 import Order from '../components/operating/Order.vue'
+import Project from '../components/operating/Project.vue'
+import Promote from '../components/operating/Promote.vue'
+import Review from '../components/operating/Review.vue'
+import Tech from '../components/operating/Tech.vue'
+import TechApply from '../components/operating/TechApply.vue'
+import TechTime from '../components/operating/TechTime.vue'
 import User from '../components/operating/User.vue'
 
 export default {
     name: 'Operating',
     components: {
         "operating-nav": Nav,
+        "operating-agent": Agent,
+        "operating-alarm": Alarm,
+        "operating-apply": Apply,
+        "operating-comment": Comment,
+        "operating-complaint": Complaint,
+        "operating-coupon": Coupon,
+        "operating-feedback": Feedback,
         "operating-order": Order,
+        "operating-project": Project,
+        "operating-promote": Promote,
+        "operating-review": Review,
+        "operating-order": Order,
+        "operating-tech": Tech,
+        "operating-techApply": TechApply,
+        "operating-techTime": TechTime,
         "operating-user": User
     },
     data() {

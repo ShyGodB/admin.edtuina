@@ -9,7 +9,7 @@
         </el-main>
 
         <el-footer>
-            <mainfoo></mainfoo>
+            <!-- <mainfoo></mainfoo> -->
         </el-footer>
     </el-container>
 </template>
