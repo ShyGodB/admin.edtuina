@@ -76,7 +76,7 @@ export default {
         "setting-advertisePush": AdvertisePush,
         "setting-enterpriseManage": EnterpriseManage,
     },
-    setting() {
+    data() {
         return {
             tab: 'userList'
         };
