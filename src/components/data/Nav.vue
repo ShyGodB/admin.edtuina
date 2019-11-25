@@ -10,35 +10,36 @@
             text-color="#000000"
             active-text-color="#ffd04b">
 
-                <el-menu-item index="1" @click="switchTab('settlement')">
+                <el-menu-item index="1" @click="switchTab('generalSituation')">
                     <i class="el-icon-menu"></i>
-                    代理商结算
+                    概况
                 </el-menu-item>
 
-                <el-menu-item index="2" @click="switchTab('cash')">
+                <el-menu-item index="2" @click="switchTab('performanceAnalysis')">
                     <i class="el-icon-menu"></i>
-                    提现管理
+                    业绩分析
                 </el-menu-item>
 
-                <el-menu-item index="3" @click="switchTab('techIncome')">
-                    <i class="el-icon-setting"></i>
-                    技师流水
-                </el-menu-item>
-
-                <el-menu-item index="4" @click="switchTab('account')">
-                    <i class="el-icon-setting"></i>
-                    账户余额
-                </el-menu-item>
-
-                <el-menu-item index="5" @click="switchTab('refund')">
-                    <i class="el-icon-setting"></i>
-                    退款管理
-                </el-menu-item>
-
-                <el-menu-item index="6" @click="switchTab('recharge')">
+                <el-menu-item index="3" @click="switchTab('userAnalysis')">
                     <i class="el-icon-menu"></i>
-                    充值管理
+                    客户分析
                 </el-menu-item>
+
+                <el-menu-item index="4" @click="switchTab('orderAnalysis')">
+                    <i class="el-icon-menu"></i>
+                    订单分析
+                </el-menu-item>
+
+                <el-menu-item index="5" @click="switchTab('techAnalysis')">
+                    <i class="el-icon-menu"></i>
+                    技师分析
+                </el-menu-item>
+
+                <el-menu-item index="6" @click="switchTab('pageTransform')">
+                    <i class="el-icon-menu"></i>
+                    页面转化
+                </el-menu-item>
+
             </el-menu>
         </el-col>
     </el-row>
@@ -47,7 +48,7 @@
 
 <script>
 export default {
-    name: 'Settle-nav',
+    name: 'Data-nav',
     data() {
         return {
 
@@ -62,7 +63,7 @@ export default {
         },
         switchTab(tab) {
             this.$router.push({
-                name: 'settle',
+                name: 'data',
                 params: {
                     tab: tab,
                 }

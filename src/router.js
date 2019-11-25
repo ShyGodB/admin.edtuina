@@ -23,12 +23,12 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/Settle.vue')
         },
         {
-            path: '/data',
+            path: '/data/:tab',
             name: 'data',
             component: () => import(/* webpackChunkName: "about" */ './views/Data.vue')
         },
         {
-            path: '/setting',
+            path: '/setting/:tab',
             name: 'setting',
             component: () => import(/* webpackChunkName: "about" */ './views/Setting.vue')
         },
