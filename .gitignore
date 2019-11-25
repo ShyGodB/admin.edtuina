@@ -60,8 +60,5 @@ typings/
 # next.js build output
 .next
 
-# node module directory
-/node_modules
-
 # webstore setting file
-/.idea
+.idea/
