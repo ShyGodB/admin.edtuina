@@ -6,6 +6,7 @@
                     <el-menu :default-active="activeIndex"
                     class="el-menu-demo"
                     mode="horizontal"
+                    background-color="#ffffff"
                     text-color="#000000"
                     @select="handleSelect">
                         <el-menu-item index="1" class="f-left">

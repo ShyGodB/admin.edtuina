@@ -6,8 +6,8 @@
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            background-color="#222222"
-            text-color="#ffffff"
+            background-color="#ffffff"
+            text-color="#000000"
             active-text-color="#ffd04b">
 
                 <el-menu-item index="1" @click="switchTab('settlement')">

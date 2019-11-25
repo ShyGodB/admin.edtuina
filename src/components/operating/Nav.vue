@@ -6,9 +6,9 @@
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            background-color="#222222"
-            text-color="#ffffff"
-            active-text-color="#ffd04b">
+            background-color="#ffffff"
+            text-color="#000"
+            active-text-color="#ff0000">
                 <el-menu-item index="1" @click="switchTab('order')">
                 <i class="el-icon-menu"></i>
                 <router-link to="/operating/order">订单管理</router-link>
