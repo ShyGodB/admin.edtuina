@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 原始组件 ---- 一级
+import Index from './views/Index.vue'
+import Operating from './views/Operating.vue'
+import Settle from './views/Settle.vue'
+import Data from './views/Data.vue'
+import Setting from './views/Setting.vue'
+import NotFount from './views/404.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -9,33 +17,33 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'index',
-            component: () => import(/* webpackChunkName: "about" */ './views/Index.vue')
+            name: 'Index',
+            component: Index
         },
         {
             path: '/operating/:tab',
-            name: 'operating',
-            component: () => import(/* webpackChunkName: "about" */ './views/Operating.vue')
+            name: 'Operating',
+            component: Operating
         },
         {
             path: '/settle/:tab',
-            name: 'settle',
-            component: () => import(/* webpackChunkName: "about" */ './views/Settle.vue')
+            name: 'Settle',
+            component: Settle
         },
         {
-            path: '/data/:tab',
-            name: 'data',
-            component: () => import(/* webpackChunkName: "about" */ './views/Data.vue')
+            path: '/data:tab',
+            name: 'Data',
+            component: Data
         },
         {
             path: '/setting/:tab',
-            name: 'setting',
-            component: () => import(/* webpackChunkName: "about" */ './views/Setting.vue')
+            name: 'Setting',
+            component: Setting
         },
         {
             path: '/404',
             name: '404',
-            component: () => import(/* webpackChunkName: "about" */ './views/404.vue')
+            component: NotFount
         }
     ]
 })

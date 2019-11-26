@@ -4,38 +4,38 @@
             <el-menu
             default-active="1"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
+            @select="handleSelect"
             background-color="#ffffff"
             text-color="#000000"
+            :router="true"
             active-text-color="#ffd04b">
 
-                <el-menu-item index="1" @click="switchTab('generalSituation')">
+                <el-menu-item index="1" :route="routes.GeneralSituation">
                     <i class="el-icon-menu"></i>
                     概况
                 </el-menu-item>
 
-                <el-menu-item index="2" @click="switchTab('performanceAnalysis')">
+                <el-menu-item index="2" :route="routes.PerformanceAnalysis">
                     <i class="el-icon-menu"></i>
                     业绩分析
                 </el-menu-item>
 
-                <el-menu-item index="3" @click="switchTab('userAnalysis')">
+                <el-menu-item index="3" :route="routes.UserAnalysis">
                     <i class="el-icon-menu"></i>
                     客户分析
                 </el-menu-item>
 
-                <el-menu-item index="4" @click="switchTab('orderAnalysis')">
+                <el-menu-item index="4" :route="routes.OrderAnalysis">
                     <i class="el-icon-menu"></i>
                     订单分析
                 </el-menu-item>
 
-                <el-menu-item index="5" @click="switchTab('techAnalysis')">
+                <el-menu-item index="5" :route="routes.TechAnalysis">
                     <i class="el-icon-menu"></i>
                     技师分析
                 </el-menu-item>
 
-                <el-menu-item index="6" @click="switchTab('pageTransform')">
+                <el-menu-item index="6" :route="routes.PageTransform">
                     <i class="el-icon-menu"></i>
                     页面转化
                 </el-menu-item>
@@ -51,24 +51,33 @@ export default {
     name: 'Data-nav',
     data() {
         return {
-
+            activeIndex: '1',
+            routes: {
+                GeneralSituation: {
+                    name: 'Data', params: { tab: 'generalSituation' }
+                },
+                PerformanceAnalysis: {
+                    name: 'Data', params: { tab: 'performanceAnalysis' }
+                },
+                UserAnalysis: {
+                    name: 'Data', params: { tab: 'userAnalysis' }
+                },
+                OrderAnalysis: {
+                    name: 'Data', params: { tab: 'orderAnalysis' }
+                },
+                TechAnalysis: {
+                    name: 'Data', params: { tab: 'techAnalysis' }
+                },
+                PageTransform: {
+                    name: 'Data', params: { tab: 'pageTransform' }
+                }
+            }
         }
     },
     methods: {
-        handleOpen(key, keyPath) {
+        handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
-        handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        },
-        switchTab(tab) {
-            this.$router.push({
-                name: 'data',
-                params: {
-                    tab: tab,
-                }
-            });
-        }
     }
 }
 </script>

@@ -8,24 +8,30 @@
                     mode="horizontal"
                     background-color="#ffffff"
                     text-color="#000000"
+                    :router="true"
                     @select="handleSelect">
-                        <el-menu-item index="1" class="f-left" @click="switchTab('/')">
+                        <el-menu-item index="1" :route="routes.index" class="f-left">
+                            <i class="el-icon-menu"></i>
                             主页
                         </el-menu-item>
 
-                        <el-menu-item index="2" class="f-left" @click="switchTab('operating', 'order')">
+                        <el-menu-item index="2" :route="routes.order" class="f-left">
+                            <i class="el-icon-menu"></i>
                             运营管理
                         </el-menu-item>
 
-                        <el-menu-item index="3" class="f-left" @click="switchTab('settle', 'settlement')">
+                        <el-menu-item index="3" :route="routes.settlement" class="f-left">
+                            <i class="el-icon-menu"></i>
                             结算中心
                         </el-menu-item>
 
-                        <el-menu-item index="4" class="f-left" @click="switchTab('data', 'generalSituation')">
+                        <el-menu-item index="4" :route="routes.generalSituation" class="f-left">
+                            <i class="el-icon-menu"></i>
                             数据分析
                         </el-menu-item>
 
-                        <el-menu-item index="5" class="f-left" @click="switchTab('setting', 'user')">
+                        <el-menu-item index="5" :route="routes.user" class="f-left">
+                            <i class="el-icon-menu"></i>
                             系统设置
                         </el-menu-item>
 
@@ -50,21 +56,29 @@ export default {
     data() {
         return {
             activeIndex: '1',
+            routes: {
+                index: {
+                    name: 'Index', path: '/'
+                },
+                order: {
+                    name: 'Operating', params: { tab: 'order' }
+                },
+                settlement: {
+                    name: 'Settle', params: { tab: 'settlement' }
+                },
+                generalSituation: {
+                    name: 'Data', params: { tab: 'generalSituation' }
+                },
+                user: {
+                    name: 'Setting', params: { tab: 'user' }
+                }
+            }
         }
     },
     methods: {
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
-        switchTab(tab, item) {
-            console.log(tab, item);
-            this.$router.push({
-                name: tab,
-                params: {
-                    tab: item,
-                }
-            });
-        }
     },
     created() {
 
