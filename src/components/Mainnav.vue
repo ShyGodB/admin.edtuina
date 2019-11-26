@@ -8,6 +8,7 @@
                     mode="horizontal"
                     background-color="#ffffff"
                     text-color="#000000"
+                    active-text-color="#ff0000"
                     :router="true"
                     @select="handleSelect">
                         <el-menu-item index="1" :route="routes.index" class="f-left">
