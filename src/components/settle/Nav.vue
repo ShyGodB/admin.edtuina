@@ -10,35 +10,11 @@
             text-color="#000000"
             active-text-color="#ffd04b">
 
-                <el-menu-item index="1" :route="routes.Settlement">
+                <el-menu-item v-for="(menu, index) in menus" :index="(index + 1).toString()" :key="index" :route="menu.route">
                     <i class="el-icon-menu"></i>
-                    代理商结算
+                    {{ menu.name }}
                 </el-menu-item>
 
-                <el-menu-item index="2" :route="routes.Cash">
-                    <i class="el-icon-menu"></i>
-                    提现管理
-                </el-menu-item>
-
-                <el-menu-item index="3" :route="routes.TechIncome">
-                    <i class="el-icon-setting"></i>
-                    技师流水
-                </el-menu-item>
-
-                <el-menu-item index="4" :route="routes.Account">
-                    <i class="el-icon-setting"></i>
-                    账户余额
-                </el-menu-item>
-
-                <el-menu-item index="5" :route="routes.Refund">
-                    <i class="el-icon-setting"></i>
-                    退款管理
-                </el-menu-item>
-
-                <el-menu-item index="6" :route="routes.Recharge">
-                    <i class="el-icon-menu"></i>
-                    充值管理
-                </el-menu-item>
             </el-menu>
         </el-col>
     </el-row>
@@ -51,26 +27,32 @@ export default {
     data() {
         return {
             activeIndex: '1',
-            routes: {
-                Settlement: {
-                    name: 'Settle', params: { tab: 'settlement' }
+            menus: [
+                {
+                    name: '代理商结算',
+                    route: { name: 'Settle', params: { tab: 'settlement' } }
                 },
-                Cash: {
-                    name: 'Settle', params: { tab: 'cash' }
+                {
+                    name: '提现管理',
+                    route: { name: 'Settle', params: { tab: 'cash' } }
                 },
-                TechIncome: {
-                    name: 'Settle', params: { tab: 'techIncome' }
+                {
+                    name: '技师流水',
+                    route: { name: 'Settle', params: { tab: 'techIncome' } }
                 },
-                Account: {
-                    name: 'Settle', params: { tab: 'account' }
+                {
+                    name: '账户余额',
+                    route: { name: 'Settle', params: { tab: 'account' } }
                 },
-                Refund: {
-                    name: 'Settle', params: { tab: 'refund' }
+                {
+                    name: '退款管理',
+                    route: { name: 'Settle', params: { tab: 'refund' } }
                 },
-                Recharge: {
-                    name: 'Settle', params: { tab: 'recharge' }
+                {
+                    name: '充值管理',
+                    route: { name: 'Settle', params: { tab: 'recharge' } }
                 }
-            }
+            ]
         }
     },
     methods: {
