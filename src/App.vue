@@ -27,6 +27,11 @@ export default {
         'mainnav': Mainnav,
         'mainfoo': Foo,
         'mainbox': Content
+    },
+    data() {
+        return {
+            user: false
+        }
     }
 }
 </script>

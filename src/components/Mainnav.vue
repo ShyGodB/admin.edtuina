@@ -40,7 +40,22 @@
                             退出
                         </el-menu-item>
 
-                        <el-menu-item index="7" class="f-right">
+                        <el-submenu index="7" class="content-top-right" style="float:right;">
+                            <template slot="title">
+                                <img src="../../public/img/tt.png" style="width:44px;height:44px;">
+                            </template>
+                            <el-menu-item index="7-1">
+                                <router-link to="/dash">Home</router-link>
+                            </el-menu-item>
+
+                            <el-menu-item index="7-2" @click="goToGithub()">
+                                Github
+                            </el-menu-item>
+
+                            <el-menu-item id="logout" index="7-3" @click="logout">Log Out</el-menu-item>
+                        </el-submenu>
+
+                        <el-menu-item index="8" class="f-right">
                             管理员：测试F
                         </el-menu-item>
                     </el-menu>
@@ -80,6 +95,12 @@ export default {
         handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
+        goToGithub() {
+            window.open("https://github.com/ShyGodB/admin.edtuina");
+        },
+        logout() {
+            console.log(1111);
+        }
     },
     created() {
 

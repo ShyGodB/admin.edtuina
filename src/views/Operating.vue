@@ -1,66 +1,66 @@
 <template>
     <el-row class="w-100">
-        <el-col :span="4">
+        <el-col :span="3">
             <operating-nav></operating-nav>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='order'">
+        <el-col :span="21" v-if="tab==='order'">
             <operating-order></operating-order>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='user'">
+        <el-col :span="21" v-if="tab==='user'">
             <operating-user></operating-user>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='tech'">
+        <el-col :span="21" v-if="tab==='tech'">
             <operating-tech></operating-tech>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='promote'">
+        <el-col :span="21" v-if="tab==='promote'">
             <operating-promote></operating-promote>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='comment'">
+        <el-col :span="21" v-if="tab==='comment'">
             <operating-comment></operating-comment>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='coupon'">
+        <el-col :span="21" v-if="tab==='coupon'">
             <operating-coupon></operating-coupon>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='project'">
+        <el-col :span="21" v-if="tab==='project'">
             <operating-project></operating-project>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='complaint'">
+        <el-col :span="21" v-if="tab==='complaint'">
             <operating-complaint></operating-complaint>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='techApply'">
+        <el-col :span="21" v-if="tab==='techApply'">
             <operating-techApply></operating-techApply>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='feedback'">
+        <el-col :span="21" v-if="tab==='feedback'">
             <operating-feedback></operating-feedback>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='review'">
+        <el-col :span="21" v-if="tab==='review'">
             <operating-review></operating-review>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='techTime'">
+        <el-col :span="21" v-if="tab==='techTime'">
             <operating-techTime></operating-techTime>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='alarm'">
+        <el-col :span="21" v-if="tab==='alarm'">
             <operating-alarm></operating-alarm>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='apply'">
+        <el-col :span="21" v-if="tab==='apply'">
             <operating-apply></operating-apply>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='agent'">
+        <el-col :span="21" v-if="tab==='agent'">
             <operating-agent></operating-agent>
         </el-col>
     </el-row>
@@ -71,7 +71,7 @@
 import axios from 'axios'
 import md5 from 'md5'
 import Nav from '../components/operating/Nav.vue'
-import Order from '../components/operating/Order.vue'
+import Order from '../components/operating/order/List.vue'
 import User from '../components/operating/User.vue'
 import Tech from '../components/operating/Tech.vue'
 import Promote from '../components/operating/Promote.vue'
@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 #god, #boss {
-    margin-top: 20px;
+    margin-top: 21px;
 }
 .register {
     width: 60%;
