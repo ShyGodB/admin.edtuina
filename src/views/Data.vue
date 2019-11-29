@@ -1,30 +1,30 @@
 <template>
     <el-row class="w-100">
-        <el-col :span="4">
+        <el-col :span="3">
             <data-nav></data-nav>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='generalSituation'">
+        <el-col :span="21" v-if="tab==='generalSituation'">
             <data-generalSituation></data-generalSituation>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='performanceAnalysis'">
+        <el-col :span="21" v-if="tab==='performanceAnalysis'">
             <data-performanceAnalysis></data-performanceAnalysis>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='userAnalysis'">
+        <el-col :span="21" v-if="tab==='userAnalysis'">
             <data-userAnalysis></data-userAnalysis>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='orderAnalysis'">
+        <el-col :span="21" v-if="tab==='orderAnalysis'">
             <data-orderAnalysis></data-orderAnalysis>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='techAnalysis'">
+        <el-col :span="21" v-if="tab==='techAnalysis'">
             <data-techAnalysis></data-techAnalysis>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='pageTransform'">
+        <el-col :span="21" v-if="tab==='pageTransform'">
             <data-pageTransform></data-pageTransform>
         </el-col>
     </el-row>

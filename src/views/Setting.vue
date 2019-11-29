@@ -1,46 +1,46 @@
 <template>
     <el-row class="w-100">
-        <el-col :span="4">
+        <el-col :span="3">
             <setting-nav></setting-nav>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='userList'">
+        <el-col :span="21" v-if="tab==='userList'">
             <setting-userList></setting-userList>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='roleConfig'">
+        <el-col :span="21" v-if="tab==='roleConfig'">
             <setting-roleConfig></setting-roleConfig>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='menuConfig'">
+        <el-col :span="21" v-if="tab==='menuConfig'">
             <setting-menuConfig></setting-menuConfig>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='techMethod'">
+        <el-col :span="21" v-if="tab==='techMethod'">
             <setting-techMethod></setting-techMethod>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='agentLevel'">
+        <el-col :span="21" v-if="tab==='agentLevel'">
             <setting-agentLevel></setting-agentLevel>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='timeManage'">
+        <el-col :span="21" v-if="tab==='timeManage'">
             <setting-timeManage></setting-timeManage>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='announcement'">
+        <el-col :span="21" v-if="tab==='announcement'">
             <setting-announcement></setting-announcement>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='withdrawalTime'">
+        <el-col :span="21" v-if="tab==='withdrawalTime'">
             <setting-withdrawalTime></setting-withdrawalTime>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='advertisePush'">
+        <el-col :span="21" v-if="tab==='advertisePush'">
             <setting-advertisePush></setting-advertisePush>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='enterpriseManage'">
+        <el-col :span="21" v-if="tab==='enterpriseManage'">
             <setting-enterpriseManage></setting-enterpriseManage>
         </el-col>
     </el-row>

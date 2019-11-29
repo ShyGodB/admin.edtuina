@@ -1,30 +1,30 @@
 <template>
     <el-row class="w-100">
-        <el-col :span="4">
+        <el-col :span="3">
             <settle-nav></settle-nav>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='settlement'">
+        <el-col :span="21" v-if="tab==='settlement'">
             <settle-settlement></settle-settlement>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='cash'">
+        <el-col :span="21" v-if="tab==='cash'">
             <settle-cash></settle-cash>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='techIncome'">
+        <el-col :span="21" v-if="tab==='techIncome'">
             <settle-techIncome></settle-techIncome>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='account'">
+        <el-col :span="21" v-if="tab==='account'">
             <settle-account></settle-account>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='refund'">
+        <el-col :span="21" v-if="tab==='refund'">
             <settle-refund></settle-refund>
         </el-col>
 
-        <el-col :span="20" v-if="tab==='recharge'">
+        <el-col :span="21" v-if="tab==='recharge'">
             <settle-recharge></settle-recharge>
         </el-col>
     </el-row>
@@ -73,7 +73,7 @@ export default {
 
 <style scoped>
 #god, #boss {
-    margin-top: 20px;
+    margin-top: 21px;
 }
 .register {
     width: 60%;
