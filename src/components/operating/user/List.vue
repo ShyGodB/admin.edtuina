@@ -1,6 +1,6 @@
 <template>
-    <div id="Promote">
-        <div class="promote-search">
+    <div id="User">
+        <div class="user-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
@@ -35,57 +35,64 @@
             </el-form>
         </div>
 
-        <div class="promote-table">
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="date" label="日期" width="180"></el-table-column>
+        <div class="user-table">
+            <el-table :data="users" style="width: 100%">
+                <el-table-column prop="id" label="用户编号" width="200"></el-table-column>
 
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+                <el-table-column prop="userName" label="用户名"></el-table-column>
 
-                <el-table-column prop="address" label="地址"></el-table-column>
+                <el-table-column prop="realName" label="真实姓名"></el-table-column>
+
+                <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
+
+                <el-table-column prop="addTime" label="注册时间"></el-table-column>
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
+
+            <div class="pagination">
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change" layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+            </div>
         </div>
     </div>
 </template>
 
 
 <script>
+import axios from 'axios'
+
 export default {
-    name: 'Promote',
+    name: 'User',
     data() {
         return {
-            tableData: [{
-                date: 'Promote',
-                name: 'Promote',
-                address: 'Promote'
-            }],
+            users: [],
+            pageNum: 1,
             ruleForm: {
                 techName: '',
                 techPhone: '',
                 userName: '',
-                userPhone: ''
+                userPhone: '',
+                pageNum: 1
             },
             rules: {
                 name: [
                     { required: true, message: '请输入活动名称', trigger: 'blur' },
                     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ]
-            }
+            },
+            loading: true
         };
     },
     methods: {
-        handleEdit(index, row) {
-            console.log(index, row);
-        },
-        handleDelete(index, row) {
-            console.log(index, row);
+        info(index, row) {
+            this.$message({
+                message: '暂未完成',
+                type: 'success'
+            });
         },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
@@ -99,12 +106,39 @@ export default {
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
+        },
+        change(pageNum) {
+            this.listOrder(pageNum)
+        },
+        sizeChange(num) {
+            console.log('funtion: sizeChange', num);
+        },
+        listOrder(pageIndex) {
+            console.log(pageIndex);
+            axios({
+                method: 'post',
+                url: '/api/api/admin/user/list',
+                responseType: 'json',
+                data: {
+                    pageIndex: pageIndex,
+                    pageSize: 12
+                }
+            }).then(res => {
+                console.log(res.data)
+                // this.users = res.data.list || [];
+                // this.pageNum = Math.floor((res.data.count || 0) / 10);
+                // if (res.data.count % 10 !== 0) {
+                //     this.pageNum += 1;
+                // }
+            })
         }
+    },
+    created() {
+        this.listOrder(1);
     }
 }
 </script>
 
 
 <style scoped>
-
 </style>

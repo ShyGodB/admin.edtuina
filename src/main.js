@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import echarts from 'echarts'
 import './registerServiceWorker'
 import Element from 'element-ui'
 import VueSession from 'vue-session'
@@ -23,6 +24,7 @@ var options = {
 
 Vue.use(Element)
 Vue.use(VueCropper)
+Vue.prototype.$echarts = echarts;
 Vue.use(VuePhotoZoomPro)
 Vue.config.productionTip = false
 Vue.use(VueSession, options)

@@ -1,6 +1,6 @@
 <template>
-    <div id="Order">
-        <div class="order-search">
+    <div id="Promote">
+        <div class="promote-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
@@ -35,31 +35,17 @@
             </el-form>
         </div>
 
-        <div class="order-table">
-            <el-table :data="orders" style="width: 100%">
-                <el-table-column prop="techName" label="技师姓名" width="60"></el-table-column>
+        <div class="promote-table">
+            <el-table :data="users" style="width: 100%">
+                <el-table-column prop="id" label="用户编号" width="200"></el-table-column>
 
-                <el-table-column prop="userName" label="用户姓名" width="120"></el-table-column>
+                <el-table-column prop="userName" label="用户名"></el-table-column>
 
-                <el-table-column prop="userDanger" label="危险" width="60"></el-table-column>
+                <el-table-column prop="realName" label="真实姓名"></el-table-column>
 
-                <el-table-column prop="userPhone" label="用户手机" width="120"></el-table-column>
+                <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
 
-                <el-table-column prop="projectsName" label="项目名称" width="160"></el-table-column>
-
-                <el-table-column prop="source" label="来源" width="60"></el-table-column>
-
-                <el-table-column prop="payService" label="服务费" width="80"></el-table-column>
-
-                <el-table-column prop="payTrans" label="交通费" width="80"></el-table-column>
-
-                <el-table-column prop="payCoupon" label="优惠卷" width="80"></el-table-column>
-
-                <el-table-column prop="payPrice" label="实际支付" width="80"></el-table-column>
-
-                <el-table-column prop="addTime" label="下单时间" width="180"></el-table-column>
-
-                <el-table-column prop="state" label="状态" width="60"></el-table-column>
+                <el-table-column prop="addTime" label="注册时间"></el-table-column>
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -80,11 +66,10 @@
 import axios from 'axios'
 
 export default {
-    name: 'Order',
+    name: 'Promote',
     data() {
         return {
-            orders: [],
-            allOrder: [],
+            users: [],
             pageNum: 1,
             ruleForm: {
                 techName: '',
@@ -132,16 +117,17 @@ export default {
             console.log(pageIndex);
             axios({
                 method: 'post',
-                url: '/api/admin/order/list',
+                url: '/api/api/client/user/list',
                 responseType: 'json',
                 data: {
                     pageIndex: pageIndex,
                     pageSize: 12
                 }
             }).then(res => {
-                this.orders = res.data.data.list || [];
-                this.pageNum = Math.floor((res.data.data.count || 0) / 10);
-                if (res.data.data.count % 10 !== 0) {
+                console.log(res.data)
+                this.users = res.data.list || [];
+                this.pageNum = Math.floor((res.data.count || 0) / 10);
+                if (res.data.count % 10 !== 0) {
                     this.pageNum += 1;
                 }
             })
