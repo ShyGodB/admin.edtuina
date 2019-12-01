@@ -17,8 +17,8 @@ export default {
     name: 'Yesterday',
     props: {
         data: {
-            type: Object,
-            default: {}
+            type: Array,
+            default: []
         }
     },
 }

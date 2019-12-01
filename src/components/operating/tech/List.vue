@@ -36,7 +36,7 @@
         </div>
 
         <div class="tech-table">
-            <el-table :data="users" style="width: 100%">
+            <el-table :data="techs" style="width: 100%">
                 <el-table-column prop="id" label="用户编号" width="200"></el-table-column>
 
                 <el-table-column prop="userName" label="用户名"></el-table-column>
@@ -69,7 +69,7 @@ export default {
     name: 'Tech',
     data() {
         return {
-            users: [],
+            techs: [],
             pageNum: 1,
             ruleForm: {
                 techName: '',
@@ -112,29 +112,10 @@ export default {
         },
         sizeChange(num) {
             console.log('funtion: sizeChange', num);
-        },
-        listOrder(pageIndex) {
-            console.log(pageIndex);
-            axios({
-                method: 'post',
-                url: '/api/api/admin/user/list',
-                responseType: 'json',
-                data: {
-                    pageIndex: pageIndex,
-                    pageSize: 12
-                }
-            }).then(res => {
-                console.log(res.data)
-                // this.users = res.data.list || [];
-                // this.pageNum = Math.floor((res.data.count || 0) / 10);
-                // if (res.data.count % 10 !== 0) {
-                //     this.pageNum += 1;
-                // }
-            })
         }
     },
     created() {
-        this.listOrder(1);
+        // this.listOrder(1);
     }
 }
 </script>

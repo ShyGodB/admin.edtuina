@@ -17,8 +17,8 @@ export default {
     name: 'Client',
     props: {
         data: {
-            type: Object,
-            default: {}
+            type: Array,
+            default: []
         }
     },
 }

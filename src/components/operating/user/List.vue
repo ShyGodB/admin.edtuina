@@ -114,7 +114,6 @@ export default {
             console.log('funtion: sizeChange', num);
         },
         listOrder(pageIndex) {
-            console.log(pageIndex);
             axios({
                 method: 'post',
                 url: '/api/api/admin/user/list',
@@ -124,10 +123,10 @@ export default {
                     pageSize: 12
                 }
             }).then(res => {
-                console.log(res.data)
-                // this.users = res.data.list || [];
-                // this.pageNum = Math.floor((res.data.count || 0) / 10);
-                // if (res.data.count % 10 !== 0) {
+                // console.log(res.data)
+                // this.users = res.data.data.list || [];
+                // this.pageNum = Math.floor((res.data.data.count || 0) / 10);
+                // if (res.data.data.count % 10 !== 0) {
                 //     this.pageNum += 1;
                 // }
             })

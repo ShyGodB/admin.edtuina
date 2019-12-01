@@ -2,7 +2,7 @@
     <el-row class="tac" id="Settle-nav">
         <el-col :span="24">
             <el-menu
-            default-active="1"
+            :default-active="activeIndex"
             class="el-menu-vertical-demo"
             @select="handleSelect"
             background-color="#ffffff"
@@ -22,6 +22,8 @@
 
 
 <script>
+import check from '../../../util/check'
+
 export default {
     name: 'Settle-nav',
     data() {
@@ -76,6 +78,10 @@ export default {
             console.log(key, keyPath);
         },
     },
+    created() {
+        const activeIndex = check.checkSecondaryActiveIndex(this.$route.name, this.$route.params.tab);
+        this.activeIndex = activeIndex;
+    }
 }
 </script>
 

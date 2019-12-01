@@ -112,29 +112,10 @@ export default {
         },
         sizeChange(num) {
             console.log('funtion: sizeChange', num);
-        },
-        listOrder(pageIndex) {
-            console.log(pageIndex);
-            axios({
-                method: 'post',
-                url: '/api/api/client/user/list',
-                responseType: 'json',
-                data: {
-                    pageIndex: pageIndex,
-                    pageSize: 12
-                }
-            }).then(res => {
-                console.log(res.data)
-                this.users = res.data.list || [];
-                this.pageNum = Math.floor((res.data.count || 0) / 10);
-                if (res.data.count % 10 !== 0) {
-                    this.pageNum += 1;
-                }
-            })
         }
     },
     created() {
-        this.listOrder(1);
+        // this.listOrder(1);
     }
 }
 </script>

@@ -30,9 +30,23 @@ export default {
     },
     data() {
         return {
-            user: false
+            tab: ''
         }
-    }
+    },
+    // provide(){
+    //     return {
+    //         tab: this.tab
+    //     }
+    // },
+    // watch:{
+    //     $route(to,from){
+    //         this.$router.push({
+    //             name: this.$route.name,
+    //             params: this.$route.params
+    //         })
+    //     },
+    //     immediate: true
+    // }
 }
 </script>
 

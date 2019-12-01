@@ -109,7 +109,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.data);
         this.showEcharts(this.data.seven);
     }
 }

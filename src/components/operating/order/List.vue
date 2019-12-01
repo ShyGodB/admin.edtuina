@@ -126,10 +126,9 @@ export default {
             this.listOrder(pageNum)
         },
         sizeChange(num) {
-            console.log('funtion: sizeChange', num);
+            // console.log('funtion: sizeChange', num);
         },
         listOrder(pageIndex) {
-            console.log(pageIndex);
             axios({
                 method: 'post',
                 url: '/api/admin/order/list',

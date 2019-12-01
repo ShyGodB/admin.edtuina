@@ -1,5 +1,5 @@
 <template>
-    <el-row class="w-100">
+    <el-row class="w-100" id="operating">
         <el-col :span="3">
             <operating-nav></operating-nav>
         </el-col>
