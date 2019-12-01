@@ -89,6 +89,9 @@ export default {
     },
     watch: {
         "$route": "changeRoute",
+    },
+    created() {
+        this.tab = this.$route.params.tab;
     }
 }
 </script>
