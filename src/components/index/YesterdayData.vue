@@ -2,7 +2,7 @@
     <el-container id="Yesterday">
 
         <el-row class="w-100">
-            <el-col :span="4" v-for="item in data">
+            <el-col :span="4" v-for="(item, index) in data" :key="index">
                 <p> {{ item.name }} </p>
                 <p> {{ item.value }} </p>
             </el-col>

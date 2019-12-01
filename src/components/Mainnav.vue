@@ -95,7 +95,7 @@ export default {
     },
     methods: {
         handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
         },
         goToGithub() {
             window.open("https://github.com/ShyGodB/admin.edtuina");

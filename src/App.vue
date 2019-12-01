@@ -32,21 +32,7 @@ export default {
         return {
             tab: ''
         }
-    },
-    // provide(){
-    //     return {
-    //         tab: this.tab
-    //     }
-    // },
-    // watch:{
-    //     $route(to,from){
-    //         this.$router.push({
-    //             name: this.$route.name,
-    //             params: this.$route.params
-    //         })
-    //     },
-    //     immediate: true
-    // }
+    }
 }
 </script>
 

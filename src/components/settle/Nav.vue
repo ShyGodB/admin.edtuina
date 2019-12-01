@@ -8,7 +8,7 @@
             :router="true"
             background-color="#ffffff"
             text-color="#000000"
-            active-text-color="#ffd04b">
+            active-text-color="#ff0000">
 
                 <el-menu-item v-for="(menu, index) in menus" :index="(index + 1).toString()" :key="index" :route="menu.route">
                     <i class="el-icon-menu"></i>
@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
         },
     },
     created() {
