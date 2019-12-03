@@ -11,30 +11,12 @@
                     active-text-color="#ff0000"
                     :router="true"
                     @select="handleSelect">
-                        <el-menu-item index="1" :route="routes.index" class="f-left">
+
+                        <el-menu-item v-for="(menu, index) in menus" :index="(index + 1).toString()" :key="index" :route="menu.route">
                             <i class="el-icon-menu"></i>
-                            主页
+                            {{ menu.name }}
                         </el-menu-item>
 
-                        <el-menu-item index="2" :route="routes.order" class="f-left">
-                            <i class="el-icon-menu"></i>
-                            运营管理
-                        </el-menu-item>
-
-                        <el-menu-item index="3" :route="routes.settlement" class="f-left">
-                            <i class="el-icon-menu"></i>
-                            结算中心
-                        </el-menu-item>
-
-                        <el-menu-item index="4" :route="routes.generalSituation" class="f-left">
-                            <i class="el-icon-menu"></i>
-                            数据分析
-                        </el-menu-item>
-
-                        <el-menu-item index="5" :route="routes.user" class="f-left">
-                            <i class="el-icon-menu"></i>
-                            系统设置
-                        </el-menu-item>
 
                         <el-menu-item index="6" class="f-right">
                             退出
@@ -74,23 +56,29 @@ export default {
     data() {
         return {
             activeIndex: '1',
-            routes: {
-                index: {
-                    name: 'Index', path: '/'
+            menus: [
+                {
+                    name: '主页',
+                    route: { name: 'Index', path: '/' }
                 },
-                order: {
-                    name: 'Operating', params: { tab: 'order' }
+                {
+                    name: '运营管理',
+                    route: { name: 'Operating', params: { tab: 'order' } }
                 },
-                settlement: {
-                    name: 'Settle', params: { tab: 'settlement' }
+                {
+                    name: '结算中心',
+                    route: { name: 'Settle', params: { tab: 'settlement' } },
                 },
-                generalSituation: {
-                    name: 'Data', params: { tab: 'generalSituation' }
+                {
+                    name: '数据分析',
+                    route: { name: 'Data', params: { tab: 'generalSituation' } }
+
                 },
-                user: {
-                    name: 'Setting', params: { tab: 'user' }
+                {
+                    name: '系统设置',
+                    route: { name: 'Setting', params: { tab: 'userList' } }
                 }
-            }
+            ]
         }
     },
     methods: {
