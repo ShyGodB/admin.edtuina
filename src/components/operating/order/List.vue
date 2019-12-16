@@ -135,7 +135,7 @@ export default {
                 responseType: 'json',
                 data: {
                     pageIndex: pageIndex,
-                    pageSize: 12
+                    pageSize: 10
                 }
             }).then(res => {
                 this.orders = res.data.data.list || [];
