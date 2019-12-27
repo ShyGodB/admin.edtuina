@@ -1,5 +1,5 @@
 <template>
-  <div id="Tech">
+  <div id="TechComment">
     <div class="order-search">
       <el-form
         :model="ruleForm"
@@ -41,25 +41,17 @@
       </el-form>
     </div>
 
-    <div class="tech-table">
-      <el-table :data="techs" style="width: 100%">
-        <el-table-column prop="techId" label="技师编号" width="120" height="120"></el-table-column>
+    <div class="techcomment-table">
+      <el-table :data="techComments" style="width: 100%">
+        <el-table-column prop="techName" label="技师姓名" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="realName" label="姓名" width="120" height="120"></el-table-column>
+        <el-table-column prop="userName" label="用户姓名" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="gender" label="性别" width="80" height="120"></el-table-column>
+        <el-table-column prop="behavior" label="用户行为" width="160" height="120"></el-table-column>
 
-        <el-table-column prop="phone" label="手机" width="120" height="120"></el-table-column>
+        <el-table-column prop="remark" label="技师备注" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="orders" label="订单量" width="160" height="120"></el-table-column>
-
-        <el-table-column prop="clicks" label="点击量" width="120" height="180"></el-table-column>
-
-        <el-table-column prop="star" label="星级" width="100" height="120"></el-table-column>
-
-        <el-table-column prop="group" label="分组" width="100" height="120"></el-table-column>
-
-        <el-table-column prop="state" label="状态" width="100" height="120"></el-table-column>
+        <el-table-column prop="addTime" label="评论时间" width="200" height="120"></el-table-column>
 
         <el-table-column label="操作" height="120">
           <template slot-scope="scope">
@@ -83,16 +75,14 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 
 export default {
-  name: "Tech",
+  name: "TechComment",
   data() {
     return {
-      techs: [],
-      allUser: [],
+      techComments: [],
       pageIndex: 1,
       pageSize: 10,
       ruleForm: {
@@ -120,7 +110,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.listTech(this.ruleForm);
+          this.listTechComment(this.ruleForm);
         } else {
           // console.log('error submit!!');
           return false;
@@ -132,21 +122,20 @@ export default {
     },
     change(num) {
       console.log("------pageIndex", num);
-      this.ruleForm.pageIndex = num;
-      this.listTech(this.ruleForm);
+      this.pageIndex = num;
+      this.listTechComment(this.ruleForm);
     },
     sizeChange(num) {
-      // this.listTech(this.ruleForm);
+      // this.listTechComment(this.ruleForm);
     },
-    listTech(data) {
+    listTechComment(data) {
       axios({
         method: "post",
-        url: "/api/admin/tech/list",
+        url: "/api/admin/tech/listComment",
         responseType: "json",
         data: data
       }).then(res => {
-        console.log(res.data.data.list);
-        this.techs = res.data.data.list || [];
+        this.techComments = res.data.data.list || [];
         this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
         if (res.data.data.count % this.pageSize !== 0) {
           this.pageIndex += 1;
@@ -155,7 +144,7 @@ export default {
     }
   },
   created() {
-    this.listTech(
+    this.listTechComment(
       Object.assign(
         {},
         this.ruleForm,
@@ -166,7 +155,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 </style>

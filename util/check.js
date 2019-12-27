@@ -3,7 +3,7 @@ const me = {};
 
 handler.checkMainActiveIndex = (routeName) => {
     let activeIndex = "1";
-    switch(routeName) {
+    switch (routeName) {
         case "Index":
             activeIndex = "1";
             break;
@@ -27,7 +27,7 @@ handler.checkMainActiveIndex = (routeName) => {
 
 handler.checkSecondaryActiveIndex = (routeName, tab) => {
     let activeIndex = "1";
-    switch(routeName) {
+    switch (routeName) {
         case "Operating":
             activeIndex = me.checkOperating(tab);
             break;
@@ -48,7 +48,7 @@ handler.checkSecondaryActiveIndex = (routeName, tab) => {
 
 me.checkOperating = (tab) => {
     let activeIndex = "1";
-    switch(tab) {
+    switch (tab) {
         case "order":
             activeIndex = "1";
             break;
@@ -61,38 +61,41 @@ me.checkOperating = (tab) => {
         case "promote":
             activeIndex = "4";
             break;
-        case "comment":
+        case "techComment":
             activeIndex = "5";
             break;
-        case "coupon":
+        case "userComment":
             activeIndex = "6";
             break;
-        case "project":
+        case "coupon":
             activeIndex = "7";
             break;
-        case "complaint":
+        case "project":
             activeIndex = "8";
             break;
-        case "techApply":
+        case "complaint":
             activeIndex = "9";
             break;
-        case "feedback":
+        case "techApply":
             activeIndex = "10";
             break;
-        case "review":
+        case "feedback":
             activeIndex = "11";
             break;
-        case "techTime":
+        case "review":
             activeIndex = "12";
             break;
-        case "alarm":
+        case "techTime":
             activeIndex = "13";
             break;
-        case "apply":
+        case "alarm":
             activeIndex = "14";
             break;
-        case "agent":
+        case "apply":
             activeIndex = "15";
+            break;
+        case "agent":
+            activeIndex = "16";
             break;
         default:
             break;
@@ -102,7 +105,7 @@ me.checkOperating = (tab) => {
 
 me.checkSettle = (tab) => {
     let activeIndex = "1";
-    switch(tab) {
+    switch (tab) {
         case "settlement":
             activeIndex = "1";
             break;
@@ -129,7 +132,7 @@ me.checkSettle = (tab) => {
 
 me.checkData = (tab) => {
     let activeIndex = "1";
-    switch(tab) {
+    switch (tab) {
         case "generalSituation":
             activeIndex = "1";
             break;
@@ -156,7 +159,7 @@ me.checkData = (tab) => {
 
 me.checkSetting = (tab) => {
     let activeIndex = "1";
-    switch(tab) {
+    switch (tab) {
         case "userList":
             activeIndex = "1";
             break;
