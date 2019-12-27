@@ -1,6 +1,6 @@
 <template>
-    <div id="User">
-        <div class="user-search">
+    <div id="Order">
+        <div class="order-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
@@ -35,19 +35,27 @@
             </el-form>
         </div>
 
-        <div class="user-table">
+        <div class="users-table">
             <el-table :data="users" style="width: 100%">
-                <el-table-column prop="id" label="用户编号" width="200"></el-table-column>
+                <el-table-column prop="userId" label="用户编号" width="120" height="120"></el-table-column>
 
-                <el-table-column prop="userName" label="用户名"></el-table-column>
+                <el-table-column prop="danger" label="危险" width="120" height="120"></el-table-column>
 
-                <el-table-column prop="realName" label="真实姓名"></el-table-column>
+                <el-table-column prop="nickName" label="姓名" width="80" height="120"></el-table-column>
 
-                <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
+                <el-table-column prop="phone" label="手机" width="120" height="120"></el-table-column>
 
-                <el-table-column prop="addTime" label="注册时间"></el-table-column>
+                <el-table-column prop="city" label="城市" width="160" height="120"></el-table-column>
 
-                <el-table-column label="操作">
+                <el-table-column prop="regTime" label="注册时间" width="120" height="180"></el-table-column>
+
+                <el-table-column prop="regType" label="注册方式" width="100" height="120"></el-table-column>
+
+                <el-table-column prop="regSource" label="注册来源" width="100" height="120"></el-table-column>
+
+                <el-table-column prop="state" label="状态" width="100" height="120"></el-table-column>
+
+                <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
                     <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
                     </template>
@@ -55,7 +63,15 @@
             </el-table>
 
             <div class="pagination">
-                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change" layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+                <el-pagination 
+                    ref="fenye" 
+                    background 
+                    @size-change="sizeChange" 
+                    @current-change="change" 
+                    layout="prev, pager, next" 
+                    :hide-on-single-page="true" 
+                    :page-count="ruleForm.pageIndex">
+                </el-pagination>
             </div>
         </div>
     </div>
@@ -66,17 +82,19 @@
 import axios from 'axios'
 
 export default {
-    name: 'User',
+    name: 'Order',
     data() {
         return {
             users: [],
+            allUser: [],
             pageNum: 1,
             ruleForm: {
                 techName: '',
                 techPhone: '',
                 userName: '',
                 userPhone: '',
-                pageNum: 1
+                pageIndex: 1,
+                pageSize: 10
             },
             rules: {
                 name: [
@@ -97,9 +115,9 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(this.ruleForm);
+                    this.listOrder(this.ruleForm)
                 } else {
-                    console.log('error submit!!');
+                    // console.log('error submit!!');
                     return false;
                 }
             });
@@ -107,33 +125,34 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        change(pageNum) {
-            this.listOrder(pageNum)
+        change(num) {
+            console.log('------pageIndex', num)
+            this.ruleForm.pageIndex = num;
+            this.listOrder(this.ruleForm)
         },
         sizeChange(num) {
-            console.log('funtion: sizeChange', num);
+            // console.log(this.ruleForm);
+            // this.ruleForm.pageIndex = num;
+            // this.listOrder(this.ruleForm);
         },
-        listOrder(pageIndex) {
+        listOrder(data) {
             axios({
                 method: 'post',
-                url: '/api/api/admin/user/list',
+                url: '/api/admin/user/list',
                 responseType: 'json',
-                data: {
-                    pageIndex: pageIndex,
-                    pageSize: 12
-                }
+                data: data
             }).then(res => {
-                // console.log(res.data)
-                // this.users = res.data.data.list || [];
-                // this.pageNum = Math.floor((res.data.data.count || 0) / 10);
-                // if (res.data.data.count % 10 !== 0) {
-                //     this.pageNum += 1;
-                // }
+                console.log(res.data.data.list)
+                this.users = res.data.data.list || [];
+                this.ruleForm.pageIndex = Math.floor((res.data.data.count || 0) / this.ruleForm.pageSize);
+                if (res.data.data.count % this.ruleForm.pageSize !== 0) {
+                    this.ruleForm.pageIndex += 1;
+                }
             })
         }
     },
     created() {
-        this.listOrder(1);
+        this.listOrder(this.ruleForm);
     }
 }
 </script>
