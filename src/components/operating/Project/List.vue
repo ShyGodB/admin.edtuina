@@ -1,5 +1,5 @@
 <template>
-  <div id="Order">
+  <div id="Project">
     <div class="order-search">
       <el-form
         :model="ruleForm"
@@ -41,29 +41,35 @@
       </el-form>
     </div>
 
-    <div class="order-table">
-      <el-table :data="orders" style="width: 100%">
-        <el-table-column prop="techName" label="技师姓名" width="120" height="120"></el-table-column>
+    <div class="project-table">
+      <el-table :data="projects" style="width: 100%">
+        <el-table-column prop="projectId" label="技师姓名" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="userName" label="用户姓名" width="120" height="120"></el-table-column>
+        <el-table-column
+          prop="cityIds"
+          class="table-userName"
+          label="适用城市"
+          width="120"
+          height="120"
+        ></el-table-column>
 
-        <el-table-column prop="userDanger" label="危险" width="80" height="120"></el-table-column>
+        <el-table-column prop="name" label="危险" width="80" height="120"></el-table-column>
 
-        <el-table-column prop="userPhone" label="用户手机" width="120" height="120"></el-table-column>
+        <el-table-column prop="originalPrice" label="原价" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="projectsName" label="项目名称" width="160" height="120"></el-table-column>
+        <el-table-column prop="price" label="默认价格" width="160" height="120"></el-table-column>
 
-        <el-table-column prop="source" label="来源" width="120" height="120"></el-table-column>
+        <el-table-column prop="isFirst" label="是否首单" width="120" height="120"></el-table-column>
 
-        <el-table-column prop="payService" label="服务费" width="100" height="120"></el-table-column>
+        <el-table-column prop="time" label="时长" width="100" height="120"></el-table-column>
 
-        <el-table-column prop="payTrans" label="交通费" width="100" height="120"></el-table-column>
+        <el-table-column prop="category" label="项目类别" width="100" height="120"></el-table-column>
 
-        <el-table-column prop="payCoupon" label="优惠卷" width="100" height="120"></el-table-column>
+        <el-table-column prop="view" label="展示属性" width="100" height="120"></el-table-column>
 
-        <el-table-column prop="payPrice" label="实际支付" width="100" height="120"></el-table-column>
+        <el-table-column prop="saleCount" label="销售量" width="100" height="120"></el-table-column>
 
-        <el-table-column prop="addTime" label="下单时间" width="180" height="120"></el-table-column>
+        <el-table-column prop="sort" label="排序" width="180" height="120"></el-table-column>
 
         <el-table-column prop="state" label="状态" width="80" height="120"></el-table-column>
 
@@ -93,10 +99,10 @@
 import axios from "axios";
 
 export default {
-  name: "Order",
+  name: "Project",
   data() {
     return {
-      orders: [],
+      projects: [],
       pageIndex: 1,
       pageSize: 10,
       ruleForm: {
@@ -124,7 +130,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.listOrder(this.ruleForm);
+          this.listProject(this.ruleForm);
         } else {
           // console.log('error submit!!');
           return false;
@@ -137,19 +143,21 @@ export default {
     change(num) {
       console.log("------pageIndex", num);
       this.pageIndex = num;
-      this.listOrder(this.ruleForm);
+      this.listProject(this.ruleForm);
     },
     sizeChange(num) {
-      // this.listOrder(this.ruleForm);
+      // this.listProject(this.ruleForm);
     },
-    listOrder(data) {
+    listProject(data) {
+      console.log("-----", data);
       axios({
         method: "post",
-        url: "/api/admin/order/list",
+        url: "/api/admin/other/listProject",
         responseType: "json",
         data: data
       }).then(res => {
-        this.orders = res.data.data.list || [];
+        console.log(res);
+        this.projects = res.data.data.list || [];
         this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
         if (res.data.data.count % this.pageSize !== 0) {
           this.pageIndex += 1;
@@ -158,7 +166,7 @@ export default {
     }
   },
   created() {
-    this.listOrder(
+    this.listProject(
       Object.assign(
         {},
         this.ruleForm,

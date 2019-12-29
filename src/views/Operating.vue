@@ -81,16 +81,16 @@ import Tech from "../components/operating/Tech/List.vue";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
-import Coupon from "../components/operating/Coupon.vue";
-import Project from "../components/operating/Project.vue";
-import Complaint from "../components/operating/Complaint.vue";
-import TechApply from "../components/operating/TechApply.vue";
-import Feedback from "../components/operating/Feedback.vue";
-import Review from "../components/operating/Review.vue";
-import TechTime from "../components/operating/TechTime.vue";
-import Alarm from "../components/operating/Alarm.vue";
-import Apply from "../components/operating/Apply.vue";
-import Agent from "../components/operating/Agent.vue";
+import Coupon from "../components/operating/Coupon/Coupon.vue";
+import Project from "../components/operating/Project/List.vue";
+import Complaint from "../components/operating/Complaint/List.vue";
+import TechApply from "../components/operating/TechApply/List.vue";
+import Feedback from "../components/operating/Feedback/List.vue";
+import Review from "../components/operating/Review/List.vue";
+import TechTime from "../components/operating/TechTime/TechTime.vue";
+import Alarm from "../components/operating/Alarm/Alarm.vue";
+import Apply from "../components/operating/Apply/List.vue";
+import Agent from "../components/operating/Agent/Agent.vue";
 
 export default {
   name: "Operating",
