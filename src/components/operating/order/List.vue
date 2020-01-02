@@ -82,7 +82,7 @@
           @current-change="change"
           layout="prev, pager, next"
           :hide-on-single-page="true"
-          :page-count="pageIndex"
+          :page-count="pageNum"
         ></el-pagination>
       </div>
     </div>
@@ -91,6 +91,7 @@
 
 <script>
 import axios from "axios";
+import util from '../../../../util/'
 
 export default {
   name: "Order",
@@ -99,6 +100,7 @@ export default {
       orders: [],
       pageIndex: 1,
       pageSize: 10,
+      pageNum: 1,
       ruleForm: {
         techName: "",
         techPhone: "",
@@ -116,17 +118,19 @@ export default {
   },
   methods: {
     info(index, row) {
-      this.$message({
-        message: "暂未完成",
-        type: "success"
-      });
+      this.$router.push('/operating/order/detail')
+      // this.getOrderDetail(row.orderId);
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.listOrder(this.ruleForm);
+          this.listOrder(Object.assign(
+            {},
+            this.ruleForm,
+            { pageIndex: this.pageIndex },
+            { pageSize: this.pageSize }
+          ));
         } else {
-          // console.log('error submit!!');
           return false;
         }
       });
@@ -137,23 +141,45 @@ export default {
     change(num) {
       console.log("------pageIndex", num);
       this.pageIndex = num;
-      this.listOrder(this.ruleForm);
+      this.listOrder(Object.assign(
+        {},
+        this.ruleForm,
+        { pageIndex: this.pageIndex },
+        { pageSize: this.pageSize }
+      ));
     },
     sizeChange(num) {
       // this.listOrder(this.ruleForm);
     },
-    listOrder(data) {
+    async listOrder(data) {
+      const res = await util.request('POST', '/api/admin/order/list', data)
+      console.log('listOrder', res)
+      this.orders = res.data.data.list || [];
+        this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+        if (res.data.data.count % this.pageSize !== 0) {
+          this.pageNum += 1;
+        }
+      // axios({
+      //   method: "post",
+      //   url: "/api/admin/order/list",
+      //   responseType: "json",
+      //   data: data
+      // }).then(res => {
+      //   this.orders = res.data.data.list || [];
+      //   this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+      //   if (res.data.data.count % this.pageSize !== 0) {
+      //     this.pageNum += 1;
+      //   }
+      // });
+    },
+    getOrderDetail(orderId) {
       axios({
         method: "post",
-        url: "/api/admin/order/list",
+        url: "/api/admin/order/detail",
         responseType: "json",
-        data: data
+        data: { orderId }
       }).then(res => {
-        this.orders = res.data.data.list || [];
-        this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
-        if (res.data.data.count % this.pageSize !== 0) {
-          this.pageIndex += 1;
-        }
+        console.log(res)
       });
     }
   },
@@ -166,6 +192,7 @@ export default {
         { pageSize: this.pageSize }
       )
     );
+
   }
 };
 </script>
