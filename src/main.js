@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/'
 import echarts from 'echarts'
 import './registerServiceWorker'
 import Element from 'element-ui'
@@ -17,6 +17,7 @@ import '../public/css/main.css'
 import '../public/css/mg.css'
 import '../public/css/pd.css'
 import '../public/css/text.css'
+import '../public/css/img.css'
 
 var options = {
   persist: true
@@ -24,7 +25,7 @@ var options = {
 
 Vue.use(Element)
 Vue.use(VueCropper)
-Vue.prototype.$echarts = echarts;
+Vue.prototype.$echarts = echarts
 Vue.use(VuePhotoZoomPro)
 Vue.config.productionTip = false
 Vue.use(VueSession, options)

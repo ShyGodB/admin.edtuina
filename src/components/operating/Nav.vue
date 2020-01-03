@@ -40,7 +40,7 @@ export default {
         },
         {
           name: "用户管理",
-          route: { name: "Operating", params: { tab: "user" } }
+          route: { name: "Operating", params: { tab: "user", model: 'list' } }
         },
         {
           name: "技师管理",

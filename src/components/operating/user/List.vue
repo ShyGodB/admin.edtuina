@@ -43,27 +43,29 @@
 
     <div class="users-table">
       <el-table :data="users" style="width: 100%">
-        <el-table-column prop="userId" label="用户编号" width="120" height="120"></el-table-column>
+        <el-table-column prop="userId" label="用户编号" width="120"></el-table-column>
 
-        <el-table-column prop="danger" label="危险" width="120" height="120"></el-table-column>
+        <el-table-column prop="danger" label="危险" width="120"></el-table-column>
 
-        <el-table-column prop="nickName" label="姓名" width="80" height="120"></el-table-column>
+        <el-table-column prop="nickName" label="姓名" width="80"></el-table-column>
 
-        <el-table-column prop="phone" label="手机" width="120" height="120"></el-table-column>
+        <el-table-column prop="phone" label="手机" width="120"></el-table-column>
 
-        <el-table-column prop="city" label="城市" width="160" height="120"></el-table-column>
+        <el-table-column prop="city" label="城市" width="160"></el-table-column>
 
-        <el-table-column prop="regTime" label="注册时间" width="120" height="180"></el-table-column>
+        <el-table-column prop="regTime" label="注册时间" width="200"></el-table-column>
 
-        <el-table-column prop="regType" label="注册方式" width="100" height="120"></el-table-column>
+        <el-table-column prop="regType" label="注册方式" width="100"></el-table-column>
 
-        <el-table-column prop="regSource" label="注册来源" width="100" height="120"></el-table-column>
+        <el-table-column prop="regSource" label="注册来源" width="100"></el-table-column>
 
-        <el-table-column prop="state" label="状态" width="100" height="120"></el-table-column>
+        <el-table-column prop="state" label="状态" width="100"></el-table-column>
 
         <el-table-column label="操作" height="120">
           <template slot-scope="scope">
             <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+            <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑</el-button>
+            <el-button size="mini" type="success" @click="lookComments(scope.$index, scope.row)" round>查看评论</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -113,6 +115,16 @@ export default {
   },
   methods: {
     info(index, row) {
+      this.$store.state.userId = row.userId;
+      this.$router.push('/operating/user/detail');
+    },
+    edit(index, row) {
+      this.$message({
+        message: "暂未完成",
+        type: "success"
+      });
+    },
+    lookComments(index, row) {
       this.$message({
         message: "暂未完成",
         type: "success"
@@ -146,7 +158,7 @@ export default {
         responseType: "json",
         data: data
       }).then(res => {
-        console.log(res.data.data.list);
+        
         this.users = res.data.data.list || [];
         this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
         if (res.data.data.count % this.pageSize !== 0) {

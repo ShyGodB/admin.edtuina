@@ -118,8 +118,8 @@ export default {
   },
   methods: {
     info(index, row) {
-      this.$router.push('/operating/order/detail')
-      // this.getOrderDetail(row.orderId);
+      this.$store.state.orderId = row.orderId;
+      this.$router.push('/operating/order/detail');
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -151,35 +151,25 @@ export default {
     sizeChange(num) {
       // this.listOrder(this.ruleForm);
     },
-    async listOrder(data) {
-      const res = await util.request('POST', '/api/admin/order/list', data)
-      console.log('listOrder', res)
-      this.orders = res.data.data.list || [];
-        this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
-        if (res.data.data.count % this.pageSize !== 0) {
-          this.pageNum += 1;
-        }
-      // axios({
-      //   method: "post",
-      //   url: "/api/admin/order/list",
-      //   responseType: "json",
-      //   data: data
-      // }).then(res => {
-      //   this.orders = res.data.data.list || [];
+    listOrder(data) {
+      // const res = await util.request('POST', '/api/admin/order/list', data)
+      // console.log('listOrder', res)
+      // this.orders = res.data.data.list || [];
       //   this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
       //   if (res.data.data.count % this.pageSize !== 0) {
       //     this.pageNum += 1;
       //   }
-      // });
-    },
-    getOrderDetail(orderId) {
       axios({
         method: "post",
-        url: "/api/admin/order/detail",
+        url: "/api/admin/order/list",
         responseType: "json",
-        data: { orderId }
+        data: data
       }).then(res => {
-        console.log(res)
+        this.orders = res.data.data.list || [];
+        this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+        if (res.data.data.count % this.pageSize !== 0) {
+          this.pageNum += 1;
+        }
       });
     }
   },
