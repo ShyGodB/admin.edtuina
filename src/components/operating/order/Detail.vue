@@ -14,45 +14,47 @@
         <div class="order-detail-userinfo">
           <el-row>
             <el-col :span="11" class="p-2 userinfo">
-              <el-row>
-                <span>技师信息</span>
-                <el-button @click="getTechInfo" type="info" size="mini" class="f-right" round>技师详情</el-button>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
-                  <img :src="tech.headImg" class="img" alt="图片加载失败或无图片">
-                </el-col>
-                <el-col :span="8">
-                  <p>姓名 {{ tech.realName }}</p>
-                  <p>手机 {{ tech.phone }}</p>
-                </el-col>
-                <el-col :span="8">
-                  <p>性别 {{ tech.gender }}</p>
-                  <p>分组 {{ tech.city }}</p>
-                </el-col>
-              </el-row>
+              <div @click="getTechInfo" class="hover-hand">
+                <el-row>
+                  <span>技师信息</span>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <img :src="tech.headImg" class="img" alt="图片加载失败或无图片">
+                  </el-col>
+                  <el-col :span="8">
+                    <p>姓名 {{ tech.realName }}</p>
+                    <p>手机 {{ tech.phone }}</p>
+                  </el-col>
+                  <el-col :span="8">
+                    <p>性别 {{ tech.gender }}</p>
+                    <p>分组 {{ tech.city }}</p>
+                  </el-col>
+                </el-row>
+              </div>
             </el-col>
   
             <el-col :span="2">123</el-col>
   
             <el-col :span="11" class="p-2 userinfo">
-              <el-row>
-                <span>用户信息</span>
-                <el-button @click="getUserInfo" type="info" size="mini" class="f-right" round>用户详情</el-button>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
-                  <img :src="user.headImg" class="img" alt="图片加载失败或无图片">
-                </el-col>
-                <el-col :span="8">
-                  <p>姓名 {{ user.nickName }}</p>
-                  <p>手机 {{ user.phone }}</p>
-                </el-col>
-                <el-col :span="8">
-                  <p>性别 {{ user.gender }}</p>
-                  <p>分组 {{ user.city }}</p>
-                </el-col>
-              </el-row>
+              <div @click="getUserInfo" class="hover-hand">
+                <el-row>
+                  <span>用户信息</span>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <img :src="user.headImg" class="img" alt="图片加载失败或无图片">
+                  </el-col>
+                  <el-col :span="8">
+                    <p>姓名 {{ user.nickName }}</p>
+                    <p>手机 {{ user.phone }}</p>
+                  </el-col>
+                  <el-col :span="8">
+                    <p>性别 {{ user.gender }}</p>
+                    <p>分组 {{ user.city }}</p>
+                  </el-col>
+                </el-row>
+              </div @click="getUserInfo">
             </el-col>
           </el-row>
         </div>
