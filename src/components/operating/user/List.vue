@@ -110,7 +110,8 @@ export default {
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ]
       },
-      loading: true
+      loading: true,
+      ratio: "1"
     };
   },
   methods: {
@@ -119,16 +120,11 @@ export default {
       this.$router.push('/operating/user/detail');
     },
     edit(index, row) {
-      this.$message({
-        message: "暂未完成",
-        type: "success"
-      });
+      
     },
     lookComments(index, row) {
-      this.$message({
-        message: "暂未完成",
-        type: "success"
-      });
+      this.$store.state.userId = row.userId;
+      this.$router.push('/operating/userComment/list');
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

@@ -4,7 +4,7 @@
         <p>基本信息</p>
         <el-row class="p-3">
           <el-col :span="4">
-            <img :src="user.headImg" alt="图片显示错误或无图片">
+            <img class="img" :src="user.headImg" alt="图片显示错误或无图片">
           </el-col>
           <el-col :span="10">
             <el-col :span="8">
