@@ -1,44 +1,59 @@
 <template>
-    <el-container style="padding: 0">
+  <div>
+    <div v-if="hasUser === false">
+      <el-container style="padding: 0">
         <el-header>
-            <mainnav></mainnav>
+          <mainnav></mainnav>
         </el-header>
 
         <el-main>
-            <mainbox></mainbox>
+          <router-view v-if="isRouterAlive === true"></router-view>
         </el-main>
 
         <el-footer>
-            <!-- <mainfoo></mainfoo> -->
+          <!-- <mainfoo></mainfoo> -->
         </el-footer>
-    </el-container>
+      </el-container>
+    </div>
+    <div v-if="hasUser === true">
+      <login></login>
+    </div>
+  </div>
 </template>
 
 
 <script>
-import Mainnav from './components/Mainnav.vue'
-import Foo from './components/Footer.vue'
-import Content from './components/Content.vue'
-
+import Mainnav from "./components/Mainnav.vue";
+import Foo from "./components/Footer.vue";
+import Content from "./components/Content.vue";
+import Login from "./views/Login.vue";
 
 export default {
-    name: 'app',
-    components: {
-        'mainnav': Mainnav,
-        'mainfoo': Foo,
-        'mainbox': Content
-    },
-    data() {
-        return {
-            tab: ''
-        }
-    }
-}
+  name: "app",
+  components: {
+    mainnav: Mainnav,
+    mainfoo: Foo,
+    mainbox: Content,
+    login: Login
+  },
+  data() {
+    return {
+      tab: "",
+      hasUser: false,
+      routeName: ""
+    };
+  },
+  created() {
+    console.log(123);
+    this.hasUser = this.$store.state.hasUser;
+    // this.routeName = this.$route.name;
+  }
+};
 </script>
 
 
 <style scoped>
 #mainnav {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 </style>

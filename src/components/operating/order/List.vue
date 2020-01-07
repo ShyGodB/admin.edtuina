@@ -82,7 +82,7 @@
           @current-change="change"
           layout="prev, pager, next"
           :hide-on-single-page="true"
-          :page-count="pageIndex"
+          :page-count="pageNum"
         ></el-pagination>
       </div>
     </div>
@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       orders: [],
+      pageNum: 1,
       pageIndex: 1,
       pageSize: 10,
       ruleForm: {
@@ -124,7 +125,14 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.listOrder(this.ruleForm);
+          this.listOrder(
+            Object.assign(
+              {},
+              this.ruleForm,
+              { pageIndex: this.pageIndex },
+              { pageSize: this.pageSize }
+            )
+          );
         } else {
           // console.log('error submit!!');
           return false;
@@ -150,9 +158,9 @@ export default {
         data: data
       }).then(res => {
         this.orders = res.data.data.list || [];
-        this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
+        this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
         if (res.data.data.count % this.pageSize !== 0) {
-          this.pageIndex += 1;
+          this.pageNum += 1;
         }
       });
     }

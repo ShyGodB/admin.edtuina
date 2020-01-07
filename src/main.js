@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/'
 import echarts from 'echarts'
 import './registerServiceWorker'
 import Element from 'element-ui'
@@ -19,7 +19,7 @@ import '../public/css/pd.css'
 import '../public/css/text.css'
 
 var options = {
-  persist: true
+    persist: true
 }
 
 Vue.use(Element)
@@ -30,7 +30,7 @@ Vue.config.productionTip = false
 Vue.use(VueSession, options)
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
