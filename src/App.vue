@@ -1,24 +1,17 @@
 <template>
-  <div>
-    <div v-if="hasUser === false">
-      <el-container style="padding: 0">
+    <el-container style="padding: 0;">
         <el-header>
-          <mainnav></mainnav>
+            <mainnav></mainnav>
         </el-header>
 
         <el-main>
-          <router-view v-if="isRouterAlive === true"></router-view>
+            <mainbox></mainbox>
         </el-main>
 
         <el-footer>
-          <!-- <mainfoo></mainfoo> -->
+            <!-- <mainfoo></mainfoo> -->
         </el-footer>
-      </el-container>
-    </div>
-    <div v-if="hasUser === true">
-      <login></login>
-    </div>
-  </div>
+    </el-container>
 </template>
 
 
@@ -29,31 +22,31 @@ import Content from "./components/Content.vue";
 import Login from "./views/Login.vue";
 
 export default {
-  name: "app",
-  components: {
-    mainnav: Mainnav,
-    mainfoo: Foo,
-    mainbox: Content,
-    login: Login
-  },
-  data() {
-    return {
-      tab: "",
-      hasUser: false,
-      routeName: ""
-    };
-  },
-  created() {
-    console.log(123);
-    this.hasUser = this.$store.state.hasUser;
-    // this.routeName = this.$route.name;
-  }
+    name: "app",
+    components: {
+        mainnav: Mainnav,
+        mainfoo: Foo,
+        mainbox: Content,
+        login: Login
+    },
+    data () {
+        return {
+            tab: "",
+            hasUser: false,
+            routeName: ""
+        };
+    },
+    created () {
+        console.log(123);
+        this.hasUser = this.$store.state.hasUser;
+        // this.routeName = this.$route.name;
+    }
 };
 </script>
 
 
 <style scoped>
 #mainnav {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 </style>
