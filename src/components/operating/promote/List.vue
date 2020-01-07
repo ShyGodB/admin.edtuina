@@ -4,7 +4,7 @@
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="技师i姓名" prop="techName">
+                        <el-form-item label="技师姓名" prop="techName">
                             <el-input v-model="ruleForm.techName"></el-input>
                         </el-form-item>
                     </el-col>
@@ -36,20 +36,37 @@
         </div>
 
         <div class="promote-table">
-            <el-table :data="users" style="width: 100%">
-                <el-table-column prop="id" label="用户编号" width="200"></el-table-column>
+            <el-table :data="promotes" style="width: 100%">
+                <el-table-column prop="img" label="二维码" width="200">
+                    <template slot-scope="scope">
+                        <el-image
+                            style="width: 80px; height: 80px"
+                            :src="scope.row.img"
+                            :fit="fit">
+                        </el-image>
+                    </template>
+                </el-table-column>
 
-                <el-table-column prop="userName" label="用户名"></el-table-column>
+                <el-table-column prop="promoteType" label="类型"></el-table-column>
 
-                <el-table-column prop="realName" label="真实姓名"></el-table-column>
+                <el-table-column prop="purpose" label="用途"></el-table-column>
 
-                <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
+                <el-table-column prop="userCount" label="用户量"></el-table-column>
 
-                <el-table-column prop="addTime" label="注册时间"></el-table-column>
+                <el-table-column prop="applyTime" label="申请时间"></el-table-column>
+
+                <el-table-column prop="authName" label="审核人"></el-table-column>
+
+                <el-table-column prop="authTime" label="审核时间"></el-table-column>
+
+                <el-table-column prop="state" label="状态"></el-table-column>
+
+                <el-table-column prop="reason" label="审核意见"></el-table-column>
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                    <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+                    <el-button size="mini" type="danger" @click="agree(scope.$index, scope.row)" round>同意</el-button>
+                    <el-button size="mini" type="primary" @click="refuse(scope.$index, scope.row)" round>拒绝</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -69,14 +86,16 @@ export default {
     name: 'Promote',
     data() {
         return {
-            users: [],
+            promotes: [],
             pageNum: 1,
+            pageIndex: 1,
+            pageSize: 10,
+            fits: 'fill',
             ruleForm: {
                 techName: '',
                 techPhone: '',
                 userName: '',
-                userPhone: '',
-                pageNum: 1
+                userPhone: ''
             },
             rules: {
                 name: [
@@ -84,11 +103,19 @@ export default {
                     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ]
             },
-            loading: true
+            value: [],
+            loading: true,
+            
         };
     },
     methods: {
-        info(index, row) {
+        agree(index, row) {
+            this.$message({
+                message: '暂未完成',
+                type: 'success'
+            });
+        },
+        refuse(index, row) {
             this.$message({
                 message: '暂未完成',
                 type: 'success'
@@ -112,10 +139,29 @@ export default {
         },
         sizeChange(num) {
             console.log('funtion: sizeChange', num);
+        },
+        listPromote(data) {
+            axios({
+                method: "post",
+                url: "/api/admin/promote/list",
+                responseType: "json",
+                data: data
+            }).then(res => {
+                this.promotes = res.data.data.list || [];
+                this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+                if (res.data.data.count % this.pageSize !== 0) {
+                    this.pageNum += 1;
+                }
+            });
         }
     },
     created() {
-        // this.listOrder(1);
+        this.listPromote(Object.assign(
+            {}, 
+            this.ruleForm,
+            { pageIndex: this.pageIndex },
+            { pageSize: this.pageSize }
+        ));
     }
 }
 </script>

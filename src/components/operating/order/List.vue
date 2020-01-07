@@ -3,7 +3,6 @@
     <div class="order-search">
       <el-form
         :model="ruleForm"
-        :rules="rules"
         ref="ruleForm"
         label-width="100px"
         class="demo-ruleForm"
@@ -32,6 +31,44 @@
               <el-input v-model="ruleForm.userPhone"></el-input>
             </el-form-item>
           </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="时间区间" prop="value">
+              <time-double v-on:getDoubleTime="getDoubleTime"></time-double>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="代理商" prop="value">
+              <agent-cascader v-on:getProxyCodes="getProxyCodes"></agent-cascader>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="订单编号" prop="orderId">
+              <el-input v-model="ruleForm.orderId"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item label="订单状态" prop="orderState">
+              <div>
+                <el-checkbox-group @change="orderStateChange" v-model="ruleForm.orderState" size="medium">
+                  <el-checkbox-button v-for="(state, index) in orderState" :label="index" :key="(index + 1)" :index="(index + 1).toString()">{{state}}</el-checkbox-button>
+                </el-checkbox-group>
+              </div>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item label="订单类型" prop="orderType">
+              <div>
+                <el-checkbox-group @change="orderTypeChange" v-model="ruleForm.orderType" size="medium">
+                  <el-checkbox-button v-for="(type, index) in orderType" :label="type" :key="(index + 1)" :index="(index + 1).toString()">{{type}}</el-checkbox-button>
+                </el-checkbox-group>
+              </div>
+            </el-form-item>
+          </el-col>
         </el-row>
 
         <el-form-item>
@@ -42,7 +79,7 @@
     </div>
 
     <div class="order-table">
-      <el-table :data="orders" style="width: 100%">
+      <el-table :data="orders" @row-click="rowInfo" style="width: 100%">
         <el-table-column prop="techName" label="技师姓名" width="120" height="120"></el-table-column>
 
         <el-table-column prop="userName" label="用户姓名" width="120" height="120"></el-table-column>
@@ -90,36 +127,58 @@
 </template>
 
 <script>
-import axios from "axios";
-import util from '../../../../util/'
+import AgentCascader from '../../tools/AgentCascader'
+import TimeDouble from '../../tools/TimeDouble'
 
 export default {
   name: "Order",
+  components: {
+    "agent-cascader": AgentCascader,
+    "time-double": TimeDouble
+  },
   data() {
     return {
       orders: [],
       pageIndex: 1,
       pageSize: 10,
       pageNum: 1,
+      orderState: ['未支付', '未接单', '已接单', '已出发', '已到达', '服务中', '服务完成', '取消订单', '已入账'],
+      orderType: ['普通', '加单', '补单', '超时接单', '用户取消订单', '技师拒单'],
       ruleForm: {
         techName: "",
         techPhone: "",
         userName: "",
-        userPhone: ""
-      },
-      rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ]
-      },
-      loading: true
+        userPhone: "",
+        times: '',
+        proxyCodes: [],
+        orderId: '',
+        orderState: [],
+        orderType: []
+      }
     };
   },
   methods: {
     info(index, row) {
       this.$store.state.orderId = row.orderId;
       this.$router.push('/operating/order/detail');
+    },
+    rowInfo(row, column, event) {
+      this.$store.state.orderId = row.orderId;
+      this.$router.push('/operating/order/detail');
+    },
+    orderStateChange(value) {
+      console.log(this.ruleForm)
+    },
+    orderTypeChange(value) {
+      console.log(this.ruleForm)
+    },
+    getProxyCodes(proxyCodes) {
+        this.ruleForm.proxyCodes = proxyCodes
+        console.log(this.ruleForm)
+    },
+    getDoubleTime(times) {
+        this.ruleForm.times = times
+        console.log(this.ruleForm)
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -151,26 +210,13 @@ export default {
     sizeChange(num) {
       // this.listOrder(this.ruleForm);
     },
-    listOrder(data) {
-      // const res = await util.request('POST', '/api/admin/order/list', data)
-      // console.log('listOrder', res)
-      // this.orders = res.data.data.list || [];
-      //   this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
-      //   if (res.data.data.count % this.pageSize !== 0) {
-      //     this.pageNum += 1;
-      //   }
-      axios({
-        method: "post",
-        url: "/api/admin/order/list",
-        responseType: "json",
-        data: data
-      }).then(res => {
-        this.orders = res.data.data.list || [];
-        this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
-        if (res.data.data.count % this.pageSize !== 0) {
-          this.pageNum += 1;
-        }
-      });
+    async listOrder(data) {
+      const res = await this.$api.post("/api/admin/order/list", data);
+      this.orders = res.data.data.list || [];
+      this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+      if (res.data.data.count % this.pageSize !== 0) {
+        this.pageNum += 1;
+      }
     }
   },
   created() {

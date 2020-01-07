@@ -1,12 +1,24 @@
-const axios = require('axios')
+import axios from 'axios'
 
-const request = async (type, url, data) => {
+const post = async (url, data) => {
   return axios({
-    method: type,
+    method: 'POST',
     url: url,
     responseType: 'JSON',
     data: data
   })
 }
 
-module.exports = request
+const get = async (url, params) => {
+  return axios({
+    method: 'GET',
+    url: url,
+    responseType: 'JSON',
+    params: params
+  })
+}
+
+export default {
+  post,
+  get
+}

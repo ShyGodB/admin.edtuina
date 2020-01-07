@@ -10,26 +10,86 @@
       >
         <el-row>
           <el-col :span="6">
-            <el-form-item label="技师i姓名" prop="techName">
-              <el-input v-model="ruleForm.techName"></el-input>
+            <el-form-item label="用户姓名" prop="techName">
+              <el-input v-model="ruleForm.nickName"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label="技师手机" prop="techPhone">
-              <el-input v-model="ruleForm.techPhone"></el-input>
+            <el-form-item label="用户电话" prop="techPhone">
+              <el-input v-model="ruleForm.phone"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label="用户姓名" prop="userName">
-              <el-input v-model="ruleForm.userName"></el-input>
+            <el-form-item label="用户编号" prop="userName">
+              <el-input v-model="ruleForm.userId"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="时间区间" prop="value">
+              <time-double v-on:getDoubleTime="getDoubleTime"></time-double>
+            </el-form-item>
+          </el-col>
+          
+          <el-col :span="6">
+            <el-form-item label="注册来源" prop="regSource">
+              <div>
+                <el-select @change="sourceChange" v-model="ruleForm.regSource" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in sources"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label="用户手机" prop="userPhone">
-              <el-input v-model="ruleForm.userPhone"></el-input>
+            <el-form-item label="代理商" prop="value">
+              <agent-cascader v-on:getProxyCodes="getProxyCodes"></agent-cascader>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="性别" prop="gender">
+              <div>
+                <el-checkbox-group @change="genderChange" v-model="ruleForm.gender" size="medium">
+                  <el-checkbox-button v-for="(gender, index) in genders" :label="gender" :key="(index + 1)" :index="(index + 1).toString()">{{gender}}</el-checkbox-button>
+                </el-checkbox-group>
+              </div>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="设备" prop="system">
+              <div>
+                <el-checkbox-group @change="systemChange" v-model="ruleForm.system" size="medium">
+                  <el-checkbox-button v-for="(system, index) in systems" :label="system" :key="(index + 1)" :index="(index + 1).toString()">{{system}}</el-checkbox-button>
+                </el-checkbox-group>
+              </div>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="危险等级" prop="danger">
+              <div>
+                <el-select @change="dangerChange" v-model="ruleForm.danger" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in dangers"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -88,21 +148,34 @@
 
 <script>
 import axios from "axios";
+import AgentCascader from '../../tools/AgentCascader'
+import TimeDouble from '../../tools/TimeDouble'
 
 export default {
   name: "User",
+  components: {
+    "agent-cascader": AgentCascader,
+    "time-double": TimeDouble
+  },
   data() {
     return {
       users: [],
       allUser: [],
+      genders: ['男', '女'],
+      systems: ['苹果', '安卓'],
       pageNum: 1,
       pageIndex: 1,
       pageSize: 10,
       ruleForm: {
-        techName: "",
-        techPhone: "",
-        userName: "",
-        userPhone: ""
+        nickName: '',
+        phone: '',
+        userId: '',
+        proxyCodes: [],
+        times: [],
+        gender: [],
+        system: [],
+        danger: '',
+        regSource: ''
       },
       rules: {
         name: [
@@ -110,6 +183,32 @@ export default {
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ]
       },
+      dangers: [{
+        value: 0,
+        label: '无(绿色)'
+      }, {
+        value: 1,
+        label: '一级(红色)'
+      }, {
+        value: 2,
+        label: '二级(黄色)'
+      }, {
+        value: 3,
+        label: '三级(蓝色)'
+      }],
+      sources: [{
+        value: '小程序',
+        label: '小程序'
+      }, {
+        value: 'APP',
+        label: 'APP'
+      }, {
+        value: '到位',
+        label: '到位'
+      }, {
+        value: '口碑',
+        label: '口碑'
+      }],
       loading: true,
       ratio: "1"
     };
@@ -122,6 +221,26 @@ export default {
     edit(index, row) {
       
     },
+    getProxyCodes(proxyCodes) {
+        this.ruleForm.proxyCodes = proxyCodes
+        console.log(this.ruleForm)
+    },
+    getDoubleTime(times) {
+        this.ruleForm.times = times
+        console.log(this.ruleForm)
+    },
+    genderChange(value) {
+      console.log(value)
+    },
+    systemChange(value) {
+      console.log(this.ruleForm)
+    },
+    dangerChange(dander) {
+      console.log(this.ruleForm)
+    },
+    sourceChange(dander) {
+      console.log(this.ruleForm)
+    },
     lookComments(index, row) {
       this.$store.state.userId = row.userId;
       this.$router.push('/operating/userComment/list');
@@ -129,7 +248,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.listUser(this.ruleForm);
+          this.listUser(
+            Object.assign(
+            {},
+            this.ruleForm,
+            { pageIndex: this.pageIndex },
+            { pageSize: this.pageSize }
+      ));
         } else {
           // console.log('error submit!!');
           return false;

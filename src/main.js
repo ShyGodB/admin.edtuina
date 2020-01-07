@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';
 import VuePhotoZoomPro from 'vue-photo-zoom-pro'
 import VueCropper from 'vue-cropper'
+import api from '../util/api'
 import '../public/css/bootstrap-grid.css'
 import '../public/css/bootstrap.css'
 import '../public/css/bootstrap-reboot.css'
@@ -26,6 +27,7 @@ var options = {
 Vue.use(Element)
 Vue.use(VueCropper)
 Vue.prototype.$echarts = echarts
+Vue.prototype.$api = api
 Vue.use(VuePhotoZoomPro)
 Vue.config.productionTip = false
 Vue.use(VueSession, options)
