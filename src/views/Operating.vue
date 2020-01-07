@@ -1,19 +1,22 @@
 <template>
   <el-row class="w-100" id="operating">
-    <el-col :span="3">
+    <el-col :span="3" class="pr-3">
       <operating-nav></operating-nav>
     </el-col>
 
     <el-col :span="21" v-if="tab==='order'">
-      <operating-order></operating-order>
+      <operating-order v-if="model==='list'"></operating-order>
+      <operating-order-detail v-if="model==='detail'"></operating-order-detail>
     </el-col>
 
     <el-col :span="21" v-if="tab==='user'">
-      <operating-user></operating-user>
+      <operating-user v-if="model==='list'"></operating-user>
+      <operating-user-detail v-if="model==='detail'"></operating-user-detail>
     </el-col>
 
     <el-col :span="21" v-if="tab==='tech'">
-      <operating-tech></operating-tech>
+      <operating-tech v-if="model==='list'"></operating-tech>
+      <operating-tech-detail v-if="model==='detail'"></operating-tech-detail>
     </el-col>
 
     <el-col :span="21" v-if="tab==='promote'">
@@ -76,8 +79,11 @@ import axios from "axios";
 import md5 from "md5";
 import Nav from "../components/operating/Nav.vue";
 import Order from "../components/operating/Order/List.vue";
+import OrderDetail from "../components/operating/Order/Detail.vue";
 import User from "../components/operating/User/List.vue";
+import UserDetail from "../components/operating/User/Detail.vue"; 
 import Tech from "../components/operating/Tech/List.vue";
+import TechDetail from "../components/operating/Tech/Detail";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
@@ -105,24 +111,29 @@ export default {
     "operating-coupon": Coupon,
     "operating-feedback": Feedback,
     "operating-order": Order,
+    "operating-order-detail": OrderDetail,
     "operating-project": Project,
     "operating-promote": Promote,
     "operating-review": Review,
     "operating-order": Order,
     "operating-tech": Tech,
+    "operating-tech-detail": TechDetail,
     "operating-techApply": TechApply,
     "operating-techTime": TechTime,
-    "operating-user": User
+    "operating-user": User,
+    "operating-user-detail": UserDetail
   },
   data() {
     return {
-      tab: "order"
+      tab: 'order',
+      model: 'detail'
     };
   },
   methods: {
     changeRoute() {
-      const tab = this.$route.params.tab;
+      const { tab, model } = this.$route.params;
       this.tab = tab;
+      this.model = model;
     }
   },
   watch: {
@@ -130,6 +141,7 @@ export default {
   },
   created() {
     this.tab = this.$route.params.tab;
+    this.model = this.$route.params.model;
   }
 };
 </script>

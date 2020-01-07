@@ -5,37 +5,37 @@ Vue.use(Vuex)
 
 const state = {
     count: 1,
-    hasUser: true
-};
+    orderId: ''
+}
 
 const getters = {
-    getCount() {
+    getCount () {
         return state.count
     }
-};
+}
 
 const mutations = {
-    add() {
-        state.count++;
+    add () {
+        state.count++
     },
-    subtract() {
-        state.count--;
+    subtract () {
+        state.count--
     }
 
-};
+}
 
 const actions = {
-    a(context) {
-        context.commit('add');
+    a (context) {
+        context.commit('add')
     },
-    s(context) {
+    s (context) {
         context.commit('subtract')
     }
-};
+}
 
 export default new Vuex.Store({
     state,
     getters,
     mutations,
     actions
-});
+})

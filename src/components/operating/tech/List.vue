@@ -112,17 +112,14 @@ export default {
   },
   methods: {
     info(index, row) {
-      this.$message({
-        message: "暂未完成",
-        type: "success"
-      });
+      this.$store.state.techId = row.techId;
+      this.$router.push('/operating/tech/detail');
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.listTech(this.ruleForm);
         } else {
-          // console.log('error submit!!');
           return false;
         }
       });

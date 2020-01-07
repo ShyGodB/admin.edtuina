@@ -13,43 +13,43 @@ import Login from './views/Login.vue';
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: [
-        {
-            path: '/',
-            name: 'Index',
-            component: Index
-        },
-        {
-            path: '/operating/:tab',
-            name: 'Operating',
-            component: Operating
-        },
-        {
-            path: '/settle/:tab',
-            name: 'Settle',
-            component: Settle
-        },
-        {
-            path: '/data:tab',
-            name: 'Data',
-            component: Data
-        },
-        {
-            path: '/setting/:tab',
-            name: 'Setting',
-            component: Setting
-        },
-        {
-            path: '/404',
-            name: '404',
-            component: NotFount
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login
-        },
-    ]
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: '/',
+      name: 'Index',
+      component: Index
+    },
+    {
+      path: '/operating/:tab/:model',
+      name: 'Operating',
+      component: Operating
+    },
+    {
+      path: '/settle/:tab',
+      name: 'Settle',
+      component: Settle
+    },
+    {
+      path: '/data:tab',
+      name: 'Data',
+      component: Data
+    },
+    {
+      path: '/setting/:tab',
+      name: 'Setting',
+      component: Setting
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: NotFount
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+  ]
 })

@@ -63,7 +63,7 @@ export default {
                 },
                 {
                     name: '运营管理',
-                    route: { name: 'Operating', params: { tab: 'order' } }
+                    route: { name: 'Operating', params: { tab: 'order', model: 'list' } }
                 },
                 {
                     name: '结算中心',

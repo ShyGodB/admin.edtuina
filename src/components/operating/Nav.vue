@@ -36,11 +36,11 @@ export default {
       menus: [
         {
           name: "订单管理",
-          route: { name: "Operating", params: { tab: "order" } }
+          route: { name: "Operating", params: { tab: "order", model: 'list' } }
         },
         {
           name: "用户管理",
-          route: { name: "Operating", params: { tab: "user" } }
+          route: { name: "Operating", params: { tab: "user", model: 'list' } }
         },
         {
           name: "技师管理",
