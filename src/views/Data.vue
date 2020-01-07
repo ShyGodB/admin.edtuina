@@ -53,13 +53,13 @@ export default {
         "data-techAnalysis": TechAnalysis,
         "data-pageTransform": PageTransform,
     },
-    data() {
+    data () {
         return {
             tab: 'generalSituation'
         };
     },
     methods: {
-        changeRoute() {
+        changeRoute () {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
@@ -67,7 +67,7 @@ export default {
     watch: {
         "$route": "changeRoute",
     },
-    created() {
+    created () {
         this.tab = this.$route.params.tab;
     }
 }
@@ -75,5 +75,4 @@ export default {
 
 
 <style scoped>
-
 </style>
