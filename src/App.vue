@@ -1,5 +1,5 @@
 <template>
-    <el-container style="padding: 0">
+    <el-container style="padding: 0;">
         <el-header>
             <mainnav></mainnav>
         </el-header>
@@ -16,35 +16,36 @@
 
 
 <script>
-import Mainnav from './components/Mainnav.vue'
-import Foo from './components/Footer.vue'
-import Content from './components/Content.vue'
-
+import Mainnav from "./components/Mainnav.vue";
+import Foo from "./components/Footer.vue";
+import Content from "./components/Content.vue";
+import Login from "./views/Login.vue";
 
 export default {
-    name: 'app',
+    name: "app",
     components: {
-        'mainnav': Mainnav,
-        'mainfoo': Foo,
-        'mainbox': Content
+        mainnav: Mainnav,
+        mainfoo: Foo,
+        mainbox: Content,
+        login: Login
     },
-    data() {
+    data () {
         return {
             tab: ''
         }
     },
     created () {
         //在页面加载时读取localStorage里的状态信息
-        if (localStorage.getItem("store")) {
-            this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(localStorage.getItem("store"))))
+        if(localStorage.getItem("store")) {
+            this.$store.replaceState(Object.assign({},this.$store.state,JSON.parse(localStorage.getItem("store"))))
         }
 
         //在页面刷新时将vuex里的信息保存到localStorage里
-        window.addEventListener("beforeunload", () => {
-            localStorage.setItem("store", JSON.stringify(this.$store.state))
+        window.addEventListener("beforeunload",() => {
+            localStorage.setItem("store",JSON.stringify(this.$store.state))
         })
     }
-}
+};
 </script>
 
 

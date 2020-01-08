@@ -8,7 +8,7 @@
 <script>
 export default {
     name: 'Content',
-    data() {
+    data () {
         return {
 
         }
@@ -19,6 +19,6 @@ export default {
 
 <style scoped>
 #Content {
-    margin: 0
+    margin: 0;
 }
 </style>

@@ -3,20 +3,15 @@
         <el-row>
             <el-col :span="24">
                 <div class="grid-content">
-                    <el-menu :default-active="activeIndex"
-                    class="el-menu-demo"
-                    mode="horizontal"
-                    background-color="#ffffff"
-                    text-color="#000000"
-                    active-text-color="#ff0000"
-                    :router="true"
-                    @select="handleSelect">
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
+                        background-color="#ffffff" text-color="#000000" active-text-color="#ff0000" :router="true"
+                        @select="handleSelect">
 
-                        <el-menu-item v-for="(menu, index) in menus" :index="(index + 1).toString()" :key="index" :route="menu.route">
+                        <el-menu-item v-for="(menu, index) in menus" :index="(index + 1).toString()" :key="index"
+                            :route="menu.route">
                             <i class="el-icon-menu"></i>
                             {{ menu.name }}
                         </el-menu-item>
-
 
                         <el-menu-item index="6" class="f-right">
                             退出
@@ -53,7 +48,7 @@ import check from '../../util/check'
 
 export default {
     name: 'mainnav',
-    data() {
+    data () {
         return {
             activeIndex: '1',
             menus: [
@@ -82,17 +77,17 @@ export default {
         }
     },
     methods: {
-        handleSelect(key, keyPath) {
+        handleSelect (key, keyPath) {
             // console.log(key, keyPath);
         },
-        goToGithub() {
+        goToGithub () {
             window.open("https://github.com/ShyGodB/admin.edtuina");
         },
-        logout() {
+        logout () {
             console.log(1111);
         }
     },
-    created() {
+    created () {
         this.activeIndex = check.checkMainActiveIndex(this.$route.name);
     }
 }
@@ -100,5 +95,4 @@ export default {
 
 
 <style scoped>
-
 </style>
