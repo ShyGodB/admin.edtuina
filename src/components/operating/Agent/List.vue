@@ -1,29 +1,11 @@
 <template>
-    <div id="Promote">
-        <div class="promote-search">
+    <div id="Agent">
+        <div class="agent-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="12">
-                        <el-form-item label="时间区间" prop="times">
-                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
-                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
-                                end-placeholder="结束日期"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="申请状态" prop="state">
-                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
-                                <el-checkbox-button v-for="(state, index) in states" :label="state" :key="(index + 1)"
-                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
-                            </el-checkbox-group>
+                        <el-form-item label="渠道名称" prop="agentName">
+                            <el-input v-model="ruleForm.agentName"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -35,29 +17,21 @@
             </el-form>
         </div>
 
-        <div class="promote-table">
+        <div class="agent-table">
             <el-table :data="promotes" style="width: 100%">
-                <el-table-column prop="img" label="二维码" width="200">
-                    <template slot-scope="scope">
-                        <el-image style="width: 80px; height: 80px" :src="scope.row.img"></el-image>
-                    </template>
-                </el-table-column>
+                <el-table-column prop="agentName" label="名称"></el-table-column>
 
-                <el-table-column prop="promoteType" label="类型"></el-table-column>
+                <el-table-column prop="agentType" label="类型"></el-table-column>
 
-                <el-table-column prop="purpose" label="用途"></el-table-column>
+                <el-table-column prop="userName" label="姓名"></el-table-column>
 
-                <el-table-column prop="userCount" label="用户量"></el-table-column>
+                <el-table-column prop="userPhone" label="手机"></el-table-column>
 
-                <el-table-column prop="applyTime" label="申请时间"></el-table-column>
+                <el-table-column prop="agentRatio" label="分成比例"></el-table-column>
 
-                <el-table-column prop="authName" label="审核人"></el-table-column>
+                <el-table-column prop="city" label="城市"></el-table-column>
 
-                <el-table-column prop="authTime" label="审核时间"></el-table-column>
-
-                <el-table-column prop="state" label="状态"></el-table-column>
-
-                <el-table-column prop="reason" label="审核意见"></el-table-column>
+                <el-table-column prop="addTime" label="添加时间"></el-table-column>
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -83,20 +57,15 @@
 import util from "../../../../util";
 
 export default {
-    name: "Promote",
+    name: "Agent",
     data () {
         return {
-            agentOptions: [],
-            timeDouble: util.config.timeDouble,
-            states: ["待审核", "审核通过", "审核拒绝"],
             promotes: [],
             pageNum: 1,
             pageIndex: 1,
             pageSize: 10,
             ruleForm: {
-                times: [],
-                proxyCodes: [],
-                state: []
+                agentName: '',
             },
             rules: {
                 name: [
@@ -133,7 +102,7 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listPromote();
+                    this.listAgent();
                 } else {
                     return false;
                 }
@@ -141,26 +110,18 @@ export default {
         },
         resetForm (formName) {
             this.$refs[formName].resetFields();
-            this.listPromote();
-        },
-        agentChange (agent) {
-            console.log(this.ruleForm);
-        },
-        timeChange (time) {
-            console.log(this.ruleForm);
-        },
-        stateChange (state) {
-            console.log(this.ruleForm);
+            this.listAgent();
         },
         change (pageNum) {
-            this.listPromote(pageNum);
+            this.pageIndex = pageNum
+            this.listAgent();
         },
         sizeChange (num) {
             console.log("funtion: sizeChange", num);
         },
-        async listPromote (data) {
-            const res = await util.api.post(
-                "/promote/list",
+        async listAgent (data) {
+            const res = await this.$api.post(
+                "/agent/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -176,14 +137,14 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent () {
+        async getAgentOptions () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
     created () {
-        this.listPromote();
         this.listAgent();
+        this.getAgentOptions();
     }
 };
 </script>

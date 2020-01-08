@@ -1,13 +1,7 @@
 <template>
     <div id="Tech">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师姓名" prop="realName">
@@ -23,46 +17,25 @@
 
                     <el-col :span="12">
                         <el-form-item label="接单状态" prop="acceptState">
-                            <el-checkbox-group
-                                @change="acceptChange"
-                                v-model="ruleForm.acceptState"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in acceptState"
-                                    :label="index"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="acceptChange" v-model="ruleForm.acceptState" size="medium">
+                                <el-checkbox-button v-for="(state, index) in acceptState" :label="index"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader
-                                v-model="ruleForm.proxyCodes"
-                                :options="agentOptions"
-                                size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }"
-                                @change="agentChange"
-                            ></el-cascader>
+                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="技师状态" prop="state">
-                            <el-checkbox-group
-                                @change="techChange"
-                                v-model="ruleForm.state"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in state"
-                                    :label="(index + 1)"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="techChange" v-model="ruleForm.state" size="medium">
+                                <el-checkbox-button v-for="(state, index) in state" :label="(index + 1)"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -97,26 +70,14 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.$index, scope.row)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -128,7 +89,7 @@ import axios from "axios";
 
 export default {
     name: "Tech",
-    data() {
+    data () {
         return {
             acceptState: ["可接单", "进行中", "不可接单"],
             agentOptions: [],
@@ -164,11 +125,11 @@ export default {
         };
     },
     methods: {
-        info(index, row) {
+        info (index, row) {
             this.$store.state.techId = row.techId;
             this.$router.push("/operating/tech/detail");
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listTech();
@@ -177,25 +138,25 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listTech();
         },
-        acceptChange(value) {},
-        agentChange(proxyCodes) {
+        acceptChange (value) { },
+        agentChange (proxyCodes) {
             this.$store.state.proxyCodes = proxyCodes;
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listTech();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listTech(this.ruleForm);
         },
-        techChange(state) {
+        techChange (state) {
             console.log(state);
         },
-        async listTech() {
+        async listTech () {
             const res = await this.$api.post(
                 "/tech/list",
                 Object.assign(
@@ -213,12 +174,12 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent() {
-            const res = await this.$api.get("/agent/list", {});
+        async listAgent () {
+            const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
-    created() {
+    created () {
         this.listTech();
         this.listAgent();
     }

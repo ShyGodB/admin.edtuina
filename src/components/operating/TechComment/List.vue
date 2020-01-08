@@ -1,13 +1,7 @@
 <template>
     <div id="TechComment">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师姓名" prop="techName">
@@ -35,13 +29,8 @@
 
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader
-                                v-model="ruleForm.proxyCodes"
-                                :options="agentOptions"
-                                size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }"
-                                @change="agentChange"
-                            ></el-cascader>
+                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -67,26 +56,14 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.$index, scope.row)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -97,7 +74,7 @@ import util from "../../../../util";
 
 export default {
     name: "TechComment",
-    data() {
+    data () {
         return {
             agentOptions: [],
             techComments: [],
@@ -130,13 +107,13 @@ export default {
         };
     },
     methods: {
-        info(index, row) {
+        info (index, row) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listTechComment();
@@ -146,18 +123,18 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listTechComment();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listTechComment();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listTechComment(this.ruleForm);
         },
-        async listTechComment(data) {
+        async listTechComment (data) {
             const res = await this.$api.post(
                 "/tech/listComment",
                 Object.assign(
@@ -175,16 +152,16 @@ export default {
                 this.pageNum += 1;
             }
         },
-        agentChange(proxyCodes) {
+        agentChange (proxyCodes) {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
         },
-        async listAgent() {
-            const res = await this.$api.get("/agent/list", {});
+        async listAgent () {
+            const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
-    created() {
+    created () {
         this.listTechComment();
         this.listAgent();
     }

@@ -1,8 +1,20 @@
 <template>
-    <div id="Promote">
+    <div id="Alarm">
         <div class="promote-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="技师姓名" prop="techName">
+                            <el-input v-model="ruleForm.techName"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item label="技师手机" prop="techPhone">
+                            <el-input v-model="ruleForm.techPhone"></el-input>
+                        </el-form-item>
+                    </el-col>
+
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
                             <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
@@ -17,15 +29,6 @@
                                 end-placeholder="结束日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="申请状态" prop="state">
-                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
-                                <el-checkbox-button v-for="(state, index) in states" :label="state" :key="(index + 1)"
-                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
-                            </el-checkbox-group>
-                        </el-form-item>
-                    </el-col>
                 </el-row>
 
                 <el-form-item>
@@ -35,7 +38,7 @@
             </el-form>
         </div>
 
-        <div class="promote-table">
+        <div class="alarm-table">
             <el-table :data="promotes" style="width: 100%">
                 <el-table-column prop="img" label="二维码" width="200">
                     <template slot-scope="scope">
@@ -83,7 +86,7 @@
 import util from "../../../../util";
 
 export default {
-    name: "Promote",
+    name: "Alarm",
     data () {
         return {
             agentOptions: [],
@@ -94,9 +97,10 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             ruleForm: {
+                techName: '',
+                techPhone: '',
                 times: [],
                 proxyCodes: [],
-                state: []
             },
             rules: {
                 name: [
@@ -133,7 +137,7 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listPromote();
+                    this.listAlarm();
                 } else {
                     return false;
                 }
@@ -141,7 +145,7 @@ export default {
         },
         resetForm (formName) {
             this.$refs[formName].resetFields();
-            this.listPromote();
+            this.listAlarm();
         },
         agentChange (agent) {
             console.log(this.ruleForm);
@@ -153,14 +157,14 @@ export default {
             console.log(this.ruleForm);
         },
         change (pageNum) {
-            this.listPromote(pageNum);
+            this.listAlarm(pageNum);
         },
         sizeChange (num) {
             console.log("funtion: sizeChange", num);
         },
-        async listPromote (data) {
-            const res = await util.api.post(
-                "/promote/list",
+        async listAlarm (data) {
+            const res = await this.$api.post(
+                "/alarm/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -182,7 +186,7 @@ export default {
         }
     },
     created () {
-        this.listPromote();
+        this.listAlarm();
         this.listAgent();
     }
 };

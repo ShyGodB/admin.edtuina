@@ -94,9 +94,9 @@ import TechApply from "../components/operating/TechApply/List.vue";
 import Feedback from "../components/operating/Feedback/List.vue";
 import Review from "../components/operating/Review/List.vue";
 import TechTime from "../components/operating/TechTime/TechTime.vue";
-import Alarm from "../components/operating/Alarm/Alarm.vue";
+import Alarm from "../components/operating/Alarm/List.vue";
 import Apply from "../components/operating/Apply/List.vue";
-import Agent from "../components/operating/Agent/Agent.vue";
+import Agent from "../components/operating/Agent/List.vue";
 
 export default {
     name: "Operating",

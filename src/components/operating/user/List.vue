@@ -1,13 +1,7 @@
 <template>
     <div id="User">
         <div class="user-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="用户姓名" prop="nickName">
@@ -29,96 +23,52 @@
 
                     <el-col :span="12">
                         <el-form-item label="时间区间" prop="times">
-                            <el-date-picker
-                                v-model="ruleForm.times"
-                                type="datetimerange"
-                                :picker-options="timeDouble"
-                                @change="timeChange"
-                                range-separator="至"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期"
-                            ></el-date-picker>
+                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
+                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
+                                end-placeholder="结束日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="注册来源" prop="regSource">
-                            <el-select
-                                @change="sourceChange"
-                                v-model="ruleForm.regSource"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in sources"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                                ></el-option>
+                            <el-select @change="sourceChange" v-model="ruleForm.regSource" clearable placeholder="请选择">
+                                <el-option v-for="item in sources" :key="item.value" :label="item.label"
+                                    :value="item.value"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader
-                                v-model="ruleForm.proxyCodes"
-                                :options="agentOptions"
-                                size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }"
-                                @change="agentChange"
-                            ></el-cascader>
+                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="性别" prop="gender">
-                            <el-checkbox-group
-                                @change="genderChange"
-                                v-model="ruleForm.gender"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(gender, index) in genders"
-                                    :label="gender"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{gender}}</el-checkbox-button>
+                            <el-checkbox-group @change="genderChange" v-model="ruleForm.gender" size="medium">
+                                <el-checkbox-button v-for="(gender, index) in genders" :label="gender"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{gender}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="设备" prop="system">
-                            <el-checkbox-group
-                                @change="systemChange"
-                                v-model="ruleForm.system"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(system, index) in systems"
-                                    :label="system.value"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{system.name}}</el-checkbox-button>
+                            <el-checkbox-group @change="systemChange" v-model="ruleForm.system" size="medium">
+                                <el-checkbox-button v-for="(system, index) in systems" :label="system.value"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{system.name}}
+                                </el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="危险等级" prop="danger">
-                            <el-select
-                                @change="dangerChange"
-                                v-model="ruleForm.danger"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in dangers"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                                ></el-option>
+                            <el-select @change="dangerChange" v-model="ruleForm.danger" clearable placeholder="请选择">
+                                <el-option v-for="item in dangers" :key="item.value" :label="item.label"
+                                    :value="item.value"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -153,38 +103,18 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.$index, scope.row)"
-                            round
-                        >详情</el-button>
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="edit(scope.$index, scope.row)"
-                            round
-                        >编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="success"
-                            @click="lookComments(scope.$index, scope.row)"
-                            round
-                        >查看评论</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
+                        </el-button>
+                        <el-button size="mini" type="success" @click="lookComments(scope.$index, scope.row)" round>查看评论
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="pageChange"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -196,7 +126,7 @@ import util from "../../../../util";
 
 export default {
     name: "User",
-    data() {
+    data () {
         return {
             timeDouble: util.config.timeDouble,
             agentOptions: [],
@@ -283,43 +213,43 @@ export default {
         };
     },
     methods: {
-        info(index, row) {
+        info (index, row) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
         },
-        edit(index, row) {},
-        getProxyCodes(proxyCodes) {
+        edit (index, row) { },
+        getProxyCodes (proxyCodes) {
             this.ruleForm.proxyCodes = proxyCodes;
             console.log(this.ruleForm);
         },
-        getDoubleTime(times) {
+        getDoubleTime (times) {
             this.ruleForm.times = times;
             console.log(this.ruleForm);
         },
-        genderChange(value) {
+        genderChange (value) {
             console.log(value);
         },
-        systemChange(value) {
+        systemChange (value) {
             console.log(this.ruleForm);
         },
-        dangerChange(dander) {
+        dangerChange (dander) {
             console.log(this.ruleForm);
         },
-        sourceChange(dander) {
+        sourceChange (dander) {
             console.log(this.ruleForm);
         },
-        timeChange(times) {
+        timeChange (times) {
             this.$store.state.times = times;
         },
-        agentChange(proxyCodes) {
+        agentChange (proxyCodes) {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
         },
-        lookComments(index, row) {
+        lookComments (index, row) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/userComment/list");
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listUser();
@@ -329,18 +259,18 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listUser();
         },
-        pageChange(num) {
+        pageChange (num) {
             this.pageIndex = num;
             this.listUser();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listUser(this.ruleForm);
         },
-        async listUser(data) {
+        async listUser (data) {
             const res = await this.$api.post(
                 "/user/list",
                 Object.assign(
@@ -358,12 +288,12 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent() {
-            const res = await this.$api.get("/agent/list", {});
+        async listAgent () {
+            const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
-    created() {
+    created () {
         this.listUser();
         this.listAgent();
     }
