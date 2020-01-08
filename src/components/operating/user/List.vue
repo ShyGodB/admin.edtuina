@@ -72,7 +72,7 @@
             <el-form-item label="设备" prop="system">
               <div>
                 <el-checkbox-group @change="systemChange" v-model="ruleForm.system" size="medium">
-                  <el-checkbox-button v-for="(system, index) in systems" :label="system" :key="(index + 1)" :index="(index + 1).toString()">{{system}}</el-checkbox-button>
+                  <el-checkbox-button v-for="(system, index) in systems" :label="system.value" :key="(index + 1)" :index="(index + 1).toString()">{{system.name}}</el-checkbox-button>
                 </el-checkbox-group>
               </div>
             </el-form-item>
@@ -138,7 +138,7 @@
           @current-change="change"
           layout="prev, pager, next"
           :hide-on-single-page="true"
-          :page-count="pageIndex"
+          :page-count="pageNum"
         ></el-pagination>
       </div>
     </div>
@@ -162,7 +162,13 @@ export default {
       users: [],
       allUser: [],
       genders: ['男', '女'],
-      systems: ['苹果', '安卓'],
+      systems: [{
+        name: '苹果',
+        value: 'ios'
+      }, {
+        name: '安卓',
+        value: 'android'
+      }],
       pageNum: 1,
       pageIndex: 1,
       pageSize: 10,
@@ -265,27 +271,24 @@ export default {
       this.$refs[formName].resetFields();
     },
     change(num) {
-      console.log("------pageIndex", num);
       this.pageIndex = num;
-      this.listUser(this.ruleForm);
+      this.listUser(Object.assign(
+        {},
+        this.ruleForm,
+        { pageIndex: this.pageIndex },
+        { pageSize: this.pageSize }
+      ));
     },
     sizeChange(num) {
       // this.listUser(this.ruleForm);
     },
-    listUser(data) {
-      axios({
-        method: "post",
-        url: "/api/admin/user/list",
-        responseType: "json",
-        data: data
-      }).then(res => {
-        
-        this.users = res.data.data.list || [];
-        this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
-        if (res.data.data.count % this.pageSize !== 0) {
-          this.pageIndex += 1;
-        }
-      });
+    async listUser(data) {
+      const res = await this.$api.post("/api/admin/user/list", data);
+      this.users = res.data.data.list || [];
+      this.pageNum = Math.floor((res.data.data.count || 0) / this.pageSize);
+      if (res.data.data.count % this.pageSize !== 0) {
+        this.pageNum += 1;
+      }
     }
   },
   created() {

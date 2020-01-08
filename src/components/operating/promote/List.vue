@@ -65,8 +65,9 @@
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="agree(scope.$index, scope.row)" round>同意</el-button>
-                    <el-button size="mini" type="primary" @click="refuse(scope.$index, scope.row)" round>拒绝</el-button>
+                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="danger" @click="agree(scope.$index, scope.row)" round>同意</el-button>
+                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="primary" @click="refuse(scope.$index, scope.row)" round>拒绝</el-button>
+                        <div  v-if="scope.row.state!='待审核'">{{ scope.row.state }}</div>
                     </template>
                 </el-table-column>
             </el-table>

@@ -160,11 +160,17 @@ export default {
   methods: {
     info(index, row) {
       this.$store.state.orderId = row.orderId;
-      this.$router.push('/operating/order/detail');
+      // this.$router.push('/operating/order/detail');
+      localStorage.setItem("store", JSON.stringify(this.$store.state))
+      const {href} = this.$router.resolve('/operating/order/detail')
+      window.open(href, '_blank')
     },
     rowInfo(row, column, event) {
       this.$store.state.orderId = row.orderId;
-      this.$router.push('/operating/order/detail');
+      // this.$router.push('/operating/order/detail');
+      localStorage.setItem("store", JSON.stringify(this.$store.state))
+      const {href} = this.$router.resolve('/operating/order/detail')
+      window.open(href, '_blank')
     },
     orderStateChange(value) {
       console.log(this.ruleForm)
@@ -198,7 +204,6 @@ export default {
       this.$refs[formName].resetFields();
     },
     change(num) {
-      console.log("------pageIndex", num);
       this.pageIndex = num;
       this.listOrder(Object.assign(
         {},
