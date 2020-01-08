@@ -28,14 +28,28 @@
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item label="时间区间" prop="value">
-                            <time-double v-on:getDoubleTime="getDoubleTime"></time-double>
+                        <el-form-item label="时间区间" prop="times">
+                            <el-date-picker
+                                v-model="ruleForm.times"
+                                type="datetimerange"
+                                :picker-options="timeDouble"
+                                @change="timeChange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                            ></el-date-picker>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
-                        <el-form-item label="代理商" prop="value">
-                            <agent-cascader v-on:getProxyCodes="getProxyCodes"></agent-cascader>
+                        <el-form-item label="代理商" prop="proxyCodes">
+                            <el-cascader
+                                v-model="ruleForm.proxyCodes"
+                                :options="agentOptions"
+                                size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }"
+                                @change="agentChange"
+                            ></el-cascader>
                         </el-form-item>
                     </el-col>
 
@@ -47,25 +61,35 @@
 
                     <el-col :span="24">
                         <el-form-item label="订单状态" prop="orderState">
-                            <div>
-                                <el-checkbox-group @change="orderStateChange" v-model="ruleForm.orderState"
-                                    size="medium">
-                                    <el-checkbox-button v-for="(state, index) in orderState" :label="index"
-                                        :key="(index + 1)" :index="(index + 1).toString()">{{state}}
-                                    </el-checkbox-button>
-                                </el-checkbox-group>
-                            </div>
+                            <el-checkbox-group
+                                @change="orderStateChange"
+                                v-model="ruleForm.orderState"
+                                size="medium"
+                            >
+                                <el-checkbox-button
+                                    v-for="(state, index) in orderState"
+                                    :label="index"
+                                    :key="(index + 1)"
+                                    :index="(index + 1).toString()"
+                                >{{state}}</el-checkbox-button>
+                            </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="24">
                         <el-form-item label="订单类型" prop="orderType">
-                            <div>
-                                <el-checkbox-group @change="orderTypeChange" v-model="ruleForm.orderType" size="medium">
-                                    <el-checkbox-button v-for="(type, index) in orderType" :label="type"
-                                        :key="(index + 1)" :index="(index + 1).toString()">{{type}}</el-checkbox-button>
-                                </el-checkbox-group>
-                            </div>
+                            <el-checkbox-group
+                                @change="orderTypeChange"
+                                v-model="ruleForm.orderType"
+                                size="medium"
+                            >
+                                <el-checkbox-button
+                                    v-for="(type, index) in orderType"
+                                    :label="type"
+                                    :key="(index + 1)"
+                                    :index="(index + 1).toString()"
+                                >{{type}}</el-checkbox-button>
+                            </el-checkbox-group>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -105,169 +129,151 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+                        <el-button
+                            size="mini"
+                            type="info"
+                            @click="info(scope.$index, scope.row)"
+                            round
+                        >详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
-                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+                <el-pagination
+                    ref="fenye"
+                    background
+                    @size-change="sizeChange"
+                    @current-change="pageChange"
+                    layout="prev, pager, next"
+                    :hide-on-single-page="true"
+                    :page-count="pageNum"
+                ></el-pagination>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import AgentCascader from '../../tools/AgentCascader'
-import TimeDouble from '../../tools/TimeDouble'
+import util from "../../../../util";
 
 export default {
     name: "Order",
-    components: {
-        "agent-cascader": AgentCascader,
-        "time-double": TimeDouble
-    },
-    data () {
+    data() {
         return {
+            timeDouble: util.config.timeDouble,
+            agentOptions: [],
             orders: [],
             pageIndex: 1,
             pageSize: 10,
             pageNum: 1,
-            orderState: ['未支付','未接单','已接单','已出发','已到达','服务中','服务完成','取消订单','已入账'],
-            orderType: ['普通','加单','补单','超时接单','用户取消订单','技师拒单'],
+            orderState: [
+                "未支付",
+                "未接单",
+                "已接单",
+                "已出发",
+                "已到达",
+                "服务中",
+                "服务完成",
+                "取消订单",
+                "已入账"
+            ],
+            orderType: [
+                "普通",
+                "加单",
+                "补单",
+                "超时接单",
+                "用户取消订单",
+                "技师拒单"
+            ],
             ruleForm: {
                 techName: "",
                 techPhone: "",
                 userName: "",
                 userPhone: "",
-                times: '',
+                orderId: "",
+                times: [],
                 proxyCodes: [],
-                orderId: '',
                 orderState: [],
                 orderType: []
             }
         };
     },
     methods: {
-        info (index,row) {
-            this.$store.state.orderId=row.orderId;
-            // this.$router.push('/operating/order/detail');
-            localStorage.setItem("store",JSON.stringify(this.$store.state))
-            const { href }=this.$router.resolve('/operating/order/detail')
-            window.open(href,'_blank')
+        info(index, row) {
+            this.$store.state.orderId = row.orderId;
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/order/detail");
+            window.open(href, "_blank");
         },
-        rowInfo (row,column,event) {
-            this.$store.state.orderId=row.orderId;
-            // this.$router.push('/operating/order/detail');
-            localStorage.setItem("store",JSON.stringify(this.$store.state))
-            const { href }=this.$router.resolve('/operating/order/detail')
-            window.open(href,'_blank')
+        rowInfo(row, column, event) {
+            this.$store.state.orderId = row.orderId;
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/order/detail");
+            window.open(href, "_blank");
         },
-        orderStateChange (value) {
-            console.log(this.ruleForm)
-        },
-        orderTypeChange (value) {
-            console.log(this.ruleForm)
-        },
-        data () {
-            return {
-                orders: [],
-                pageNum: 1,
-                pageIndex: 1,
-                pageSize: 10,
-                pageNum: 1,
-                orderState: ['未支付','未接单','已接单','已出发','已到达','服务中','服务完成','取消订单','已入账'],
-                orderType: ['普通','加单','补单','超时接单','用户取消订单','技师拒单'],
-                ruleForm: {
-                    techName: "",
-                    techPhone: "",
-                    userName: "",
-                    userPhone: "",
-                    times: '',
-                    proxyCodes: [],
-                    orderId: '',
-                    orderState: [],
-                    orderType: []
-                }
-            };
-        },
-        methods: {
-            info (index,row) {
-                this.$store.state.orderId=row.orderId;
-                this.$router.push('/operating/order/detail');
-            },
-            rowInfo (row,column,event) {
-                this.$store.state.orderId=row.orderId;
-                this.$router.push('/operating/order/detail');
-            },
-            orderStateChange (value) {
-                console.log(this.ruleForm)
-            },
-            orderTypeChange (value) {
-                console.log(this.ruleForm)
-            },
-            getProxyCodes (proxyCodes) {
-                this.ruleForm.proxyCodes=proxyCodes
-                console.log(this.ruleForm)
-            },
-            getDoubleTime (times) {
-                this.ruleForm.times=times
-                console.log(this.ruleForm)
-            },
-            submitForm (formName) {
-                this.$refs[formName].validate(valid => {
-                    if(valid) {
-                        this.listOrder(Object.assign(
+        submitForm(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    this.listOrder(
+                        Object.assign(
                             {},
                             this.ruleForm,
                             { pageIndex: this.pageIndex },
                             { pageSize: this.pageSize }
-                        ));
-                    } else {
-                        return false;
-                    }
-                });
-            },
-            resetForm (formName) {
-                this.$refs[formName].resetFields();
-            },
-            change (num) {
-                console.log("------pageIndex",num);
-                this.pageIndex=num;
-                this.listOrder(Object.assign(
+                        )
+                    );
+                } else {
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        orderStateChange(value) {
+            console.log(this.ruleForm);
+        },
+        orderTypeChange(value) {
+            console.log(this.ruleForm);
+        },
+        timeChange(times) {
+            this.$store.state.times = times;
+        },
+        agentChange(proxyCodes) {
+            console.log(proxyCodes);
+            this.$store.state.proxyCodes = proxyCodes;
+        },
+        pageChange(num) {
+            this.pageIndex = num;
+            this.listOrder(
+                Object.assign(
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
                     { pageSize: this.pageSize }
-                ));
-            },
-            sizeChange (num) {
-                // this.listOrder(this.ruleForm);
-            },
-            async listOrder (data) {
-                const res=await this.$api.post("/api/admin/order/list",data);
-                this.orders=res.data.data.list||[];
-                this.pageNum=Math.floor((res.data.data.count||0)/this.pageSize);
-                if(res.data.data.count%this.pageSize!==0) {
-                    this.pageNum+=1;
-                }
+                )
+            );
+        },
+        sizeChange(num) {
+            // this.listOrder(this.ruleForm);
+        },
+        async listOrder(data) {
+            const res = await this.$api.post("/api/admin/order/list", data);
+            this.orders = res.data.data.list || [];
+            this.pageNum = Math.floor(
+                (res.data.data.count || 0) / this.pageSize
+            );
+            if (res.data.data.count % this.pageSize !== 0) {
+                this.pageNum += 1;
             }
+        },
+        async listAgent() {
+            const res = await this.$api.get("/api/admin/agent/list", {});
+            this.agentOptions = res.data.data;
         }
     },
-    resetForm (formName) {
-        this.$refs[formName].resetFields();
-    },
-    change (num) {
-        this.pageIndex=num;
-        this.listOrder(Object.assign(
-            {},
-            this.ruleForm,
-            { pageIndex: this.pageIndex },
-            { pageSize: this.pageSize }
-        ));
-    },
-    created () {
+    created() {
         this.listOrder(
             Object.assign(
                 {},
@@ -276,7 +282,7 @@ export default {
                 { pageSize: this.pageSize }
             )
         );
-
+        this.listAgent();
     }
 };
 </script>

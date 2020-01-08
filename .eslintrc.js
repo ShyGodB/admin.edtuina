@@ -37,6 +37,7 @@ module.exports = {
         "no-inline-comments": 0,//禁止行内备注
         "no-var": 0,//禁用var，用let和const代替
         "semi": ["warn", "never"],
-        "no-unused-vars": ["warn"]
+        "no-unused-vars": ["warn"],
+        "space-before-function-paren": "off"
     }
 };
