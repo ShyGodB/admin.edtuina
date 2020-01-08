@@ -68,7 +68,7 @@
                             >
                                 <el-checkbox-button
                                     v-for="(state, index) in orderState"
-                                    :label="index"
+                                    :label="index + 1"
                                     :key="(index + 1)"
                                     :index="(index + 1).toString()"
                                 >{{state}}</el-checkbox-button>
@@ -215,22 +215,15 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listOrder(
-                        Object.assign(
-                            {},
-                            this.ruleForm,
-                            { pageIndex: this.pageIndex },
-                            { pageSize: this.pageSize }
-                        )
-                    );
+                    this.listOrder();
                 } else {
                     return false;
                 }
             });
         },
         resetForm(formName) {
-            console.log(this.ruleForm);
             this.$refs[formName].resetFields();
+            this.listOrder();
         },
         orderStateChange(value) {
             console.log(this.ruleForm);
@@ -243,7 +236,14 @@ export default {
         },
         pageChange(num) {
             this.pageIndex = num;
-            this.listOrder(
+            this.listOrder();
+        },
+        sizeChange(num) {
+            // this.listOrder(this.ruleForm);
+        },
+        async listOrder() {
+            const res = await this.$api.post(
+                "/order/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -251,12 +251,6 @@ export default {
                     { pageSize: this.pageSize }
                 )
             );
-        },
-        sizeChange(num) {
-            // this.listOrder(this.ruleForm);
-        },
-        async listOrder(data) {
-            const res = await this.$api.post("/api/admin/order/list", data);
             this.orders = res.data.data.list || [];
             this.pageNum = Math.floor(
                 (res.data.data.count || 0) / this.pageSize
@@ -269,19 +263,12 @@ export default {
             this.$store.state.proxyCodes = proxyCodes;
         },
         async listAgent() {
-            const res = await this.$api.get("/api/admin/agent/list", {});
+            const res = await this.$api.get("/agent/list", {});
             this.agentOptions = res.data.data;
         }
     },
     created() {
-        this.listOrder(
-            Object.assign(
-                {},
-                this.ruleForm,
-                { pageIndex: this.pageIndex },
-                { pageSize: this.pageSize }
-            )
-        );
+        this.listOrder();
         this.listAgent();
     }
 };

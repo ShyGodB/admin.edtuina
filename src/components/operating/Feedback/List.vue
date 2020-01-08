@@ -1,156 +1,174 @@
 <template>
-  <div id="Feedback">
-    <div class="order-search">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-row>
-          <el-col :span="6">
-            <el-form-item label="技师i姓名" prop="techName">
-              <el-input v-model="ruleForm.techName"></el-input>
-            </el-form-item>
-          </el-col>
+    <div id="Feedback">
+        <div class="order-search">
+            <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
+            >
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="用户姓名" prop="userName">
+                            <el-input v-model="ruleForm.userName"></el-input>
+                        </el-form-item>
+                    </el-col>
 
-          <el-col :span="6">
-            <el-form-item label="技师手机" prop="techPhone">
-              <el-input v-model="ruleForm.techPhone"></el-input>
-            </el-form-item>
-          </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="用户手机" prop="userPhone">
+                            <el-input v-model="ruleForm.userPhone"></el-input>
+                        </el-form-item>
+                    </el-col>
 
-          <el-col :span="6">
-            <el-form-item label="用户姓名" prop="userName">
-              <el-input v-model="ruleForm.userName"></el-input>
-            </el-form-item>
-          </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="是否回复" prop="state">
+                            <el-checkbox-group
+                                @change="stateChange"
+                                v-model="ruleForm.state"
+                                size="medium"
+                            >
+                                <el-checkbox-button
+                                    v-for="(state, index) in state"
+                                    :label="state"
+                                    :key="(index + 1)"
+                                    :index="(index + 1).toString()"
+                                >{{state}}</el-checkbox-button>
+                            </el-checkbox-group>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
 
-          <el-col :span="6">
-            <el-form-item label="用户手机" prop="userPhone">
-              <el-input v-model="ruleForm.userPhone"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
+                    <el-button @click="resetForm('ruleForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
 
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
+        <div class="techapply-table">
+            <el-table :data="feedbacks" style="width: 100%">
+                <el-table-column prop="userName" label="用户姓名" height="120"></el-table-column>
+
+                <el-table-column prop="content" label="建议内容" height="120"></el-table-column>
+
+                <el-table-column prop="labels" label="回复人" height="120"></el-table-column>
+
+                <el-table-column prop="remark" label="回复内容" height="120"></el-table-column>
+
+                <el-table-column prop="evidence" label="时间" height="120"></el-table-column>
+
+                <el-table-column label="操作" height="120">
+                    <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            type="info"
+                            @click="info(scope.$index, scope.row)"
+                            round
+                        >详情</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+            <div class="pagination">
+                <el-pagination
+                    ref="fenye"
+                    background
+                    @size-change="sizeChange"
+                    @current-change="change"
+                    layout="prev, pager, next"
+                    :hide-on-single-page="true"
+                    :page-count="pageNum"
+                ></el-pagination>
+            </div>
+        </div>
     </div>
-
-    <div class="feedback-table">
-      <el-table :data="feedbacks" style="width: 100%">
-        <el-table-column prop="userId" label="用户编号" width="120" height="120"></el-table-column>
-
-        <el-table-column prop="title" label="标题" width="120" height="120"></el-table-column>
-
-        <el-table-column prop="content" label="内容" width="500" height="120"></el-table-column>
-
-        <el-table-column prop="addTime" label="建议时间" width="200" height="120"></el-table-column>
-
-        <el-table-column label="操作" height="120">
-          <template slot-scope="scope">
-            <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div class="pagination">
-        <el-pagination
-          ref="fenye"
-          background
-          @size-change="sizeChange"
-          @current-change="change"
-          layout="prev, pager, next"
-          :hide-on-single-page="true"
-          :page-count="pageIndex"
-        ></el-pagination>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  name: "Feedback",
-  data() {
-    return {
-      feedbacks: [],
-      pageIndex: 1,
-      pageSize: 10,
-      ruleForm: {
-        techName: "",
-        techPhone: "",
-        userName: "",
-        userPhone: ""
-      },
-      rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ]
-      },
-      loading: true
-    };
-  },
-  methods: {
-    info(index, row) {
-      this.$message({
-        message: "暂未完成",
-        type: "success"
-      });
+    name: "Feedback",
+    data() {
+        return {
+            state: ["未回复", "已回复"],
+            feedbacks: [],
+            pageNum: 1,
+            pageIndex: 1,
+            pageSize: 10,
+            ruleForm: {
+                userName: "",
+                userPhone: "",
+                state: []
+            },
+            rules: {
+                name: [
+                    {
+                        required: true,
+                        message: "请输入活动名称",
+                        trigger: "blur"
+                    },
+                    {
+                        min: 3,
+                        max: 5,
+                        message: "长度在 3 到 5 个字符",
+                        trigger: "blur"
+                    }
+                ]
+            },
+            loading: true
+        };
     },
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.listAdvice(this.ruleForm);
-        } else {
-          // console.log('error submit!!');
-          return false;
+    methods: {
+        info(index, row) {
+            this.$message({
+                message: "暂未完成",
+                type: "success"
+            });
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    this.listFeedback();
+                } else {
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        change(num) {
+            this.pageIndex = num;
+            this.listFeedback();
+        },
+        sizeChange(num) {
+            // this.listFeedback(this.ruleForm);
+        },
+        stateChange(state) {
+            console.log(state);
+        },
+        async listFeedback(data) {
+            const res = await this.$api.post(
+                "/feedback/list",
+                Object.assign(
+                    {},
+                    this.ruleForm,
+                    { pageIndex: this.pageIndex },
+                    { pageSize: this.pageSize }
+                )
+            );
+            this.feedbacks = res.data.data.list || [];
+            this.pageNum = Math.floor(
+                (res.data.data.count || 0) / this.pageSize
+            );
+            if (res.data.data.count % this.pageSize !== 0) {
+                this.pageNum += 1;
+            }
         }
-      });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    change(num) {
-      console.log("------pageIndex", num);
-      this.pageIndex = num;
-      this.listAdvice(this.ruleForm);
-    },
-    sizeChange(num) {
-      // this.listAdvice(this.ruleForm);
-    },
-    listAdvice(data) {
-      axios({
-        method: "post",
-        url: "/api/admin/other/listAdvice",
-        responseType: "json",
-        data: data
-      }).then(res => {
-        this.feedbacks = res.data.data.list || [];
-        this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
-        if (res.data.data.count % this.pageSize !== 0) {
-          this.pageIndex += 1;
-        }
-      });
+    created() {
+        this.listFeedback();
     }
-  },
-  created() {
-    this.listAdvice(
-      Object.assign(
-        {},
-        this.ruleForm,
-        { pageIndex: this.pageIndex },
-        { pageSize: this.pageSize }
-      )
-    );
-  }
 };
 </script>
 

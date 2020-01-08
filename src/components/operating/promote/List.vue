@@ -202,7 +202,7 @@ export default {
         },
         async listPromote(data) {
             const res = await util.api.post(
-                "/api/admin/promote/list",
+                "/promote/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -219,7 +219,7 @@ export default {
             }
         },
         async listAgent() {
-            const res = await this.$api.get("/api/admin/agent/list", {});
+            const res = await this.$api.get("/agent/list", {});
             this.agentOptions = res.data.data;
         }
     },

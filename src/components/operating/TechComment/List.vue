@@ -159,7 +159,7 @@ export default {
         },
         async listTechComment(data) {
             const res = await this.$api.post(
-                "/api/admin/tech/listComment",
+                "/tech/listComment",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -180,7 +180,7 @@ export default {
             this.$store.state.proxyCodes = proxyCodes;
         },
         async listAgent() {
-            const res = await this.$api.get("/api/admin/agent/list", {});
+            const res = await this.$api.get("/agent/list", {});
             this.agentOptions = res.data.data;
         }
     },

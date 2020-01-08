@@ -1,7 +1,13 @@
 <template>
     <div id="TechTime">
         <div class="techTime-search">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
+            >
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师i姓名" prop="techName">
@@ -45,9 +51,13 @@
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleDelete(scope.$index, scope.row)"
+                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -58,24 +68,35 @@
 
 <script>
 export default {
-    name: 'TechTime',
+    name: "TechTime",
     data() {
         return {
-            tableData: [{
-                date: 'TechTime',
-                name: 'TechTime',
-                address: 'TechTime'
-            }],
+            tableData: [
+                {
+                    date: "TechTime",
+                    name: "TechTime",
+                    address: "TechTime"
+                }
+            ],
             ruleForm: {
-                techName: '',
-                techPhone: '',
-                userName: '',
-                userPhone: ''
+                techName: "",
+                techPhone: "",
+                userName: "",
+                userPhone: ""
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    {
+                        required: true,
+                        message: "请输入活动名称",
+                        trigger: "blur"
+                    },
+                    {
+                        min: 3,
+                        max: 5,
+                        message: "长度在 3 到 5 个字符",
+                        trigger: "blur"
+                    }
                 ]
             }
         };
@@ -88,23 +109,43 @@ export default {
             console.log(index, row);
         },
         submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
+            this.$refs[formName].validate(valid => {
                 if (valid) {
                     console.log(this.ruleForm);
                 } else {
-                    console.log('error submit!!');
+                    console.log("error submit!!");
                     return false;
                 }
             });
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
+        },
+        async listTechTime(data) {
+            const res = await this.$api.post(
+                "/review/list",
+                Object.assign(
+                    {},
+                    this.ruleForm,
+                    { pageIndex: this.pageIndex },
+                    { pageSize: this.pageSize }
+                )
+            );
+            this.reviews = res.data.data.list || [];
+            this.pageNum = Math.floor(
+                (res.data.data.count || 0) / this.pageSize
+            );
+            if (res.data.data.count % this.pageSize !== 0) {
+                this.pageNum += 1;
+            }
         }
+    },
+    created() {
+        this.listTechTime();
     }
-}
+};
 </script>
 
 
 <style scoped>
-
 </style>

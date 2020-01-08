@@ -5,7 +5,7 @@ module.exports = {
     lintOnSave: false, // 是否开启语法检测
     devServer: {
         open: true,
-        host: '127.0.0.1',
+        host: '0.0.0.0',
         port: 8081,
         https: false,
         hotOnly: true,

@@ -197,7 +197,7 @@ export default {
         },
         async listTech() {
             const res = await this.$api.post(
-                "/api/admin/tech/list",
+                "/tech/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -214,7 +214,7 @@ export default {
             }
         },
         async listAgent() {
-            const res = await this.$api.get("/api/admin/agent/list", {});
+            const res = await this.$api.get("/agent/list", {});
             this.agentOptions = res.data.data;
         }
     },
