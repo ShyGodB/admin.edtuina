@@ -180,7 +180,7 @@
                     ref="fenye"
                     background
                     @size-change="sizeChange"
-                    @current-change="change"
+                    @current-change="pageChange"
                     layout="prev, pager, next"
                     :hide-on-single-page="true"
                     :page-count="pageNum"
@@ -322,14 +322,7 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listUser(
-                        Object.assign(
-                            {},
-                            this.ruleForm,
-                            { pageIndex: this.pageIndex },
-                            { pageSize: this.pageSize }
-                        )
-                    );
+                    this.listUser();
                 } else {
                     // console.log('error submit!!');
                     return false;
@@ -338,10 +331,18 @@ export default {
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
+            this.listUser();
         },
-        change(num) {
+        pageChange(num) {
             this.pageIndex = num;
-            this.listUser(
+            this.listUser();
+        },
+        sizeChange(num) {
+            // this.listUser(this.ruleForm);
+        },
+        async listUser(data) {
+            const res = await this.$api.post(
+                "/api/admin/user/list",
                 Object.assign(
                     {},
                     this.ruleForm,
@@ -349,12 +350,6 @@ export default {
                     { pageSize: this.pageSize }
                 )
             );
-        },
-        sizeChange(num) {
-            // this.listUser(this.ruleForm);
-        },
-        async listUser(data) {
-            const res = await this.$api.post("/api/admin/user/list", data);
             this.users = res.data.data.list || [];
             this.pageNum = Math.floor(
                 (res.data.data.count || 0) / this.pageSize
@@ -369,14 +364,7 @@ export default {
         }
     },
     created() {
-        this.listUser(
-            Object.assign(
-                {},
-                this.ruleForm,
-                { pageIndex: this.pageIndex },
-                { pageSize: this.pageSize }
-            )
-        );
+        this.listUser();
         this.listAgent();
     }
 };

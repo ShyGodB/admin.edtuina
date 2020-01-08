@@ -4,7 +4,7 @@
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="技师i姓名" prop="techName">
+                        <el-form-item label="技师姓名" prop="techName">
                             <el-input v-model="ruleForm.techName"></el-input>
                         </el-form-item>
                     </el-col>
@@ -229,6 +229,7 @@ export default {
             });
         },
         resetForm(formName) {
+            console.log(this.ruleForm);
             this.$refs[formName].resetFields();
         },
         orderStateChange(value) {
@@ -239,10 +240,6 @@ export default {
         },
         timeChange(times) {
             this.$store.state.times = times;
-        },
-        agentChange(proxyCodes) {
-            console.log(proxyCodes);
-            this.$store.state.proxyCodes = proxyCodes;
         },
         pageChange(num) {
             this.pageIndex = num;
@@ -267,6 +264,9 @@ export default {
             if (res.data.data.count % this.pageSize !== 0) {
                 this.pageNum += 1;
             }
+        },
+        agentChange(proxyCodes) {
+            this.$store.state.proxyCodes = proxyCodes;
         },
         async listAgent() {
             const res = await this.$api.get("/api/admin/agent/list", {});
