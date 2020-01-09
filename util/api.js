@@ -1,6 +1,13 @@
 import axios from 'axios'
+import { Loading } from 'element-ui'
 
 const post = async (url, data) => {
+    const loading = Loading.service({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+    })
     return axios({
         method: 'POST',
         url: '/api/admin' + url,
@@ -9,10 +16,19 @@ const post = async (url, data) => {
         },
         responseType: 'JSON',
         data: data
+    }).then(res => {
+        loading.close()
+        return res
     })
 }
 
 const get = async (url, params) => {
+    const loading = Loading.service({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+    })
     return axios({
         method: 'GET',
         url: '/api/admin' + url,
@@ -21,6 +37,9 @@ const get = async (url, params) => {
         },
         responseType: 'JSON',
         params: params
+    }).then(res => {
+        loading.close()
+        return res
     })
 }
 

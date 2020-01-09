@@ -124,6 +124,7 @@ export default {
         return {
             timeDouble: util.config.timeDouble,
             agentOptions: [],
+            loading: true,
             orders: [],
             pageIndex: 1,
             pageSize: 10,
@@ -219,6 +220,7 @@ export default {
             if (res.data.data.count % this.pageSize !== 0) {
                 this.pageNum += 1;
             }
+            // this.$loading.close()
         },
         agentChange (proxyCodes) {
             this.$store.state.proxyCodes = proxyCodes;

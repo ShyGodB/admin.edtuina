@@ -29,7 +29,7 @@
                         </el-submenu>
 
                         <el-menu-item index="7" class="f-right">
-                            管理员：测试F
+                            {{ userinfo.role }} : {{ userinfo.userName }}
                         </el-menu-item>
                     </el-menu>
                 </div>
@@ -47,6 +47,7 @@ export default {
     name: 'mainnav',
     data () {
         return {
+            userinfo: {},
             activeIndex: '1',
             menus: [
                 {
@@ -88,6 +89,7 @@ export default {
     },
     created () {
         this.activeIndex = check.checkMainActiveIndex(this.$route.name);
+        this.userinfo = this.$store.state.userinfo || {}
     }
 }
 </script>
