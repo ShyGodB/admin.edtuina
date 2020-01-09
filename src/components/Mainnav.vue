@@ -13,26 +13,22 @@
                             {{ menu.name }}
                         </el-menu-item>
 
-                        <el-menu-item index="6" class="f-right">
-                            退出
-                        </el-menu-item>
-
-                        <el-submenu index="7" class="content-top-right" style="float:right;">
+                        <el-submenu index="6" class="content-top-right" style="float:right;">
                             <template slot="title">
                                 <img src="../../public/img/tt.png" style="width:44px;height:44px;">
                             </template>
-                            <el-menu-item index="7-1">
+                            <el-menu-item index="6-1">
                                 <router-link to="/dash">Home</router-link>
                             </el-menu-item>
 
-                            <el-menu-item index="7-2" @click="goToGithub()">
+                            <el-menu-item index="6-2" @click="goToGithub()">
                                 Github
                             </el-menu-item>
 
-                            <el-menu-item id="logout" index="7-3" @click="logout">Log Out</el-menu-item>
+                            <el-menu-item id="logout" index="6-3" @click="logout">Log Out</el-menu-item>
                         </el-submenu>
 
-                        <el-menu-item index="8" class="f-right">
+                        <el-menu-item index="7" class="f-right">
                             管理员：测试F
                         </el-menu-item>
                     </el-menu>
@@ -47,6 +43,7 @@
 import check from '../../util/check'
 
 export default {
+    inject: ['reload'],
     name: 'mainnav',
     data () {
         return {
@@ -84,7 +81,9 @@ export default {
             window.open("https://github.com/ShyGodB/admin.edtuina");
         },
         logout () {
-            console.log(1111);
+            this.$store.state.userinfo = false
+            this.$router.push('/login')
+            this.reload()
         }
     },
     created () {

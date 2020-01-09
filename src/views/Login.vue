@@ -5,12 +5,12 @@
 
             <div class="login-box-username">
                 <i class="el-icon-user-solid"></i>
-                <input type="text" v-model="form.userName" placeholder=" 手机/用户名/邮箱" />
+                <input type="text" v-model="form.userPhone" placeholder=" 手机" />
             </div>
 
             <div class="login-box-password">
                 <i class="el-icon-lock"></i>
-                <input type="password" v-model="form.password" placeholder="密码" />
+                <input type="password" v-model="form.password" placeholder=" 密码" />
             </div>
 
             <div class="login-button">
@@ -29,21 +29,21 @@
 export default {
     inject: ["reload"],
     name: "login",
-    data() {
+    data () {
         return {
             form: {
-                userName: "admin",
-                password: "admin"
+                userPhone: "",
+                password: ""
             }
         };
     },
     methods: {
-        async login() {
+        async login () {
             const res = await this.$api.post("/index/login", this.form);
             if (!res.data.success) {
                 this.$message.error(res.data.msg);
             } else {
-                this.$store.state.userinfo = true;
+                this.$store.state.userinfo = res.data.data;
                 this.$router.push("/");
                 this.reload();
             }
@@ -55,8 +55,8 @@ export default {
 
 <style scoped>
 #login {
-    width: 1440px;
-    height: 800px;
+    width: 100%;
+    height: 100%;
     background-image: url(../../public/img/bg.png);
     background-size: 100% 100%;
 }
@@ -76,6 +76,7 @@ export default {
     display: block;
     text-align: center;
     margin-bottom: 30px;
+    height: 30px;
 }
 .login-box i {
     margin-right: 10px;
@@ -84,8 +85,14 @@ input {
     width: 320px;
     height: 30px;
 }
+i {
+    width: 16px;
+    height: 16px;
+}
+
 .login-box div {
     margin-bottom: 30px;
+    height: 30px;
 }
 .login-box button {
     width: 100%;

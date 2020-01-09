@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
     orderId: '',
-    userinfo: null
+    userinfo: false
 }
 
 const getters = {}
