@@ -43,8 +43,8 @@ export default {
         }
     },
     methods: {
-        showEcharts(data) {
-            var option = {
+        async showEcharts (data) {
+            const option = {
                 color: ['#65a031', '#fc7c00'],
                 title: {
                     text: '',
@@ -64,7 +64,7 @@ export default {
                 toolbox: {
                     show: true,
                     feature: {
-                        dataView: {readOnly: false},
+                        dataView: { readOnly: false },
                         restore: {},
                         saveAsImage: {}
                     },
@@ -98,17 +98,17 @@ export default {
                     yAxisIndex: 1,
                     data: data.orders
                 },
-                    {
-                        name: '交易额',
-                        type: 'bar',
-                        data: data.pay
-                    }]
+                {
+                    name: '交易额',
+                    type: 'bar',
+                    data: data.pay
+                }]
             };
-            var myChart = this.$echarts.init(this.$refs.myChart);
+            const myChart = await this.$echarts.init(this.$refs.myChart);
             myChart.setOption(option);
         }
     },
-    mounted() {
+    mounted () {
         this.showEcharts(this.data.seven);
     }
 }
