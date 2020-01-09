@@ -1,24 +1,25 @@
 <template>
-    <el-container style="padding: 0;">
-        <el-header>
-            <mainnav></mainnav>
-        </el-header>
+    <div>
+        <el-container v-if="isLogin" style="padding: 0;">
+            <el-header>
+                <mainnav></mainnav>
+            </el-header>
 
-        <el-main>
-            <mainbox></mainbox>
-        </el-main>
+            <el-main>
+                <router-view v-if="isRouterAlive === true"></router-view>
+            </el-main>
+        </el-container>
 
-        <el-footer>
-            <!-- <mainfoo></mainfoo> -->
-        </el-footer>
-    </el-container>
+        <div v-if="!isLogin">
+            <login></login>
+        </div>
+    </div>
 </template>
 
 
 <script>
 import Mainnav from "./components/Mainnav.vue";
 import Foo from "./components/Footer.vue";
-import Content from "./components/Content.vue";
 import Login from "./views/Login.vue";
 
 export default {
@@ -26,24 +27,58 @@ export default {
     components: {
         mainnav: Mainnav,
         mainfoo: Foo,
-        mainbox: Content,
         login: Login
     },
-    data () {
+    provide() {
         return {
-            tab: ''
+            reload: this.reload
+        };
+    },
+    data() {
+        return {
+            tab: "",
+            isLogin: false,
+            isRouterAlive: true
+        };
+    },
+    methods: {
+        reload() {
+            this.isRouterAlive = false;
+            if (this.$session.exists()) {
+                this.hasUser = true;
+            } else {
+                this.hasUser = false;
+            }
+            this.$nextTick(() => {
+                this.isRouterAlive = true;
+            });
         }
     },
-    created () {
+    created() {
         //在页面加载时读取localStorage里的状态信息
-        if(localStorage.getItem("store")) {
-            this.$store.replaceState(Object.assign({},this.$store.state,JSON.parse(localStorage.getItem("store"))))
+        if (localStorage.getItem("store")) {
+            this.$store.replaceState(
+                Object.assign(
+                    {},
+                    this.$store.state,
+                    JSON.parse(localStorage.getItem("store"))
+                )
+            );
         }
 
         //在页面刷新时将vuex里的信息保存到localStorage里
-        window.addEventListener("beforeunload",() => {
-            localStorage.setItem("store",JSON.stringify(this.$store.state))
-        })
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+        });
+
+        console.log(this.$store.state);
+
+        if (this.$store.state.userinfo) {
+            this.isLogin = true;
+        } else {
+            this.isLogin = false;
+            this.$router.push("/login");
+        }
     }
 };
 </script>

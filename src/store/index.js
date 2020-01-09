@@ -4,34 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-    count: 1,
-    orderId: ''
+    orderId: '',
+    userinfo: null
 }
 
-const getters = {
-    getCount () {
-        return state.count
-    }
-}
+const getters = {}
 
-const mutations = {
-    add () {
-        state.count++
-    },
-    subtract () {
-        state.count--
-    }
+const mutations = {}
 
-}
-
-const actions = {
-    a (context) {
-        context.commit('add')
-    },
-    s (context) {
-        context.commit('subtract')
-    }
-}
+const actions = {}
 
 export default new Vuex.Store({
     state,
