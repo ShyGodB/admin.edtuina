@@ -108,25 +108,36 @@ const checkHomeData = (homeData) => {
 
 // 过滤选择的菜单，menus为所有的，data为已选择的
 const checkMenus = (menus, data) => {
-    const result = [] // 结果集
+    const result = []
+    const first = []
+    const second = []
+    let str = ''
+    data.forEach(item => {
+        str += item.route.name
+        if (item.children) {
+            first.push(item)
+        } else {
+            second.push(item)
+        }
+    })
+
+    if (first.length === data.length) return first
 
     // 第一次循环，将一级菜单的数据加入结果集
     menus.forEach(menu => {
-        if (menu.name === '') {
+        if (str.indexOf(menu.route.name) !== -1) {
             menu.children = []
             result.push(menu)
         }
     })
-    console.log('result', result)
 
-    // result.forEach(a => {
-    //     a.children = []
-    //     data.forEach(d => {
-    //         a.children.push(d)
-    //     })
-    // })
-
-    // console.log('result is ', result)
+    result.forEach(item => { // 2
+        second.forEach(i => {
+            if (item.route.name === i.route.name) {
+                item.children.push(i)
+            }
+        })
+    })
 
     return result
 }

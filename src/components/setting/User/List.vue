@@ -37,6 +37,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -70,6 +71,70 @@
                     layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
+
+        <div>
+            <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                    <el-form-item label="选择角色" :label-width="formLabelWidth">
+                        <el-select @change="roleChange" v-model="form.role" clearable placeholder="请选择">
+                            <el-option v-for="item in role" :key="item" :label="item" :value="item"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="请选择分组" :label-width="formLabelWidth">
+                        <el-select @change="groupChange" v-model="form.group" clearable placeholder="请选择">
+                            <el-option v-for="item in group" :key="item.proxyCode" :label="item.agentName"
+                                :value="item.proxyCode"></el-option>
+                        </el-select>
+                    </el-form-item> -->
+                    <el-form-item label="手机号" :label-width="formLabelWidth">
+                        <el-input v-model="form.userPhone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth">
+                        <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注" :label-width="formLabelWidth">
+                        <span class="text-red">默认密码为 z157456</span>
+                    </el-form-item>
+
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="add">确 定</el-button>
+                </div>
+            </el-dialog>
+        </div>
+
+        <div>
+            <el-dialog title="新增角色" :visible.sync="dialogForm">
+                <el-form :model="form">
+                    <el-form-item label="选择角色" :label-width="formLabelWidth">
+                        <el-select @change="roleChange" v-model="form.role" clearable placeholder="请选择">
+                            <el-option v-for="item in role" :key="item" :label="item" :value="item"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="请选择分组" :label-width="formLabelWidth">
+                        <el-select @change="groupChange" v-model="form.group" clearable placeholder="请选择">
+                            <el-option v-for="item in group" :key="item.proxyCode" :label="item.agentName"
+                                :value="item.proxyCode"></el-option>
+                        </el-select>
+                    </el-form-item> -->
+                    <el-form-item label="手机号" :label-width="formLabelWidth">
+                        <el-input v-model="form.userPhone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth">
+                        <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注" :label-width="formLabelWidth">
+                        <span class="text-red">默认密码为 z157456</span>
+                    </el-form-item>
+
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogForm = false">取 消</el-button>
+                    <el-button type="primary" @click="update">确 定</el-button>
+                </div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -78,6 +143,7 @@
 import util from "../../../../util";
 
 export default {
+    inject: ['reload'],
     name: "User",
     data () {
         return {
@@ -92,7 +158,17 @@ export default {
                     label: "启用"
                 }
             ],
-            role: ['管理员', '运营', '财务', '组长', '客服', '代理商', '渠道商'],
+            form: {
+                group: '',
+                role: '',
+                userPhone: '',
+                password: '',
+            },
+            dialogFormVisible: false,
+            dialogForm: false,
+            formLabelWidth: "120px",
+            role: [],
+            group: [],
             pageNum: 1,
             pageIndex: 1,
             pageSize: 10,
@@ -122,19 +198,51 @@ export default {
         };
     },
     methods: {
-        edit (index, row) {
-            this.$store.state.userId = row.userId;
-            this.$router.push("/operating/user/detail");
+        async add () {
+            if (this.form.password.length < 6) {
+                this.$message.error('密码长度不能小于6位')
+                this.reload()
+                return
+            }
+            this.dialogFormVisible = false;
+            const res = await this.$api.post("/admin/add", this.form);
+            if (res.data.success) {
+                this.$message.success("新增角色成功");
+                this.reload();
+            } else {
+                this.$message.error(res.data.msg);
+            }
+        },
+        async edit (index, row) {
+            this.dialogForm = true
+            this.form.group = row.group
+            this.form.role = row.role
+            this.form.userPhone = row.userPhone
+            this.form.password = ''
+        },
+        async update () {
+            if (this.form.password.length < 6) {
+                this.$message.error('密码长度不能小于6位')
+                this.reload()
+                return
+            }
+            this.dialogForm = false;
+            const res = await this.$api.post('/admin/update', this.form)
+            if (res.data.success) {
+                this.$message.success("更新成功");
+                this.reload();
+            } else {
+                this.$message.error(res.data.msg);
+            }
         },
         delete (index, row) { },
         resetPassword (index, row) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/userComment/list");
         },
-        stateChange (value) {
-            console.log(value)
-        },
         roleChange () { },
+        groupChange () { },
+        stateChange () { },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
@@ -174,13 +282,19 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent () {
-            const res = await this.$api.get("/agent/getOptions", {});
-            this.agentOptions = res.data.data;
+        async listGroup () {
+            const res = await this.$api.get("/agent/listGroup", {});
+            this.group = res.data.data.list || [];
+        },
+        async listRole () {
+            const res = await this.$api.get('/role/listRole', {})
+            this.role = res.data.data.list || []
         }
     },
     created () {
         this.listAdmin();
+        this.listGroup()
+        this.listRole()
     }
 };
 </script>

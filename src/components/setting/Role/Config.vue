@@ -1,12 +1,6 @@
 <template>
     <div id="Menu-config">
-        <el-form
-            :model="ruleForm"
-            ref="ruleForm"
-            :inline="true"
-            label-width="100px"
-            class="demo-ruleForm"
-        >
+        <el-form :model="ruleForm" ref="ruleForm" :inline="true" label-width="100px" class="demo-ruleForm">
             <el-form-item label="名称" prop="name">
                 <el-input width="120" v-model="ruleForm.name"></el-input>
             </el-form-item>
@@ -25,29 +19,12 @@
                         <el-input v-model="form.name" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="权限分配" :label-width="formLabelWidth">
-                        <el-input class="mb-3 w-75 mr-3" placeholder="快速查找" v-model="filterText"></el-input>
-                        <el-button
-                            type="primary"
-                            style="display: inline-block;"
-                            @click="checkAll"
-                        >全选</el-button>
-                        <el-button
-                            type="danger"
-                            style="display: inline-block;"
-                            @click="resetChecked"
-                        >清空</el-button>
+                        <el-input class="mb-3 w-50 mr-3" placeholder="快速查找" v-model="filterText"></el-input>
+                        <el-button type="primary" style="display: inline-block;" @click="checkAll">全选</el-button>
+                        <el-button type="danger" style="display: inline-block;" @click="resetChecked">清空</el-button>
                         <div class="mb-3 role-tree">
-                            <el-tree
-                                :data="data"
-                                show-checkbox
-                                default-expand-all
-                                node-key="_id"
-                                ref="tree"
-                                accordion
-                                highlight-current
-                                :props="defaultProps"
-                                :filter-node-method="filterNode"
-                            ></el-tree>
+                            <el-tree :data="data" show-checkbox default-expand-all node-key="_id" ref="tree" accordion
+                                highlight-current :props="defaultProps" :filter-node-method="filterNode"></el-tree>
                         </div>
                     </el-form-item>
                 </el-form>
@@ -67,26 +44,14 @@
 
             <el-table-column label="操作" height="120" width="280">
                 <template slot-scope="scope">
-                    <el-button
-                        size="mini"
-                        type="info"
-                        @click="edit(scope.$index, scope.row)"
-                        round
-                    >编辑</el-button>
+                    <el-button size="mini" type="info" @click="edit(scope.$index, scope.row)" round>编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
         <div class="pagination">
-            <el-pagination
-                ref="fenye"
-                background
-                @size-change="sizeChange"
-                @current-change="pageChange"
-                layout="prev, pager, next"
-                :hide-on-single-page="true"
-                :page-count="pageNum"
-            ></el-pagination>
+            <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
         </div>
     </div>
 </template>
@@ -96,13 +61,14 @@
 import util from "../../../../util";
 
 export default {
+    inject: ['reload'],
     name: "MenuConfig",
     watch: {
-        filterText(val) {
+        filterText (val) {
             this.$refs.tree.filter(val);
         }
     },
-    data() {
+    data () {
         return {
             roles: [],
             pageNum: 1,
@@ -132,29 +98,27 @@ export default {
         };
     },
     methods: {
-        edit(index, row) {
+        edit (index, row) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
         },
-        async addRole() {
+        async addRole () {
             this.dialogFormVisible = false;
             const checkedNodes = this.$refs.tree.getCheckedNodes();
-            console.log("data", this.data);
-            console.log("check", checkedNodes);
             const menus = util.tool.checkMenus(this.data, checkedNodes);
-            // const res = await this.$api.post("/role/add", {
-            //     name: this.form.name,
-            //     menus,
-            //     addUserName: "测试F"
-            // });
-            // if (res.data.success) {
-            //     this.$message.success("新增角色成功");
-            //     this.reload();
-            // } else {
-            //     this.$message.error("创建角色失败，请联系技术人员！");
-            // }
+            const res = await this.$api.post("/role/add", {
+                name: this.form.name,
+                menus: menus,
+                addUserName: "测试F"
+            });
+            if (res.data.success) {
+                this.$message.success("新增角色成功");
+                this.reload();
+            } else {
+                this.$message.error("创建角色失败，请联系技术人员！");
+            }
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listRole();
@@ -163,22 +127,22 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listRole();
         },
-        pageChange(num) {
+        pageChange (num) {
             this.pageIndex = num;
             this.listRole();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             this.listRole();
         },
-        async listMenu(data) {
+        async listMenu (data) {
             const res = await this.$api.post("/menu/list", {});
             this.data = res.data.data || [];
         },
-        async listRole(data) {
+        async listRole (data) {
             const res = await this.$api.post("/role/list", {});
             this.roles = res.data.data.list || [];
             this.pageNum = Math.floor(
@@ -188,11 +152,11 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent() {
+        async listAgent () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         },
-        checkAll() {
+        checkAll () {
             this.$refs.tree.setCheckedNodes(this.data);
             const data = [];
             this.data.forEach(item => {
@@ -200,18 +164,18 @@ export default {
             });
             this.$refs.tree.setCheckedKeys(data);
         },
-        resetChecked() {
+        resetChecked () {
             this.$refs.tree.setCheckedKeys([]);
         },
-        handleNodeClick(data) {
+        handleNodeClick (data) {
             // console.log(data);
         },
-        filterNode(value, data) {
+        filterNode (value, data) {
             if (!value) return true;
             return data.name.indexOf(value) !== -1;
         }
     },
-    created() {
+    created () {
         this.listRole();
         this.listMenu();
     }
@@ -222,7 +186,7 @@ export default {
 <style scoped>
 .role-tree {
     width: 100%;
-    height: 20rem;
+    height: 15rem;
     overflow: auto;
 }
 </style>
