@@ -32,18 +32,19 @@
 
 
 <script>
-import axios from 'axios'
-import md5 from 'md5'
-import Nav from '../components/settle/Nav.vue'
-import Account from '../components/settle/Account.vue'
-import Cash from '../components/settle/Cash.vue'
-import Recharge from '../components/settle/Recharge.vue'
-import Refund from '../components/settle/Refund.vue'
-import Settlement from '../components/settle/Settlement.vue'
-import TechIncome from '../components/settle/TechIncome.vue'
+import axios from "axios";
+import md5 from "md5";
+// import Nav from '../components/settle/Nav.vue'
+import Nav from "../components/SecondNav.vue";
+import Account from "../components/settle/Account.vue";
+import Cash from "../components/settle/Cash.vue";
+import Recharge from "../components/settle/Recharge.vue";
+import Refund from "../components/settle/Refund.vue";
+import Settlement from "../components/settle/Settlement.vue";
+import TechIncome from "../components/settle/TechIncome.vue";
 
 export default {
-    name: 'Settle',
+    name: "Settle",
     components: {
         "settle-nav": Nav,
         "settle-account": Account,
@@ -51,11 +52,11 @@ export default {
         "settle-recharge": Recharge,
         "settle-refund": Refund,
         "settle-settlement": Settlement,
-        "settle-techIncome": TechIncome,
+        "settle-techIncome": TechIncome
     },
     data() {
         return {
-            tab: 'settlement'
+            tab: "settlement"
         };
     },
     methods: {
@@ -65,17 +66,18 @@ export default {
         }
     },
     watch: {
-        "$route": "changeRoute",
+        $route: "changeRoute"
     },
     created() {
         this.tab = this.$route.params.tab;
     }
-}
+};
 </script>
 
 
 <style scoped>
-#god, #boss {
+#god,
+#boss {
     margin-top: 21px;
 }
 .register {

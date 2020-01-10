@@ -29,12 +29,12 @@ export default {
         mainfoo: Foo,
         login: Login
     },
-    provide () {
+    provide() {
         return {
             reload: this.reload
         };
     },
-    data () {
+    data() {
         return {
             tab: "",
             isLogin: true,
@@ -42,7 +42,7 @@ export default {
         };
     },
     methods: {
-        reload () {
+        reload() {
             this.isRouterAlive = false;
             if (this.$store.state.userinfo) {
                 this.isLogin = true;
@@ -53,7 +53,7 @@ export default {
                 this.isRouterAlive = true;
             });
         },
-        getStore () {
+        getStore() {
             // 在页面加载时读取localStorage里的状态信息
             if (localStorage.getItem("store")) {
                 this.$store.replaceState(
@@ -67,12 +67,15 @@ export default {
 
             //在页面刷新时将vuex里的信息保存到localStorage里
             window.addEventListener("beforeunload", () => {
-                localStorage.setItem("store", JSON.stringify(this.$store.state));
+                localStorage.setItem(
+                    "store",
+                    JSON.stringify(this.$store.state)
+                );
             });
         }
     },
-    created () {
-        this.getStore()
+    created() {
+        this.getStore();
 
         if (this.$store.state.userinfo) {
             this.isLogin = true;

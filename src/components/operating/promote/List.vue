@@ -1,28 +1,53 @@
 <template>
     <div id="Promote">
         <div class="promote-search">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
+            >
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
+                            <el-cascader
+                                v-model="ruleForm.proxyCodes"
+                                :options="agentOptions"
+                                size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }"
+                                @change="agentChange"
+                            ></el-cascader>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12">
                         <el-form-item label="时间区间" prop="times">
-                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
-                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
-                                end-placeholder="结束日期"></el-date-picker>
+                            <el-date-picker
+                                v-model="ruleForm.times"
+                                type="datetimerange"
+                                :picker-options="timeDouble"
+                                @change="timeChange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                            ></el-date-picker>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="申请状态" prop="state">
-                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
-                                <el-checkbox-button v-for="(state, index) in states" :label="state" :key="(index + 1)"
-                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
+                            <el-checkbox-group
+                                @change="stateChange"
+                                v-model="ruleForm.state"
+                                size="medium"
+                            >
+                                <el-checkbox-button
+                                    v-for="(state, index) in states"
+                                    :label="state"
+                                    :key="(index + 1)"
+                                    :index="(index + 1).toString()"
+                                >{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -61,18 +86,35 @@
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="danger"
-                            @click="agree(scope.$index, scope.row)" round>同意</el-button>
-                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="primary"
-                            @click="refuse(scope.$index, scope.row)" round>拒绝</el-button>
+                        <el-button
+                            v-if="scope.row.state=='待审核'"
+                            size="mini"
+                            type="danger"
+                            @click="agree(scope.$index, scope.row)"
+                            round
+                        >同意</el-button>
+                        <el-button
+                            v-if="scope.row.state=='待审核'"
+                            size="mini"
+                            type="primary"
+                            @click="refuse(scope.$index, scope.row)"
+                            round
+                        >拒绝</el-button>
                         <div v-if="scope.row.state!='待审核'">{{ scope.row.state }}</div>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
-                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+                <el-pagination
+                    ref="fenye"
+                    background
+                    @size-change="sizeChange"
+                    @current-change="change"
+                    layout="prev, pager, next"
+                    :hide-on-single-page="true"
+                    :page-count="pageNum"
+                ></el-pagination>
             </div>
         </div>
     </div>
@@ -84,7 +126,7 @@ import util from "../../../../util";
 
 export default {
     name: "Promote",
-    data () {
+    data() {
         return {
             agentOptions: [],
             timeDouble: util.config.timeDouble,
@@ -118,19 +160,19 @@ export default {
         };
     },
     methods: {
-        agree (index, row) {
+        agree(index, row) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        refuse (index, row) {
+        refuse(index, row) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm (formName) {
+        submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listPromote();
@@ -139,27 +181,27 @@ export default {
                 }
             });
         },
-        resetForm (formName) {
+        resetForm(formName) {
             this.$refs[formName].resetFields();
             this.listPromote();
         },
-        agentChange (agent) {
+        agentChange(agent) {
             console.log(this.ruleForm);
         },
-        timeChange (time) {
+        timeChange(time) {
             console.log(this.ruleForm);
         },
-        stateChange (state) {
+        stateChange(state) {
             console.log(this.ruleForm);
         },
-        change (pageNum) {
+        change(pageNum) {
             this.listPromote(pageNum);
         },
-        sizeChange (num) {
+        sizeChange(num) {
             console.log("funtion: sizeChange", num);
         },
-        async listPromote (data) {
-            const res = await util.api.post(
+        async listPromote(data) {
+            const res = await this.$api.post(
                 "/promote/list",
                 Object.assign(
                     {},
@@ -176,12 +218,12 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listAgent () {
+        async listAgent() {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
-    created () {
+    created() {
         this.listPromote();
         this.listAgent();
     }

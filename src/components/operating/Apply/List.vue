@@ -1,7 +1,13 @@
 <template>
     <div id="Apply">
         <div class="order-search">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
+            >
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师i姓名" prop="techName">
@@ -53,14 +59,26 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+                        <el-button
+                            size="mini"
+                            type="info"
+                            @click="info(scope.$index, scope.row)"
+                            round
+                        >详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
-                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageIndex"></el-pagination>
+                <el-pagination
+                    ref="fenye"
+                    background
+                    @size-change="sizeChange"
+                    @current-change="change"
+                    layout="prev, pager, next"
+                    :hide-on-single-page="true"
+                    :page-count="pageNum"
+                ></el-pagination>
             </div>
         </div>
     </div>
@@ -71,9 +89,10 @@ import axios from "axios";
 
 export default {
     name: "Apply",
-    data () {
+    data() {
         return {
             applys: [],
+            pageNum: 1,
             pageIndex: 1,
             pageSize: 10,
             ruleForm: {
@@ -84,21 +103,30 @@ export default {
             },
             rules: {
                 name: [
-                    { required: true, message: "请输入活动名称", trigger: "blur" },
-                    { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+                    {
+                        required: true,
+                        message: "请输入活动名称",
+                        trigger: "blur"
+                    },
+                    {
+                        min: 3,
+                        max: 5,
+                        message: "长度在 3 到 5 个字符",
+                        trigger: "blur"
+                    }
                 ]
             },
             loading: true
         };
     },
     methods: {
-        info (index, row) {
+        info(index, row) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm (formName) {
+        submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listApply(this.ruleForm);
@@ -108,41 +136,37 @@ export default {
                 }
             });
         },
-        resetForm (formName) {
+        resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        change (num) {
-            console.log("------pageIndex", num);
+        change(num) {
             this.pageIndex = num;
             this.listApply(this.ruleForm);
         },
-        sizeChange (num) {
+        sizeChange(num) {
             // this.listApply(this.ruleForm);
         },
-        listApply (data) {
-            axios({
-                method: "post",
-                url: "/api/admin/other/listApply",
-                responseType: "json",
-                data: data
-            }).then(res => {
-                this.applys = res.data.data.list || [];
-                this.pageIndex = Math.floor((res.data.data.count || 0) / this.pageSize);
-                if (res.data.data.count % this.pageSize !== 0) {
-                    this.pageIndex += 1;
-                }
-            });
+        async listApply(data) {
+            const res = await this.$api.post(
+                "/tech/listTechApply",
+                Object.assign(
+                    {},
+                    this.ruleForm,
+                    { pageIndex: this.pageIndex },
+                    { pageSize: this.pageSize }
+                )
+            );
+            this.applys = res.data.data.list || [];
+            this.pageNum = Math.floor(
+                (res.data.data.count || 0) / this.pageSize
+            );
+            if (res.data.data.count % this.pageSize !== 0) {
+                this.pageNum += 1;
+            }
         }
     },
-    created () {
-        this.listApply(
-            Object.assign(
-                {},
-                this.ruleForm,
-                { pageIndex: this.pageIndex },
-                { pageSize: this.pageSize }
-            )
-        );
+    created() {
+        this.listApply();
     }
 };
 </script>

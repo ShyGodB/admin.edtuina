@@ -12,7 +12,7 @@
                     <el-col :span="6">
                         <el-form-item label="状态" prop="state">
                             <el-checkbox-group
-                                @change="techChange"
+                                @change="stateChange"
                                 v-model="ruleForm.state"
                                 size="medium"
                             >
@@ -29,7 +29,7 @@
                     <el-col :span="6">
                         <el-form-item label="类别" prop="category">
                             <el-checkbox-group
-                                @change="techChange"
+                                @change="categoryChange"
                                 v-model="ruleForm.category"
                                 size="medium"
                             >
@@ -44,9 +44,9 @@
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item label="技师状态" prop="view">
+                        <el-form-item label="展示属性" prop="view">
                             <el-checkbox-group
-                                @change="techChange"
+                                @change="viewChange"
                                 v-model="ruleForm.view"
                                 size="medium"
                             >
@@ -176,6 +176,9 @@ export default {
             this.$refs[formName].resetFields();
             this.listProject();
         },
+        stateChange() {},
+        categoryChange() {},
+        viewChange() {},
         change(num) {
             this.pageIndex = num;
             this.listProject();

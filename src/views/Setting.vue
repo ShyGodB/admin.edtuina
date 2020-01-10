@@ -47,22 +47,23 @@
 </template>
 
 <script>
-import axios from 'axios'
-import md5 from 'md5'
-import Nav from '../components/setting/Nav.vue'
-import UserList from '../components/setting/User/List.vue'
-import RoleConfig from '../components/setting/RoleConfig.vue'
-import MenuConfig from '../components/setting/Menu/Config.vue'
-import TechMethod from '../components/setting/TechMethod.vue'
-import AgentLevel from '../components/setting/AgentLevel.vue'
-import TimeManage from '../components/setting/TimeManage.vue'
-import Announcement from '../components/setting/Announcement.vue'
-import WithdrawalTime from '../components/setting/WithdrawalTime.vue'
-import AdvertisePush from '../components/setting/AdvertisePush.vue'
-import EnterpriseManage from '../components/setting/EnterpriseManage.vue'
+import axios from "axios";
+import md5 from "md5";
+// import Nav from "../components/setting/Nav.vue";
+import Nav from "../components/SecondNav.vue";
+import UserList from "../components/setting/User/List.vue";
+import RoleConfig from "../components/setting/Role/Config.vue";
+import MenuConfig from "../components/setting/Menu/Config.vue";
+import TechMethod from "../components/setting/TechMethod.vue";
+import AgentLevel from "../components/setting/AgentLevel.vue";
+import TimeManage from "../components/setting/TimeManage.vue";
+import Announcement from "../components/setting/Announcement.vue";
+import WithdrawalTime from "../components/setting/WithdrawalTime.vue";
+import AdvertisePush from "../components/setting/AdvertisePush.vue";
+import EnterpriseManage from "../components/setting/EnterpriseManage.vue";
 
 export default {
-    name: 'Setting',
+    name: "Setting",
     components: {
         "setting-nav": Nav,
         "setting-userList": UserList,
@@ -74,26 +75,26 @@ export default {
         "setting-announcement": Announcement,
         "setting-withdrawalTime": WithdrawalTime,
         "setting-advertisePush": AdvertisePush,
-        "setting-enterpriseManage": EnterpriseManage,
+        "setting-enterpriseManage": EnterpriseManage
     },
-    data () {
+    data() {
         return {
-            tab: 'userList'
+            tab: "userList"
         };
     },
     methods: {
-        changeRoute () {
+        changeRoute() {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
     },
     watch: {
-        "$route": "changeRoute",
+        $route: "changeRoute"
     },
-    created () {
+    created() {
         this.tab = this.$route.params.tab;
     }
-}
+};
 </script>
 
 

@@ -77,7 +77,7 @@
 <script>
 import axios from "axios";
 import md5 from "md5";
-import Nav from "../components/operating/Nav.vue";
+import Nav from "../components/SecondNav.vue";
 import Order from "../components/operating/Order/List.vue";
 import OrderDetail from "../components/operating/Order/Detail.vue";
 import User from "../components/operating/User/List.vue";
@@ -123,14 +123,14 @@ export default {
         "operating-user": User,
         "operating-user-detail": UserDetail
     },
-    data () {
+    data() {
         return {
-            tab: 'order',
-            model: 'detail'
+            tab: "order",
+            model: "detail"
         };
     },
     methods: {
-        changeRoute () {
+        changeRoute() {
             const { tab, model } = this.$route.params;
             this.tab = tab;
             this.model = model;
@@ -139,7 +139,7 @@ export default {
     watch: {
         $route: "changeRoute"
     },
-    created () {
+    created() {
         this.tab = this.$route.params.tab;
         this.model = this.$route.params.model;
     }

@@ -32,18 +32,19 @@
 
 
 <script>
-import axios from 'axios'
-import md5 from 'md5'
-import Nav from '../components/data/Nav.vue'
-import GeneralSituation from '../components/data/GeneralSituation.vue'
-import PerformanceAnalysis from '../components/data/PerformanceAnalysis.vue'
-import UserAnalysis from '../components/data/UserAnalysis.vue'
-import OrderAnalysis from '../components/data/OrderAnalysis.vue'
-import TechAnalysis from '../components/data/TechAnalysis.vue'
-import PageTransform from '../components/data/PageTransform.vue'
+import axios from "axios";
+import md5 from "md5";
+// import Nav from '../components/data/Nav.vue'
+import Nav from "../components/SecondNav.vue";
+import GeneralSituation from "../components/data/GeneralSituation.vue";
+import PerformanceAnalysis from "../components/data/PerformanceAnalysis.vue";
+import UserAnalysis from "../components/data/UserAnalysis.vue";
+import OrderAnalysis from "../components/data/OrderAnalysis.vue";
+import TechAnalysis from "../components/data/TechAnalysis.vue";
+import PageTransform from "../components/data/PageTransform.vue";
 
 export default {
-    name: 'Setting',
+    name: "Setting",
     components: {
         "data-nav": Nav,
         "data-generalSituation": GeneralSituation,
@@ -51,26 +52,26 @@ export default {
         "data-userAnalysis": UserAnalysis,
         "data-orderAnalysis": OrderAnalysis,
         "data-techAnalysis": TechAnalysis,
-        "data-pageTransform": PageTransform,
+        "data-pageTransform": PageTransform
     },
-    data () {
+    data() {
         return {
-            tab: 'generalSituation'
+            tab: "generalSituation"
         };
     },
     methods: {
-        changeRoute () {
+        changeRoute() {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
     },
     watch: {
-        "$route": "changeRoute",
+        $route: "changeRoute"
     },
-    created () {
+    created() {
         this.tab = this.$route.params.tab;
     }
-}
+};
 </script>
 
 
