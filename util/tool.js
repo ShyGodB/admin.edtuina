@@ -112,10 +112,9 @@ const checkMenus = (menus, data) => {
 
     // 第一次循环，将一级菜单的数据加入结果集
     menus.forEach(menu => {
-        if () {
+        if (menu.name === '') {
             menu.children = []
             result.push(menu)
-            return
         }
     })
     console.log('result', result)
