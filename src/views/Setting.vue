@@ -50,9 +50,9 @@
 import axios from 'axios'
 import md5 from 'md5'
 import Nav from '../components/setting/Nav.vue'
-import UserList from '../components/setting/UserList.vue'
+import UserList from '../components/setting/User/List.vue'
 import RoleConfig from '../components/setting/RoleConfig.vue'
-import MenuConfig from '../components/setting/MenuConfig.vue'
+import MenuConfig from '../components/setting/Menu/Config.vue'
 import TechMethod from '../components/setting/TechMethod.vue'
 import AgentLevel from '../components/setting/AgentLevel.vue'
 import TimeManage from '../components/setting/TimeManage.vue'
@@ -76,13 +76,13 @@ export default {
         "setting-advertisePush": AdvertisePush,
         "setting-enterpriseManage": EnterpriseManage,
     },
-    data() {
+    data () {
         return {
             tab: 'userList'
         };
     },
     methods: {
-        changeRoute() {
+        changeRoute () {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
@@ -90,7 +90,7 @@ export default {
     watch: {
         "$route": "changeRoute",
     },
-    created() {
+    created () {
         this.tab = this.$route.params.tab;
     }
 }
@@ -98,5 +98,4 @@ export default {
 
 
 <style scoped>
-
 </style>
