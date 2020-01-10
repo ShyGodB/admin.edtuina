@@ -114,6 +114,7 @@ export default {
             loading: true,
             ratio: "1",
             data: [],
+            menus: [],
             defaultProps: { children: "children", label: "name" },
             filterText: "",
             dialogFormVisible: false,
@@ -137,22 +138,21 @@ export default {
         },
         async addRole() {
             this.dialogFormVisible = false;
-            const menus = [];
             const checkedNodes = this.$refs.tree.getCheckedNodes();
-            checkedNodes.forEach(item => {
-                if (item.children) menus.push(item);
-            });
-            const res = await this.$api.post("/role/add", {
-                name: this.form.name,
-                menus,
-                addUserName: "测试F"
-            });
-            if (res.data.success) {
-                this.$message.success("新增角色成功");
-                this.reload();
-            } else {
-                this.$message.error("创建角色失败，请联系技术人员！");
-            }
+            console.log("data", this.data);
+            console.log("check", checkedNodes);
+            const menus = util.tool.checkMenus(this.data, checkedNodes);
+            // const res = await this.$api.post("/role/add", {
+            //     name: this.form.name,
+            //     menus,
+            //     addUserName: "测试F"
+            // });
+            // if (res.data.success) {
+            //     this.$message.success("新增角色成功");
+            //     this.reload();
+            // } else {
+            //     this.$message.error("创建角色失败，请联系技术人员！");
+            // }
         },
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
@@ -176,7 +176,7 @@ export default {
         },
         async listMenu(data) {
             const res = await this.$api.post("/menu/list", {});
-            this.data = res.data.data || {};
+            this.data = res.data.data || [];
         },
         async listRole(data) {
             const res = await this.$api.post("/role/list", {});
