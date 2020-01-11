@@ -7,7 +7,7 @@ import './registerServiceWorker'
 import Element from 'element-ui'
 import VueSession from 'vue-session'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'element-ui/lib/theme-chalk/display.css';
+import 'element-ui/lib/theme-chalk/display.css'
 import VuePhotoZoomPro from 'vue-photo-zoom-pro'
 import VueCropper from 'vue-cropper'
 import api from '../util/api'

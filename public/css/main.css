@@ -22,3 +22,7 @@ a {
 .hover-hand {
     cursor: pointer;
 }
+
+.oa {
+    overflow: auto;
+}

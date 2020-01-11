@@ -28,7 +28,13 @@
 
                 <el-table-column prop="addUserName" label="添加人" width="80"></el-table-column>
 
-                <el-table-column prop="off" label="状态" width="120"></el-table-column>
+                <el-table-column label="状态" width="120">
+                    <template slot-scope="scope">
+                        <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
@@ -168,7 +174,11 @@ export default {
             if (res.data.data.count % this.pageSize !== 0) {
                 this.pageNum += 1;
             }
-        }
+        },
+        async offChange (row) {
+            await this.$api.post('/tech/switchTechLabel', { _id: row._id, off: !row.off })
+            this.$message.success('修改状态成功')
+        },
     },
     created () {
         this.listLabel()

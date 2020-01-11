@@ -52,14 +52,20 @@
 
                 <el-table-column prop="role" label="角色" width="80"></el-table-column>
 
-                <el-table-column prop="off" label="状态" width="120"></el-table-column>
+                <el-table-column label="状态" width="120">
+                    <template slot-scope="scope">
+                        <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="edit(scope.$index, scope.row)" round>编辑</el-button>
-                        <el-button size="mini" type="primary" @click="delete(scope.$index, scope.row)" round>删除
+                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
                         </el-button>
-                        <el-button size="mini" type="success" @click="resetePassword(scope.$index, scope.row)" round>
+                        <!-- <el-button size="mini" type="primary" @click="del(scope.$index, scope.row)" round>删除</el-button> -->
+                        <el-button size="mini" type="success" @click="resetPassword(scope.$index, scope.row)" round>
                             重设密码
                         </el-button>
                     </template>
@@ -198,47 +204,27 @@ export default {
         };
     },
     methods: {
-        async add () {
-            if (this.form.password.length < 6) {
-                this.$message.error('密码长度不能小于6位')
-                this.reload()
-                return
-            }
-            this.dialogFormVisible = false;
-            const res = await this.$api.post("/admin/add", this.form);
-            if (res.data.success) {
-                this.$message.success("新增角色成功");
-                this.reload();
-            } else {
-                this.$message.error(res.data.msg);
-            }
-        },
-        async edit (index, row) {
-            this.dialogForm = true
-            this.form.group = row.group
-            this.form.role = row.role
-            this.form.userPhone = row.userPhone
-            this.form.password = ''
-        },
-        async update () {
-            if (this.form.password.length < 6) {
-                this.$message.error('密码长度不能小于6位')
-                this.reload()
-                return
-            }
-            this.dialogForm = false;
-            const res = await this.$api.post('/admin/update', this.form)
-            if (res.data.success) {
-                this.$message.success("更新成功");
-                this.reload();
-            } else {
-                this.$message.error(res.data.msg);
-            }
-        },
-        delete (index, row) { },
         resetPassword (index, row) {
-            this.$store.state.userId = row.userId;
-            this.$router.push("/operating/userComment/list");
+            this.$prompt('请输入密码', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+            }).then(async ({ value }) => {
+                if (value.length < 6) {
+                    this.$message.error('密码长度不能小于6位')
+                    this.reload()
+                    return
+                }
+                this.form.group = row.group
+                this.form.role = row.role
+                this.form.userPhone = row.userPhone
+                this.form.password = value
+                this.update()
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消输入'
+                });
+            });
         },
         roleChange () { },
         groupChange () { },
@@ -248,7 +234,6 @@ export default {
                 if (valid) {
                     this.listAdmin();
                 } else {
-                    // console.log('error submit!!');
                     return false;
                 }
             });
@@ -289,7 +274,57 @@ export default {
         async listRole () {
             const res = await this.$api.get('/role/listRole', {})
             this.role = res.data.data.list || []
-        }
+        },
+        async add () {
+            if (this.form.password.length < 6) {
+                this.$message.error('密码长度不能小于6位')
+                this.reload()
+                return
+            }
+            this.dialogFormVisible = false;
+            const res = await this.$api.post("/admin/add", this.form);
+            if (res.data.success) {
+                this.$message.success("新增角色成功");
+                this.reload();
+            } else {
+                this.$message.error(res.data.msg);
+            }
+        },
+        async edit (index, row) {
+            this.dialogForm = true
+            this.form.group = row.group
+            this.form.role = row.role
+            this.form.userPhone = row.userPhone
+            this.form.password = ''
+        },
+        async update () {
+            if (this.form.password.length < 6) {
+                this.$message.error('密码长度不能小于6位')
+                this.reload()
+                return
+            }
+            this.dialogForm = false;
+            const res = await this.$api.post('/admin/update', this.form)
+            if (res.data.success) {
+                this.$message.success("更新成功");
+                this.reload();
+            } else {
+                this.$message.error(res.data.msg);
+            }
+        },
+        async del (index, row) {
+            const res = await this.$api.post('/admin/delete', { _id: row._id })
+            if (res.data.success) {
+                this.$message.success('删除成功')
+                this.reload()
+            } else {
+                this.$message.error(res.data.msg)
+            }
+        },
+        async offChange (row) {
+            await this.$api.post('/admin/switch', { _id: row._id, off: !row.off })
+            this.$message.success('修改状态成功')
+        },
     },
     created () {
         this.listAdmin();

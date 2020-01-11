@@ -40,7 +40,13 @@
 
             <el-table-column prop="addTime" label="添加时间" width="160"></el-table-column>
 
-            <el-table-column prop="off" label="状态" width="120"></el-table-column>
+            <el-table-column label="状态" width="120">
+                <template slot-scope="scope">
+                    <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </template>
+            </el-table-column>
 
             <el-table-column label="操作" height="120" width="280">
                 <template slot-scope="scope">
@@ -173,7 +179,11 @@ export default {
         filterNode (value, data) {
             if (!value) return true;
             return data.name.indexOf(value) !== -1;
-        }
+        },
+        async offChange (row) {
+            await this.$api.post('/role/switch', { _id: row._id, off: !row.off })
+            this.$message.success('修改状态成功')
+        },
     },
     created () {
         this.listRole();

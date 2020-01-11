@@ -29,12 +29,12 @@ export default {
         mainfoo: Foo,
         login: Login
     },
-    provide() {
+    provide () {
         return {
             reload: this.reload
         };
     },
-    data() {
+    data () {
         return {
             tab: "",
             isLogin: true,
@@ -42,7 +42,7 @@ export default {
         };
     },
     methods: {
-        reload() {
+        reload () {
             this.isRouterAlive = false;
             if (this.$store.state.userinfo) {
                 this.isLogin = true;
@@ -53,7 +53,7 @@ export default {
                 this.isRouterAlive = true;
             });
         },
-        getStore() {
+        getStore () {
             // 在页面加载时读取localStorage里的状态信息
             if (localStorage.getItem("store")) {
                 this.$store.replaceState(
@@ -74,7 +74,7 @@ export default {
             });
         }
     },
-    created() {
+    created () {
         this.getStore();
 
         if (this.$store.state.userinfo) {

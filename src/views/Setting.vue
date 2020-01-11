@@ -56,7 +56,7 @@ import MenuConfig from "../components/setting/Menu/Config.vue";
 import TechMethod from "../components/setting/TechLabel/List.vue";
 import AgentLevel from "../components/setting/AgentLevel.vue";
 import TimeManage from "../components/setting/TimeManage.vue";
-import Announcement from "../components/setting/Announcement.vue";
+import Announcement from "../components/setting/Announce/List.vue";
 import WithdrawalTime from "../components/setting/WithdrawalTime.vue";
 import AdvertisePush from "../components/setting/AdvertisePush.vue";
 import EnterpriseManage from "../components/setting/EnterpriseManage.vue";

@@ -29,7 +29,7 @@
 export default {
     inject: ["reload"],
     name: "login",
-    data() {
+    data () {
         return {
             form: {
                 userPhone: "",
@@ -38,7 +38,7 @@ export default {
         };
     },
     methods: {
-        async login() {
+        async login () {
             const res = await this.$api.post("/index/login", this.form);
             if (!res.data.success) {
                 this.$message.error(res.data.msg);
@@ -48,6 +48,11 @@ export default {
                 this.$router.push("/");
                 this.reload();
             }
+        }
+    },
+    created () {
+        if (this.$store.state.userinfo) {
+            this.$router.push('/')
         }
     }
 };

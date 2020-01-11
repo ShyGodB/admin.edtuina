@@ -9,6 +9,7 @@ import Data from './views/Data.vue'
 import Setting from './views/Setting.vue'
 import NotFount from './views/404.vue'
 import Login from './views/Login.vue'
+import Doc from './views/Doc.vue'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/doc/:tab',
+            name: 'Doc',
+            component: Doc
         }
     ]
 })
