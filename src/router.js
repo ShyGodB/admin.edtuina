@@ -38,7 +38,7 @@ export default new Router({
             component: Data
         },
         {
-            path: '/setting/:tab',
+            path: '/setting/:tab/:model',
             name: 'Setting',
             component: Setting
         },

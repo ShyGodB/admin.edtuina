@@ -4,7 +4,7 @@
             <setting-nav></setting-nav>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='userList'">
+        <el-col :span="21" v-if="tab==='user'">
             <setting-userList></setting-userList>
         </el-col>
 
@@ -28,20 +28,22 @@
             <setting-timeManage></setting-timeManage>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='announcement'">
+        <el-col :span="21" v-if="tab==='announce'">
             <setting-announcement></setting-announcement>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='withdrawalTime'">
+        <el-col :span="21" v-if="tab==='withdrawal'">
             <setting-withdrawalTime></setting-withdrawalTime>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='advertisePush'">
+        <el-col :span="21" v-if="tab==='advertise'">
             <setting-advertisePush></setting-advertisePush>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='enterpriseManage'">
-            <setting-enterpriseManage></setting-enterpriseManage>
+        <el-col :span="21" v-if="tab==='enterprise'">
+            <setting-enterpriseManage v-if="model==='list'"></setting-enterpriseManage>
+            <setting-enterpriseManage-orders v-if="model==='orders'"></setting-enterpriseManage-orders>
+            <setting-enterpriseManage-users v-if="model==='users'"></setting-enterpriseManage-users>
         </el-col>
     </el-row>
 </template>
@@ -58,8 +60,11 @@ import AgentLevel from "../components/setting/AgentLevel.vue";
 import TimeManage from "../components/setting/TimeManage.vue";
 import Announcement from "../components/setting/Announce/List.vue";
 import WithdrawalTime from "../components/setting/WithdrawalTime.vue";
-import AdvertisePush from "../components/setting/AdvertisePush.vue";
-import EnterpriseManage from "../components/setting/EnterpriseManage.vue";
+import AdvertisePush from "../components/setting/Advertise/List.vue";
+import EnterpriseManage from "../components/setting/Enterprise/List.vue";
+import EnterpriseOrders from "../components/setting/Enterprise/Orders.vue";
+import EnterpriseUsers from "../components/setting/Enterprise/Users.vue";
+
 
 export default {
     name: "Setting",
@@ -74,11 +79,14 @@ export default {
         "setting-announcement": Announcement,
         "setting-withdrawalTime": WithdrawalTime,
         "setting-advertisePush": AdvertisePush,
-        "setting-enterpriseManage": EnterpriseManage
+        "setting-enterpriseManage": EnterpriseManage,
+        "setting-enterpriseManage-orders": EnterpriseOrders,
+        "setting-enterpriseManage-users": EnterpriseUsers
     },
     data () {
         return {
-            tab: "userList"
+            tab: "user",
+            model: 'list'
         };
     },
     methods: {
@@ -92,6 +100,7 @@ export default {
     },
     created () {
         this.tab = this.$route.params.tab;
+        this.model = this.$route.params.model;
     }
 };
 </script>
