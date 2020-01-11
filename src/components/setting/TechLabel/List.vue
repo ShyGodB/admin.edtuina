@@ -1,14 +1,10 @@
 <template>
     <div class="TechLabel">
         <div class="user-search">
-            <el-form :model="ruleForm" ref="form" label-width="100px" class="demo-ruleForm">
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="名称" prop="name">
-                            <el-input v-model="ruleForm.name"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+            <el-form :model="ruleForm" :inline="true" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('form')">确定</el-button>

@@ -15,7 +15,7 @@
         </div>
 
         <div class="users-table">
-            <el-table :data="announces" @row-click="read" style="width: 100%">
+            <el-table :data="announces" style="width: 100%">
                 <el-table-column prop="title" label="标题"></el-table-column>
 
                 <el-table-column prop="img" label="图片" width="120">
@@ -83,12 +83,12 @@ export default {
         create () {
             this.$router.push('/doc/create')
         },
-        read (row) {
-            this.$store.state.docId = row._id
-            localStorage.setItem("store", JSON.stringify(this.$store.state));
-            const { href } = this.$router.resolve('/doc/read');
-            window.open(href, '_blank');
-        },
+        // read (row) {
+        //     this.$store.state.docId = row._id
+        //     localStorage.setItem("store", JSON.stringify(this.$store.state));
+        //     const { href } = this.$router.resolve('/doc/read');
+        //     window.open(href, '_blank');
+        // },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {

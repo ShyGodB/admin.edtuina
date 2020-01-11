@@ -44,7 +44,7 @@
 
         <div class="users-table">
             <el-table :data="users" style="width: 100%">
-                <el-table-column prop="userName" label="姓名" width="120"></el-table-column>
+                <el-table-column prop="userName" label="姓名"></el-table-column>
 
                 <el-table-column prop="userPhone" label="手机" width="120"></el-table-column>
 
@@ -60,11 +60,10 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
                         </el-button>
-                        <!-- <el-button size="mini" type="primary" @click="del(scope.$index, scope.row)" round>删除</el-button> -->
                         <el-button size="mini" type="success" @click="resetPassword(scope.$index, scope.row)" round>
                             重设密码
                         </el-button>
