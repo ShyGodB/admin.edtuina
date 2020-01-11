@@ -166,29 +166,26 @@ me.checkSetting = (tab) => {
         case 'roleConfig':
             activeIndex = '2'
             break
-        case 'menuConfig':
+        case 'techMethod':
             activeIndex = '3'
             break
-        case 'techMethod':
+        case 'agentLevel':
             activeIndex = '4'
             break
-        case 'agentLevel':
+        case 'timeManage':
             activeIndex = '5'
             break
-        case 'timeManage':
+        case 'announcement':
             activeIndex = '6'
             break
-        case 'announcement':
+        case 'withdrawalTime':
             activeIndex = '7'
             break
-        case 'withdrawalTime':
+        case 'advertisePush':
             activeIndex = '8'
             break
-        case 'advertisePush':
-            activeIndex = '9'
-            break
         case 'enterpriseManage':
-            activeIndex = '10'
+            activeIndex = '9'
             break
         default:
             break

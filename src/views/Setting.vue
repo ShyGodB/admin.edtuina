@@ -1,6 +1,6 @@
 <template>
     <el-row class="w-100">
-        <el-col :span="3">
+        <el-col :span="3" class="pr-3">
             <setting-nav></setting-nav>
         </el-col>
 
@@ -49,12 +49,11 @@
 <script>
 import axios from "axios";
 import md5 from "md5";
-// import Nav from "../components/setting/Nav.vue";
 import Nav from "../components/SecondNav.vue";
 import UserList from "../components/setting/User/List.vue";
 import RoleConfig from "../components/setting/Role/Config.vue";
 import MenuConfig from "../components/setting/Menu/Config.vue";
-import TechMethod from "../components/setting/TechMethod.vue";
+import TechMethod from "../components/setting/TechLabel/List.vue";
 import AgentLevel from "../components/setting/AgentLevel.vue";
 import TimeManage from "../components/setting/TimeManage.vue";
 import Announcement from "../components/setting/Announcement.vue";
@@ -77,13 +76,13 @@ export default {
         "setting-advertisePush": AdvertisePush,
         "setting-enterpriseManage": EnterpriseManage
     },
-    data() {
+    data () {
         return {
             tab: "userList"
         };
     },
     methods: {
-        changeRoute() {
+        changeRoute () {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
@@ -91,7 +90,7 @@ export default {
     watch: {
         $route: "changeRoute"
     },
-    created() {
+    created () {
         this.tab = this.$route.params.tab;
     }
 };
