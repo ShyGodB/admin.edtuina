@@ -1,78 +1,10 @@
 <template>
     <div id="User">
         <div class="user-search">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="用户姓名" prop="nickName">
-                            <el-input v-model="ruleForm.nickName"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="用户手机" prop="userPhone">
-                            <el-input v-model="ruleForm.userPhone"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="用户编号" prop="userId">
-                            <el-input v-model="ruleForm.userId"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="12">
-                        <el-form-item label="时间区间" prop="times">
-                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
-                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
-                                end-placeholder="结束日期"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="注册来源" prop="regSource">
-                            <el-select @change="sourceChange" v-model="ruleForm.regSource" clearable placeholder="请选择">
-                                <el-option v-for="item in sources" :key="item.value" :label="item.label"
-                                    :value="item.value"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="性别" prop="gender">
-                            <el-checkbox-group @change="genderChange" v-model="ruleForm.gender" size="medium">
-                                <el-checkbox-button v-for="(gender, index) in genders" :label="gender"
-                                    :key="(index + 1)" :index="(index + 1).toString()">{{gender}}</el-checkbox-button>
-                            </el-checkbox-group>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="设备" prop="system">
-                            <el-checkbox-group @change="systemChange" v-model="ruleForm.system" size="medium">
-                                <el-checkbox-button v-for="(system, index) in systems" :label="system.value"
-                                    :key="(index + 1)" :index="(index + 1).toString()">{{system.name}}
-                                </el-checkbox-button>
-                            </el-checkbox-group>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="危险等级" prop="danger">
-                            <el-select @change="dangerChange" v-model="ruleForm.danger" clearable placeholder="请选择">
-                                <el-option v-for="item in dangers" :key="item.value" :label="item.label"
-                                    :value="item.value"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+            <el-form :model="ruleForm" :inline="true" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="用户手机" prop="phone">
+                    <el-input v-model="ruleForm.phone"></el-input>
+                </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
@@ -83,7 +15,7 @@
         </div>
 
         <div class="users-table">
-            <el-table :data="users" style="width: 100%">
+            <el-table :data="users" @row-click="rowInfo" style="width: 100%">
                 <el-table-column prop="userId" label="用户编号" width="120"></el-table-column>
 
                 <el-table-column prop="danger" label="危险" width="120"></el-table-column>
@@ -100,14 +32,13 @@
 
                 <el-table-column prop="regSource" label="注册来源" width="100"></el-table-column>
 
-                <el-table-column prop="state" label="状态" width="100"></el-table-column>
-
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
-                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
+                        <!-- <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button> -->
+                        <el-button size="mini" type="success" @click.stop="lookOrders(scope.$index, scope.row)" round>
+                            订单
                         </el-button>
-                        <el-button size="mini" type="success" @click="lookComments(scope.$index, scope.row)" round>查看评论
+                        <el-button size="mini" type="danger" @click.stop="del(scope.$index, scope.row)" round>删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -119,7 +50,7 @@
             </div>
         </div>
 
-        <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
+        <el-dialog title="新增企业用户" :visible.sync="dialogFormVisible">
             <el-form :model="form">
                 <el-form-item label="手机号" :label-width="formLabelWidth">
                     <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -138,6 +69,7 @@
 import util from "../../../../util";
 
 export default {
+    inject: ['reload'],
     name: "User",
     data () {
         return {
@@ -163,30 +95,7 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             ruleForm: {
-                nickName: "",
-                phone: "",
-                userId: "",
-                proxyCodes: [],
-                times: [],
-                gender: [],
-                system: [],
-                danger: "",
-                regSource: ""
-            },
-            rules: {
-                name: [
-                    {
-                        required: true,
-                        message: "请输入活动名称",
-                        trigger: "blur"
-                    },
-                    {
-                        min: 3,
-                        max: 5,
-                        message: "长度在 3 到 5 个字符",
-                        trigger: "blur"
-                    }
-                ]
+                phone: ""
             },
             dangers: [
                 {
@@ -233,9 +142,16 @@ export default {
     methods: {
         info (index, row) {
             this.$store.state.userId = row.userId;
-            this.$router.push("/operating/user/detail");
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/user/detail");
+            window.open(href, "_blank");
         },
-        edit (index, row) { },
+        rowInfo (row) {
+            this.$store.state.userId = row.userId;
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/user/detail");
+            window.open(href, "_blank");
+        },
         getProxyCodes (proxyCodes) {
             this.ruleForm.proxyCodes = proxyCodes;
             console.log(this.ruleForm);
@@ -263,16 +179,17 @@ export default {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
         },
-        lookComments (index, row) {
+        lookOrders (index, row) {
             this.$store.state.userId = row.userId;
-            this.$router.push("/operating/userComment/list");
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/setting/enterprise/userOrders");
+            window.open(href, "_blank");
         },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listUser();
                 } else {
-                    // console.log('error submit!!');
                     return false;
                 }
             });
@@ -319,10 +236,16 @@ export default {
             const res = await this.$api.post('/enterprise/addUser', { phone: this.form.phone, acId: this.$store.state.acId })
             if (res.data.success) {
                 this.$message.success('添加成功')
-                this.reload()
             } else {
                 this.$message.error('添加失败')
             }
+            // this.dialogFormVisible = false
+            this.reload()
+        },
+        async del (index, row) {
+            await this.$api.post('/enterprise/del', { userId: row.userId })
+            this.$message.success('删除成功')
+            this.reload()
         }
     },
     created () {

@@ -1,5 +1,5 @@
 <template>
-    <div id="Order">
+    <div id="Setting-UserOrder">
         <div class="order-search">
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -74,7 +74,7 @@
             </el-form>
         </div>
 
-        <div class="order-table">
+        <div class="user-order-table">
             <el-table :data="orders" @row-click="rowInfo" style="width: 100%">
                 <el-table-column prop="techName" label="技师姓名" width="120" height="120"></el-table-column>
 
@@ -118,7 +118,7 @@
 import util from "../../../../util";
 
 export default {
-    name: "Order",
+    name: "Setting-User-Order",
     data () {
         return {
             timeDouble: util.config.timeDouble,
@@ -209,6 +209,7 @@ export default {
                     {},
                     this.ruleForm,
                     { acId: this.$store.state.acId },
+                    { userId: this.$store.state.userId },
                     { pageIndex: this.pageIndex },
                     { pageSize: this.pageSize }
                 )

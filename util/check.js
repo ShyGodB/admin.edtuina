@@ -175,16 +175,16 @@ me.checkSetting = (tab) => {
         case 'timeManage':
             activeIndex = '5'
             break
-        case 'announcement':
+        case 'announce':
             activeIndex = '6'
             break
-        case 'withdrawalTime':
+        case 'withdrawal':
             activeIndex = '7'
             break
-        case 'advertisePush':
+        case 'advertise':
             activeIndex = '8'
             break
-        case 'enterpriseManage':
+        case 'enterprise':
             activeIndex = '9'
             break
         default:

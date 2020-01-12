@@ -182,7 +182,7 @@ export default {
             }
         },
         async offChange (row) {
-            await this.$api.post('/admin/switch', { _id: row._id, off: !row.off })
+            await this.$api.post('/enterprise/switch', { _id: row._id, off: !row.off })
             this.$message.success('修改状态成功')
         },
     },

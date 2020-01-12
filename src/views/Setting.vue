@@ -44,13 +44,12 @@
             <setting-enterpriseManage v-if="model==='list'"></setting-enterpriseManage>
             <setting-enterpriseManage-orders v-if="model==='orders'"></setting-enterpriseManage-orders>
             <setting-enterpriseManage-users v-if="model==='users'"></setting-enterpriseManage-users>
+            <setting-enterpriseManage-userOrders v-if="model==='userOrders'"></setting-enterpriseManage-userOrders>
         </el-col>
     </el-row>
 </template>
 
 <script>
-import axios from "axios";
-import md5 from "md5";
 import Nav from "../components/SecondNav.vue";
 import UserList from "../components/setting/User/List.vue";
 import RoleConfig from "../components/setting/Role/Config.vue";
@@ -64,7 +63,7 @@ import AdvertisePush from "../components/setting/Advertise/List.vue";
 import EnterpriseManage from "../components/setting/Enterprise/List.vue";
 import EnterpriseOrders from "../components/setting/Enterprise/Orders.vue";
 import EnterpriseUsers from "../components/setting/Enterprise/Users.vue";
-
+import EnterpriseUserOrders from "../components/setting/Enterprise/UserOrders.vue";
 
 export default {
     name: "Setting",
@@ -81,7 +80,8 @@ export default {
         "setting-advertisePush": AdvertisePush,
         "setting-enterpriseManage": EnterpriseManage,
         "setting-enterpriseManage-orders": EnterpriseOrders,
-        "setting-enterpriseManage-users": EnterpriseUsers
+        "setting-enterpriseManage-users": EnterpriseUsers,
+        "setting-enterpriseManage-userOrders": EnterpriseUserOrders
     },
     data () {
         return {
