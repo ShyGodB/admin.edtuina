@@ -57,14 +57,14 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="24">
+                    <!-- <el-col :span="24">
                         <el-form-item label="订单类型" prop="orderType">
                             <el-checkbox-group @change="orderTypeChange" v-model="ruleForm.orderType" size="medium">
                                 <el-checkbox-button v-for="(type, index) in orderType" :label="type" :key="(index + 1)"
                                     :index="(index + 1).toString()">{{type}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
-                    </el-col>
+                    </el-col> -->
                 </el-row>
 
                 <el-form-item>

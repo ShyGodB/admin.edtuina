@@ -39,7 +39,7 @@
         </div>
 
         <div class="alarm-table">
-            <el-table :data="promotes" style="width: 100%">
+            <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="img" label="二维码" width="200">
                     <template slot-scope="scope">
                         <el-image style="width: 80px; height: 80px" :src="scope.row.img"></el-image>
@@ -91,8 +91,7 @@ export default {
         return {
             agentOptions: [],
             timeDouble: util.config.timeDouble,
-            states: ["待审核", "审核通过", "审核拒绝"],
-            promotes: [],
+            tableData: [],
             pageNum: 1,
             pageIndex: 1,
             pageSize: 10,
@@ -116,9 +115,7 @@ export default {
                         trigger: "blur"
                     }
                 ]
-            },
-            value: [],
-            loading: true
+            }
         };
     },
     methods: {
@@ -172,7 +169,7 @@ export default {
                     { pageSize: this.pageSize }
                 )
             );
-            this.promotes = res.data.data.list || [];
+            this.tableData = res.data.data.list || [];
             this.pageNum = Math.floor(
                 (res.data.data.count || 0) / this.pageSize
             );

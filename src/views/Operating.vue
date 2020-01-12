@@ -87,7 +87,7 @@ import TechDetail from "../components/operating/Tech/Detail";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
-import Coupon from "../components/operating/Coupon/Coupon.vue";
+import Coupon from "../components/operating/Coupon/List.vue";
 import Project from "../components/operating/Project/List.vue";
 import Complaint from "../components/operating/Complaint/List.vue";
 import TechApply from "../components/operating/TechApply/List.vue";
