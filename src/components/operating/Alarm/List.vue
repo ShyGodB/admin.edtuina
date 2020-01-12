@@ -65,9 +65,9 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.state=='待审核'" size="mini" type="danger"
-                            @click="agree(scope.$index, scope.row)" round>同意</el-button>
+                            @click="agree(scope.row, scope.$index)" round>同意</el-button>
                         <el-button v-if="scope.row.state=='待审核'" size="mini" type="primary"
-                            @click="refuse(scope.$index, scope.row)" round>拒绝</el-button>
+                            @click="refuse(scope.row, scope.$index)" round>拒绝</el-button>
                         <div v-if="scope.row.state!='待审核'">{{ scope.row.state }}</div>
                     </template>
                 </el-table-column>
@@ -122,13 +122,13 @@ export default {
         };
     },
     methods: {
-        agree (index, row) {
+        agree (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        refuse (index, row) {
+        refuse (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"

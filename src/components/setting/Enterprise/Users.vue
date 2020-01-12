@@ -34,11 +34,11 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <!-- <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button> -->
-                        <el-button size="mini" type="success" @click.stop="lookOrders(scope.$index, scope.row)" round>
+                        <!-- <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button> -->
+                        <el-button size="mini" type="success" @click.stop="lookOrders(scope.row, scope.$index)" round>
                             订单
                         </el-button>
-                        <el-button size="mini" type="danger" @click.stop="del(scope.$index, scope.row)" round>删除
+                        <el-button size="mini" type="danger" @click.stop="del(scope.row, scope.$index)" round>删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -140,7 +140,7 @@ export default {
         };
     },
     methods: {
-        info (index, row) {
+        info (row, index) {
             this.$store.state.userId = row.userId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/operating/user/detail");
@@ -179,7 +179,7 @@ export default {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
         },
-        lookOrders (index, row) {
+        lookOrders (row, index) {
             this.$store.state.userId = row.userId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/setting/enterprise/userOrders");
@@ -242,7 +242,7 @@ export default {
             // this.dialogFormVisible = false
             this.reload()
         },
-        async del (index, row) {
+        async del (row, index) {
             await this.$api.post('/enterprise/del', { userId: row.userId })
             this.$message.success('删除成功')
             this.reload()

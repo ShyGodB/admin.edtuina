@@ -103,10 +103,10 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
-                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
                         </el-button>
-                        <el-button size="mini" type="success" @click="lookComments(scope.$index, scope.row)" round>查看评论
+                        <el-button size="mini" type="success" @click="lookComments(scope.row, scope.$index)" round>查看评论
                         </el-button>
                     </template>
                 </el-table-column>
@@ -213,11 +213,11 @@ export default {
         };
     },
     methods: {
-        info (index, row) {
+        info (row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
         },
-        edit (index, row) { },
+        edit (row, index) { },
         getProxyCodes (proxyCodes) {
             this.ruleForm.proxyCodes = proxyCodes;
             console.log(this.ruleForm);
@@ -245,7 +245,7 @@ export default {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
         },
-        lookComments (index, row) {
+        lookComments (row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/userComment/list");
         },

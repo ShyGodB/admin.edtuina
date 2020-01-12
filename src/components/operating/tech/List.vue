@@ -70,7 +70,7 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="info" @click="info(scope.$index, scope.row)" round>详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -125,7 +125,7 @@ export default {
         };
     },
     methods: {
-        info (index, row) {
+        info (row, index) {
             this.$store.state.techId = row.techId;
             this.$router.push("/operating/tech/detail");
         },

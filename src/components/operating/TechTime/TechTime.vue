@@ -51,12 +51,12 @@
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.row, scope.$index)">编辑</el-button>
 
                         <el-button
                             size="mini"
                             type="danger"
-                            @click="handleDelete(scope.$index, scope.row)"
+                            @click="handleDelete(scope.row, scope.$index)"
                         >删除</el-button>
                     </template>
                 </el-table-column>
@@ -102,11 +102,11 @@ export default {
         };
     },
     methods: {
-        handleEdit(index, row) {
-            console.log(index, row);
+        handleEdit(row, index) {
+            console.log(row, index);
         },
-        handleDelete(index, row) {
-            console.log(index, row);
+        handleDelete(row, index) {
+            console.log(row, index);
         },
         submitForm(formName) {
             this.$refs[formName].validate(valid => {

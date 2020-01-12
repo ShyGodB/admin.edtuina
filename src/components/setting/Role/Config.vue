@@ -50,7 +50,7 @@
 
             <el-table-column label="操作" height="120" width="280">
                 <template slot-scope="scope">
-                    <el-button size="mini" type="info" @click="edit(scope.$index, scope.row)" round>编辑</el-button>
+                    <el-button size="mini" type="info" @click="edit(scope.row, scope.$index)" round>编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -104,7 +104,7 @@ export default {
         };
     },
     methods: {
-        edit (index, row) {
+        edit (row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
         },

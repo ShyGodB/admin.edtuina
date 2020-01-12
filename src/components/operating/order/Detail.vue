@@ -173,7 +173,7 @@
 
         <el-table-column label="操作" height="120">
           <template slot-scope="scope">
-            <el-button size="mini" type="info" @click="listen(scope.$index, scope.row)" round>听录音</el-button>
+            <el-button size="mini" type="info" @click="listen(scope.row, scope.$index)" round>听录音</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -197,7 +197,7 @@
       }
     },
     methods: {
-      listen(index, row) {
+      listen(row, index) {
 
       },
       getUserInfo() {

@@ -38,11 +38,11 @@
 
                 <el-table-column label="操作" width="260">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="listOrder(scope.$index, scope.row)" round>订单
+                        <el-button size="mini" type="primary" @click="listOrder(scope.row, scope.$index)" round>订单
                         </el-button>
-                        <el-button size="mini" type="success" @click="listUser(scope.$index, scope.row)" round>用户
+                        <el-button size="mini" type="success" @click="listUser(scope.row, scope.$index)" round>用户
                         </el-button>
-                        <el-button size="mini" type="warning" @click="recharge(scope.$index, scope.row)" round>
+                        <el-button size="mini" type="warning" @click="recharge(scope.row, scope.$index)" round>
                             充值
                         </el-button>
                     </template>
@@ -101,19 +101,19 @@ export default {
         };
     },
     methods: {
-        listOrder (index, row) {
+        listOrder (row, index) {
             this.$store.state.acId = row.acId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/setting/enterprise/orders");
             window.open(href, "_blank");
         },
-        listUser (index, row) {
+        listUser (row, index) {
             this.$store.state.acId = row.acId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/setting/enterprise/users");
             window.open(href, "_blank");
         },
-        recharge (index, row) {
+        recharge (row, index) {
             this.$prompt('请输入充值金额', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',

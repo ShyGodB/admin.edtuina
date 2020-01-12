@@ -62,9 +62,9 @@
 
                 <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
                         </el-button>
-                        <el-button size="mini" type="success" @click="resetPassword(scope.$index, scope.row)" round>
+                        <el-button size="mini" type="success" @click="resetPassword(scope.row, scope.$index)" round>
                             重设密码
                         </el-button>
                     </template>
@@ -202,7 +202,7 @@ export default {
         };
     },
     methods: {
-        resetPassword (index, row) {
+        resetPassword (row, index) {
             this.$prompt('请输入密码', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -288,7 +288,7 @@ export default {
                 this.$message.error(res.data.msg);
             }
         },
-        async edit (index, row) {
+        async edit (row, index) {
             this.dialogForm = true
             this.form.group = row.group
             this.form.role = row.role
@@ -310,7 +310,7 @@ export default {
                 this.$message.error(res.data.msg);
             }
         },
-        async del (index, row) {
+        async del (row, index) {
             const res = await this.$api.post('/admin/delete', { _id: row._id })
             if (res.data.success) {
                 this.$message.success('删除成功')

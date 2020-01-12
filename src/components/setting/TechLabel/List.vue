@@ -34,7 +34,7 @@
 
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="edit(scope.$index, scope.row)" round>编辑
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
                         </el-button>
                     </template>
                 </el-table-column>
@@ -154,7 +154,7 @@ export default {
                 this.$message.error('请求错误')
             }
         },
-        async edit (index, row) {
+        async edit (row, index) {
             this.form._id = row._id
             this.form.name = row.name
             this.form.sort = row.sort

@@ -97,7 +97,7 @@
                         <el-button
                             size="mini"
                             type="info"
-                            @click="info(scope.$index, scope.row)"
+                            @click="info(scope.row, scope.$index)"
                             round
                         >详情</el-button>
                     </template>
@@ -157,7 +157,7 @@ export default {
         };
     },
     methods: {
-        info(index, row) {
+        info(row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"

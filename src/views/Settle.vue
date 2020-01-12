@@ -5,7 +5,9 @@
         </el-col>
 
         <el-col :span="21" v-if="tab==='settlement'">
-            <settle-settlement></settle-settlement>
+            <settle-settlement v-if="model === 'list'"></settle-settlement>
+            <settle-settlement-proxy v-if="model === 'proxy'"></settle-settlement-proxy>
+            <settle-settlement-channel v-if="model === 'channel'"></settle-settlement-channel>
         </el-col>
 
         <el-col :span="21" v-if="tab==='cash'">
@@ -32,16 +34,15 @@
 
 
 <script>
-import axios from "axios";
-import md5 from "md5";
-// import Nav from '../components/settle/Nav.vue'
 import Nav from "../components/SecondNav.vue";
-import Account from "../components/settle/Account.vue";
-import Cash from "../components/settle/Cash.vue";
-import Recharge from "../components/settle/Recharge.vue";
-import Refund from "../components/settle/Refund.vue";
-import Settlement from "../components/settle/Settlement.vue";
-import TechIncome from "../components/settle/TechIncome.vue";
+import Account from "../components/settle/Account/List.vue";
+import Cash from "../components/settle/Cash/List.vue";
+import Recharge from "../components/settle/Recharge/List.vue";
+import Refund from "../components/settle/Refund/List.vue";
+import SettleList from "../components/settle/Settle/List.vue";
+import SettleProxy from "../components/settle/Settle/Proxy.vue";
+import SettleChannel from "../components/settle/Settle/Channel.vue";
+import TechIncome from "../components/settle/TechIncome/List.vue";
 
 export default {
     name: "Settle",
@@ -51,16 +52,19 @@ export default {
         "settle-cash": Cash,
         "settle-recharge": Recharge,
         "settle-refund": Refund,
-        "settle-settlement": Settlement,
+        "settle-settlement": SettleList,
+        "settle-settlement-proxy": SettleProxy,
+        "settle-settlement-channel": SettleChannel,
         "settle-techIncome": TechIncome
     },
-    data() {
+    data () {
         return {
-            tab: "settlement"
+            tab: "settlement",
+            model: 'list'
         };
     },
     methods: {
-        changeRoute() {
+        changeRoute () {
             const tab = this.$route.params.tab;
             this.tab = tab;
         }
@@ -68,8 +72,9 @@ export default {
     watch: {
         $route: "changeRoute"
     },
-    created() {
+    created () {
         this.tab = this.$route.params.tab;
+        this.model = this.$route.params.model;
     }
 };
 </script>

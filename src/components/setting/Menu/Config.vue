@@ -72,19 +72,19 @@
                             <el-button
                                 size="mini"
                                 type="info"
-                                @click="edit(scope.$index, scope.row)"
+                                @click="edit(scope.row, scope.$index)"
                                 round
                             >编辑</el-button>
                             <el-button
                                 size="mini"
                                 type="primary"
-                                @click="delete(scope.$index, scope.row)"
+                                @click="delete(scope.row, scope.$index)"
                                 round
                             >删除</el-button>
                             <el-button
                                 size="mini"
                                 type="success"
-                                @click="resetePassword(scope.$index, scope.row)"
+                                @click="resetePassword(scope.row, scope.$index)"
                                 round
                             >重设密码</el-button>
                         </template>
@@ -194,12 +194,12 @@ export default {
         };
     },
     methods: {
-        edit(index, row) {
+        edit(row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
         },
-        delete(index, row) {},
-        resetPassword(index, row) {
+        delete(row, index) {},
+        resetPassword(row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/userComment/list");
         },

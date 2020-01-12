@@ -12,9 +12,9 @@ const post = async (url, data) => {
         method: 'POST',
         url: '/api/admin' + url,
         headers: {
-            authtoken: '31c535a1d1a0826b39057dfd9a2dbdb8'
+            'authtoken': '31c535a1d1a0826b39057dfd9a2dbdb8',
+            'Content-Type': 'application/json'
         },
-        responseType: 'JSON',
         data: data
     }).then(res => {
         loading.close()
@@ -33,9 +33,9 @@ const get = async (url, params) => {
         method: 'GET',
         url: '/api/admin' + url,
         headers: {
-            authtoken: '31c535a1d1a0826b39057dfd9a2dbdb8'
+            'authtoken': '31c535a1d1a0826b39057dfd9a2dbdb8',
+            'Content-Type': 'application/json'
         },
-        responseType: 'JSON',
         params: params
     }).then(res => {
         loading.close()

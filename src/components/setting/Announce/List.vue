@@ -1,14 +1,10 @@
 <template>
     <div id="Setting-Announce">
         <div class="user-search">
-            <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="标题" prop="title">
-                            <el-input v-model="ruleForm.title"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+            <el-form :model="ruleForm" :inline="true" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="ruleForm.title"></el-input>
+                </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>

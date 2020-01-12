@@ -28,7 +28,7 @@ export default new Router({
             component: Operating
         },
         {
-            path: '/settle/:tab',
+            path: '/settle/:tab/:model',
             name: 'Settle',
             component: Settle
         },
