@@ -83,15 +83,15 @@
 
         <div class="users-table">
             <el-table :data="users" style="width: 100%">
-                <el-table-column prop="userId" label="用户编号" width="120"></el-table-column>
+                <el-table-column prop="userId" label="用户编号" width="80"></el-table-column>
 
-                <el-table-column prop="danger" label="危险" width="120"></el-table-column>
+                <el-table-column prop="danger" label="危险" width="80"></el-table-column>
 
-                <el-table-column prop="nickName" label="姓名" width="80"></el-table-column>
+                <el-table-column prop="nickName" label="姓名"></el-table-column>
 
                 <el-table-column prop="phone" label="手机" width="120"></el-table-column>
 
-                <el-table-column prop="city" label="城市" width="160"></el-table-column>
+                <el-table-column prop="city" label="城市" width="80"></el-table-column>
 
                 <el-table-column prop="regTime" label="注册时间" width="200"></el-table-column>
 
@@ -101,7 +101,7 @@
 
                 <el-table-column prop="state" label="状态" width="100"></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" width="260">
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                         <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
