@@ -96,10 +96,16 @@
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
+                            type="primary"
+                            @click="edit(scope.row, scope.$index)"
                             round
-                        >详情</el-button>
+                        >编辑</el-button>
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            @click="del(scope.row, scope.$index)"
+                            round
+                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -157,12 +163,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        edit(row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
+        async del(row, index) {},
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
