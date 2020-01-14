@@ -32,7 +32,8 @@
         </el-col>
 
         <el-col :span="21" v-if="tab==='coupon'">
-            <operating-coupon></operating-coupon>
+            <operating-coupon-store v-if="model === 'list'"></operating-coupon-store>
+            <operating-coupon-coupons v-if="model === 'store'"></operating-coupon-coupons>
         </el-col>
 
         <el-col :span="21" v-if="tab==='project'">
@@ -87,7 +88,8 @@ import TechDetail from "../components/operating/Tech/Detail";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
-import Coupon from "../components/operating/Coupon/List.vue";
+import CouponList from "../components/operating/Coupon/List.vue";
+import Coupons from "../components/operating/Coupon/Coupon.vue";
 import Project from "../components/operating/Project/List.vue";
 import Complaint from "../components/operating/Complaint/List.vue";
 import TechApply from "../components/operating/TechApply/List.vue";
@@ -108,7 +110,8 @@ export default {
         "operating-techcomment": TechComment,
         "operating-usercomment": UserComment,
         "operating-complaint": Complaint,
-        "operating-coupon": Coupon,
+        "operating-coupon-store": CouponList,
+        "operating-coupon-coupons": Coupons,
         "operating-feedback": Feedback,
         "operating-order": Order,
         "operating-order-detail": OrderDetail,
@@ -123,14 +126,14 @@ export default {
         "operating-user": User,
         "operating-user-detail": UserDetail
     },
-    data () {
+    data() {
         return {
             tab: "order",
             model: "detail"
         };
     },
     methods: {
-        changeRoute () {
+        changeRoute() {
             const { tab, model } = this.$route.params;
             this.tab = tab;
             this.model = model;
@@ -139,7 +142,7 @@ export default {
     watch: {
         $route: "changeRoute"
     },
-    created () {
+    created() {
         this.tab = this.$route.params.tab;
         this.model = this.$route.params.model;
     }

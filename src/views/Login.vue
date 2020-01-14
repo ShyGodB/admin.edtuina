@@ -1,6 +1,6 @@
 <template>
-    <div id="login">
-        <div class="login-box">
+    <div id="login" class="h-100">
+        <div class="login-box h-100">
             <h3 class="login-box-title">密码登录</h3>
 
             <div class="login-box-username">
@@ -29,7 +29,7 @@
 export default {
     inject: ["reload"],
     name: "login",
-    data () {
+    data() {
         return {
             form: {
                 userPhone: "",
@@ -38,7 +38,7 @@ export default {
         };
     },
     methods: {
-        async login () {
+        async login() {
             const res = await this.$api.post("/index/login", this.form);
             if (!res.data.success) {
                 this.$message.error(res.data.msg);
@@ -50,9 +50,9 @@ export default {
             }
         }
     },
-    created () {
+    created() {
         if (this.$store.state.userinfo) {
-            this.$router.push('/')
+            this.$router.push("/");
         }
     }
 };

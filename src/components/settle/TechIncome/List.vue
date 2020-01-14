@@ -15,10 +15,15 @@
                     </el-col>
                     <el-col :span="24">
                         <el-form-item label="时间区间" prop="times">
-                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
-                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
-                                end-placeholder="结束日期">
-                            </el-date-picker>
+                            <el-date-picker
+                                v-model="ruleForm.times"
+                                type="datetimerange"
+                                :picker-options="timeDouble"
+                                @change="timeChange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                            ></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -54,8 +59,15 @@
             </el-table>
 
             <div class="pagination">
-                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
-                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+                <el-pagination
+                    ref="fenye"
+                    background
+                    @size-change="sizeChange"
+                    @current-change="pageChange"
+                    layout="prev, pager, next"
+                    :hide-on-single-page="true"
+                    :page-count="pageNum"
+                ></el-pagination>
             </div>
         </div>
     </div>
@@ -63,9 +75,11 @@
 
 
 <script>
+import util from "../../../../util";
+
 export default {
-    name: 'TechIncome',
-    data () {
+    name: "TechIncome",
+    data() {
         return {
             tableData: [],
             timeDouble: util.config.timeDouble,
@@ -73,33 +87,33 @@ export default {
             pageSize: 10,
             pageNum: 1,
             ruleForm: {
-                realName: '',
-                phone: '',
+                realName: "",
+                phone: "",
                 times: []
             }
         };
     },
     methods: {
-        submitForm (formName) {
-            this.$refs[formName].validate((valid) => {
+        submitForm(formName) {
+            this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listTechIncome()
+                    this.listTechIncome();
                 } else {
                     return false;
                 }
             });
         },
-        resetForm (formName) {
+        resetForm(formName) {
             this.$refs[formName].resetFields();
-            this.listTechIncome()
-        },
-        pageChange (pageNum) {
-            this.pageIndex = pageNum
             this.listTechIncome();
         },
-        sizeChange (num) { },
-        timeChange () { },
-        async listTechIncome () {
+        pageChange(pageNum) {
+            this.pageIndex = pageNum;
+            this.listTechIncome();
+        },
+        sizeChange(num) {},
+        timeChange() {},
+        async listTechIncome() {
             const res = await this.$api.post(
                 "/tech/listIncome",
                 Object.assign(
@@ -118,10 +132,10 @@ export default {
             }
         }
     },
-    created () {
-        this.listTechIncome()
+    created() {
+        this.listTechIncome();
     }
-}
+};
 </script>
 
 

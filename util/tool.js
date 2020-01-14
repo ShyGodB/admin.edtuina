@@ -142,6 +142,22 @@ const checkMenus = (menus, data) => {
     return result
 }
 
+const checkProject = (projectList, projectIds) => {
+    if (projectIds.length === 0) return []
+    let result = []
+    projectIds.forEach(item => {
+        projectList.forEach(i => {
+            if (item === i.projectId) {
+                result.push({
+                    id: item,
+                    name: i.name
+                })
+            }
+        })
+    })
+    return result
+}
+
 export default {
-    checkHomeData, checkMenus
+    checkHomeData, checkMenus, checkProject
 }

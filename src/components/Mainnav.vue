@@ -75,6 +75,7 @@ export default {
         },
         logout() {
             this.$store.state.userinfo = false;
+            localStorage.removeItem("store");
             this.$router.push("/login");
             this.reload();
         }
