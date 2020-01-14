@@ -1,61 +1,31 @@
 <template>
     <div id="Project">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="状态" prop="state">
-                            <el-checkbox-group
-                                @change="stateChange"
-                                v-model="ruleForm.state"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in state"
-                                    :label="state"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
+                                <el-checkbox-button v-for="(state, index) in state" :label="state" :key="(index + 1)"
+                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="类别" prop="category">
-                            <el-checkbox-group
-                                @change="categoryChange"
-                                v-model="ruleForm.category"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(category, index) in category"
-                                    :label="category"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{category}}</el-checkbox-button>
+                            <el-checkbox-group @change="categoryChange" v-model="ruleForm.category" size="medium">
+                                <el-checkbox-button v-for="(category, index) in category" :label="category"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{category}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12">
                         <el-form-item label="展示属性" prop="view">
-                            <el-checkbox-group
-                                @change="viewChange"
-                                v-model="ruleForm.view"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(view, index) in view"
-                                    :label="view"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{view}}</el-checkbox-button>
+                            <el-checkbox-group @change="viewChange" v-model="ruleForm.view" size="medium">
+                                <el-checkbox-button v-for="(view, index) in view" :label="view" :key="(index + 1)"
+                                    :index="(index + 1).toString()">{{view}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -70,7 +40,7 @@
 
         <div class="project-table">
             <el-table :data="projects" style="width: 100%">
-                <el-table-column prop="projectId" label="技师姓名" width="120" height="120"></el-table-column>
+                <el-table-column prop="projectId" label="项目编号" width="120" height="120"></el-table-column>
 
                 <el-table-column prop="name" label="名字" width="200" height="120"></el-table-column>
 
@@ -90,36 +60,27 @@
 
                 <el-table-column prop="sort" label="排序" width="180" height="120"></el-table-column>
 
-                <el-table-column prop="state" label="状态" width="80" height="120"></el-table-column>
-
-                <el-table-column label="操作" height="120">
+                <el-table-column label="状态" width="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="edit(scope.row, scope.$index)"
-                            round
-                        >编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="del(scope.row, scope.$index)"
-                            round
-                        >删除</el-button>
+                        <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                            inactive-color="#ff4949"></el-switch>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="操作" width="240">
+                    <template slot-scope="scope">
+                        <el-button size="mini" type="success" @click="copy(scope.row, scope.$index)" round>复制
+                        </el-button>
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
+                        </el-button>
+                        <el-button size="mini" type="danger" @click="del(scope.row, scope.$index)" round>删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -129,8 +90,9 @@
 import axios from "axios";
 
 export default {
+    inject: ['reload'],
     name: "Project",
-    data() {
+    data () {
         return {
             state: ["正常", "禁用"],
             category: ["正常", "加钟"],
@@ -163,14 +125,22 @@ export default {
         };
     },
     methods: {
-        edit(row, index) {
+        edit (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        async del(row, index) {},
-        submitForm(formName) {
+        async del (row, index) { },
+        async copy (row, index) {
+            const res = await this.$api.post('/project/copy', { _id: row._id })
+            if (res.data.success) {
+                this.$message.success("修改成功");
+            } else {
+                this.$message.error('复制失败')
+            }
+        },
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listProject();
@@ -179,21 +149,21 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listProject();
         },
-        stateChange() {},
-        categoryChange() {},
-        viewChange() {},
-        change(num) {
+        stateChange () { },
+        categoryChange () { },
+        viewChange () { },
+        change (num) {
             this.pageIndex = num;
             this.listProject();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listProject(this.ruleForm);
         },
-        async listProject() {
+        async listProject () {
             const res = await this.$api.post(
                 "/project/list",
                 Object.assign(
@@ -210,9 +180,17 @@ export default {
             if (res.data.data.count % this.pageSize !== 0) {
                 this.pageNum += 1;
             }
-        }
+        },
+        async offChange (row) {
+            await this.$api.post("/project/switch", {
+                _id: row._id,
+                off: !row.off
+            });
+            this.$message.success("修改状态成功");
+        },
+
     },
-    created() {
+    created () {
         this.listProject();
     }
 };
