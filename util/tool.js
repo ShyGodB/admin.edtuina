@@ -158,6 +158,7 @@ const checkProject = (projectList, projectIds) => {
     return result
 }
 
+
 export default {
     checkHomeData, checkMenus, checkProject
 }

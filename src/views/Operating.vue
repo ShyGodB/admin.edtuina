@@ -1,6 +1,6 @@
 <template>
     <el-row class="w-100 h-100" id="operating">
-        <el-col :span="3" class="pr-3 oa">
+        <el-col :span="3" class="pr-3">
             <operating-nav></operating-nav>
         </el-col>
 
@@ -33,7 +33,8 @@
 
         <el-col :span="21" v-if="tab==='coupon'">
             <operating-coupon-store v-if="model === 'list'"></operating-coupon-store>
-            <operating-coupon-coupons v-if="model === 'store'"></operating-coupon-coupons>
+            <operating-coupon-userCoupons v-if="model === 'userCoupons'"></operating-coupon-userCoupons>
+            <operating-coupon-codes v-if="model === 'codes'"></operating-coupon-codes>
         </el-col>
 
         <el-col :span="21" v-if="tab==='project'">
@@ -89,7 +90,8 @@ import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
 import CouponList from "../components/operating/Coupon/List.vue";
-import Coupons from "../components/operating/Coupon/Coupon.vue";
+import UserCoupons from "../components/operating/Coupon/UserCoupons.vue";
+import Codes from "../components/operating/Coupon/Codes.vue";
 import Project from "../components/operating/Project/List.vue";
 import Complaint from "../components/operating/Complaint/List.vue";
 import TechApply from "../components/operating/TechApply/List.vue";
@@ -111,7 +113,8 @@ export default {
         "operating-usercomment": UserComment,
         "operating-complaint": Complaint,
         "operating-coupon-store": CouponList,
-        "operating-coupon-coupons": Coupons,
+        "operating-coupon-userCoupons": UserCoupons,
+        "operating-coupon-codes": Codes,
         "operating-feedback": Feedback,
         "operating-order": Order,
         "operating-order-detail": OrderDetail,
