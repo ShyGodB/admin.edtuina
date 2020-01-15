@@ -61,8 +61,8 @@
         </div>
 
         <div class="promote-table">
-            <el-table :data="promotes" style="width: 100%">
-                <el-table-column prop="img" label="二维码" width="200">
+            <el-table @cell-click="showImg" :data="promotes" style="width: 100%">
+                <el-table-column label="二维码" width="200">
                     <template slot-scope="scope">
                         <el-image style="width: 80px; height: 80px" :src="scope.row.img"></el-image>
                     </template>
@@ -105,6 +105,14 @@
                 </el-table-column>
             </el-table>
 
+            <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%">
+                <el-image style="width: 400px; height: 400px; margin: auto" :src="img"></el-image>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+                </span>
+            </el-dialog>
+
             <div class="pagination">
                 <el-pagination
                     ref="fenye"
@@ -130,6 +138,7 @@ export default {
         return {
             agentOptions: [],
             timeDouble: util.config.timeDouble,
+            img: "",
             states: ["待审核", "审核通过", "审核拒绝"],
             promotes: [],
             pageNum: 1,
@@ -156,10 +165,15 @@ export default {
                 ]
             },
             value: [],
-            loading: true
+            centerDialogVisible: false
         };
     },
     methods: {
+        showImg(row, column, cell, event) {
+            console.log(12);
+            this.centerDialogVisible = true;
+            this.img = row.img;
+        },
         agree(row, index) {
             this.$message({
                 message: "暂未完成",

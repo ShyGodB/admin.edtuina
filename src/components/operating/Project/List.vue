@@ -64,7 +64,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
-                    <el-button @click="dialogAdd = true">添加</el-button>
+                    <el-button type="success" @click="dialogAdd = true">添加</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -551,9 +551,22 @@ export default {
             this.$store.state.notice = this.editForm.notice;
         },
         async del(row, index) {
-            await this.$api.post("/project/del", { _id: row._id });
-            this.$message.success("删除成功");
-            this.reload();
+            this.$confirm("此操作将永久删除该项目, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            })
+                .then(async () => {
+                    await this.$api.post("/project/del", { _id: row._id });
+                    this.$message.success("删除成功");
+                    this.reload();
+                })
+                .catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
         },
         async copy(row, index) {
             await this.$api.post("/project/copy", { _id: row._id });
@@ -620,7 +633,7 @@ export default {
             });
             this.$message.success("修改状态成功");
         },
-        add() {},
+        async add() {},
         updateProject() {}
     },
     created() {
