@@ -97,7 +97,7 @@ import Complaint from "../components/operating/Complaint/List.vue";
 import TechApply from "../components/operating/TechApply/List.vue";
 import Feedback from "../components/operating/Feedback/List.vue";
 import Review from "../components/operating/Review/List.vue";
-import TechTime from "../components/operating/TechTime/TechTime.vue";
+import TechTime from "../components/operating/TechTime/List.vue";
 import Alarm from "../components/operating/Alarm/List.vue";
 import Apply from "../components/operating/Apply/List.vue";
 import Agent from "../components/operating/Agent/List.vue";
