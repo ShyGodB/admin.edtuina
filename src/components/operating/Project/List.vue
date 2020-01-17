@@ -437,7 +437,7 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="24">
+                    <!-- <el-col :span="24">
                         <el-form-item label="服务介绍" prop="introduction">
                             <project-introduction :introduction="editForm.introduction"></project-introduction>
                         </el-form-item>
@@ -453,7 +453,50 @@
                         <el-form-item label="服务介绍" prop="notice">
                             <project-notice :notice="editForm.notice"></project-notice>
                         </el-form-item>
+                    </el-col>-->
+
+                    <!-- <el-col :span="3">
+                        <el-form-item label="项目文件" prop="upload">
+                            <el-select
+                                @change="fileChange"
+                                v-model="file"
+                                clearable
+                                placeholder="请选择"
+                            >
+                                <el-option
+                                    v-for="item in fileType"
+                                    :key="item"
+                                    :label="item"
+                                    :value="item"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
                     </el-col>
+
+                    <el-col :span="18">
+                        <el-form-item label="项目图片" prop="upload">
+                            <el-upload
+                                class="upload-demo"
+                                ref="upload"
+                                action="http://127.0.0.1:3102/api/admin/file/sync"
+                                :on-preview="handlePreview"
+                                :on-remove="handleRemove"
+                                :file-list="fileList"
+                                :auto-upload="false"
+                                multiple
+                                list-type="picture-card"
+                            >
+                                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                                <el-button
+                                    style="margin-left: 10px;"
+                                    size="small"
+                                    type="success"
+                                    @click="submitUpload"
+                                >上传到服务器</el-button>
+                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                            </el-upload>
+                        </el-form-item>
+                    </el-col>-->
                 </el-row>
             </el-form>
 
@@ -484,6 +527,8 @@ export default {
             category: ["正常", "加钟"],
             view: ["全部展示", "服务列表", "技师列表", "都不显示"],
             saleType: ["指导价格", "技师星级", "限时促销"],
+            fileType: ["小图", "中图", "大图", "视频"],
+            file: "小图",
             projects: [],
             pageNum: 1,
             pageIndex: 1,
@@ -536,6 +581,7 @@ export default {
                 imgVideo: "",
                 saleType: ""
             },
+            fileList: [],
             editForm: {}
         };
     },
@@ -589,6 +635,9 @@ export default {
         stateChange() {},
         categoryChange() {},
         viewChange() {},
+        fileChange(value) {
+            console.log(value);
+        },
         addStateChange(value) {
             console.log(value);
         },
@@ -641,6 +690,16 @@ export default {
             await this.$api.post("/project/update", { project: this.editForm });
             this.$message.success("修改成功!");
             this.reload();
+        },
+        async submitUpload() {
+            const res = await this.$refs.upload.submit();
+            console.log(res);
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
         }
     },
     created() {
