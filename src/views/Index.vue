@@ -2,8 +2,15 @@
     <div id="Index" class="w-100">
         <el-row class="index-today">
             <el-col :span="4" v-for="(item, index) in today" :key="index">
-                <p>{{ item.name }}</p>
-                <p>{{ item.value }}</p>
+                <el-row>
+                    <el-col :span="10">
+                        <el-image style="width: 40px; height: 40px; margin-left: 3rem" :src="url"></el-image>
+                    </el-col>
+                    <el-col :span="14">
+                        <div>{{ item.name }}</div>
+                        <div style="font-size: x-large">{{ item.value }}</div>
+                    </el-col>
+                </el-row>
             </el-col>
         </el-row>
 
@@ -12,18 +19,18 @@
                 <div ref="myChart" id="myChart"></div>
             </el-col>
 
-            <el-col :span="10" class="seven-user-tech">
+            <el-col :span="10" class="seven-user-tech h-100">
                 <div class="seven-user">
                     <el-row>
-                        <el-col :span="12">总用户</el-col>
+                        <el-col :span="12" class="index-count height-half">总用户</el-col>
 
                         <el-col :span="12">{{ userCount }}</el-col>
                     </el-row>
                 </div>
 
-                <div class="seven-tech">
+                <div class="seven-tech h-100">
                     <el-row>
-                        <el-col :span="12">总技师</el-col>
+                        <el-col :span="12" class="index-count height-half">总技师</el-col>
 
                         <el-col :span="12">{{ techCount }}</el-col>
                     </el-row>
@@ -33,15 +40,19 @@
 
         <el-row class="index-yesterday">
             <el-col :span="4" v-for="(item, index) in yesterday" :key="index">
-                <p>{{ item.name }}</p>
-                <p>{{ item.value }}</p>
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">{{ item.name }}</div>
+                    <div class="text item">{{ item.value }}</div>
+                </el-card>
             </el-col>
         </el-row>
 
         <el-row class="index-yesterday">
             <el-col :span="6" v-for="(item, index) in client" :key="index">
-                <p>{{ item.name }}</p>
-                <p>{{ item.value }}</p>
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">{{ item.name }}</div>
+                    <div class="text item">{{ item.value }}</div>
+                </el-card>
             </el-col>
         </el-row>
     </div>
@@ -59,7 +70,8 @@ export default {
             seven: [],
             userCount: 0,
             techCount: 0,
-            client: []
+            client: [],
+            url: "/public/img/a1.jpg"
         };
     },
     methods: {
@@ -164,5 +176,17 @@ export default {
 #myChart {
     width: 100%;
     height: 400px;
+}
+.index-count {
+    display: inline-block;
+    text-align: right;
+    padding-right: 4rem;
+}
+.height-half {
+    height: 50%;
+    margin: auto;
+}
+.d-inline {
+    display: inline;
 }
 </style>
