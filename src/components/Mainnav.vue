@@ -82,7 +82,7 @@ export default {
     },
     created() {
         this.listMenu();
-        this.activeIndex = check.checkMainActiveIndex(this.$route.name);
+        this.activeIndex = check.checkMenu(this.$route.name, this.menus);
         this.userinfo = this.$store.state.userinfo || {};
     }
 };

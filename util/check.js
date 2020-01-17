@@ -1,196 +1,30 @@
-const handler = {}
-const me = {}
+/**
+ * This file provides two methods to determine the active primary and secondary menus
+ */
 
-handler.checkMainActiveIndex = (routeName) => {
+const checkMenu = (routeName, menus) => {
     let activeIndex = '1'
-    switch (routeName) {
-        case 'Index':
-            activeIndex = '1'
-            break
-        case 'Operating':
-            activeIndex = '2'
-            break
-        case 'Settle':
-            activeIndex = '3'
-            break
-        case 'Data':
-            activeIndex = '4'
-            break
-        case 'Setting':
-            activeIndex = '5'
-            break
-        default:
-            break
-    }
+    menus.forEach((item, index) => {
+        if (routeName === item.route.name) {
+            activeIndex = index + 1 + ''
+            return false
+        }
+    })
     return activeIndex
 }
 
-handler.checkSecondaryActiveIndex = (routeName, tab) => {
+const checkTab = (tab, menus) => {
     let activeIndex = '1'
-    switch (routeName) {
-        case 'Operating':
-            activeIndex = me.checkOperating(tab)
-            break
-        case 'Settle':
-            activeIndex = me.checkSettle(tab)
-            break
-        case 'Data':
-            activeIndex = me.checkData(tab)
-            break
-        case 'Setting':
-            activeIndex = me.checkSetting(tab)
-            break
-        default:
-            break
-    }
+    menus.forEach((item, index) => {
+        if (tab === item.route.params.tab) {
+            activeIndex = index + 1 + ''
+            return false
+        }
+    })
     return activeIndex
 }
 
-me.checkOperating = (tab) => {
-    let activeIndex = '1'
-    switch (tab) {
-        case 'order':
-            activeIndex = '1'
-            break
-        case 'user':
-            activeIndex = '2'
-            break
-        case 'tech':
-            activeIndex = '3'
-            break
-        case 'promote':
-            activeIndex = '4'
-            break
-        case 'techComment':
-            activeIndex = '5'
-            break
-        case 'userComment':
-            activeIndex = '6'
-            break
-        case 'coupon':
-            activeIndex = '7'
-            break
-        case 'project':
-            activeIndex = '8'
-            break
-        case 'complaint':
-            activeIndex = '9'
-            break
-        case 'techApply':
-            activeIndex = '10'
-            break
-        case 'feedback':
-            activeIndex = '11'
-            break
-        case 'review':
-            activeIndex = '12'
-            break
-        case 'techTime':
-            activeIndex = '13'
-            break
-        case 'alarm':
-            activeIndex = '14'
-            break
-        case 'apply':
-            activeIndex = '15'
-            break
-        case 'agent':
-            activeIndex = '16'
-            break
-        default:
-            break
-    }
-    return activeIndex
+export default {
+    checkMenu,
+    checkTab
 }
-
-me.checkSettle = (tab) => {
-    let activeIndex = '1'
-    switch (tab) {
-        case 'settlement':
-            activeIndex = '1'
-            break
-        case 'cash':
-            activeIndex = '2'
-            break
-        case 'techIncome':
-            activeIndex = '3'
-            break
-        case 'account':
-            activeIndex = '4'
-            break
-        case 'refund':
-            activeIndex = '5'
-            break
-        case 'recharge':
-            activeIndex = '6'
-            break
-        default:
-            break
-    }
-    return activeIndex
-}
-
-me.checkData = (tab) => {
-    let activeIndex = '1'
-    switch (tab) {
-        case 'generalSituation':
-            activeIndex = '1'
-            break
-        case 'performanceAnalysis':
-            activeIndex = '2'
-            break
-        case 'userAnalysis':
-            activeIndex = '3'
-            break
-        case 'orderAnalysis':
-            activeIndex = '4'
-            break
-        case 'techAnalysis':
-            activeIndex = '5'
-            break
-        case 'pageTransform':
-            activeIndex = '6'
-            break
-        default:
-            break
-    }
-    return activeIndex
-}
-
-me.checkSetting = (tab) => {
-    let activeIndex = '1'
-    switch (tab) {
-        case 'userList':
-            activeIndex = '1'
-            break
-        case 'roleConfig':
-            activeIndex = '2'
-            break
-        case 'techMethod':
-            activeIndex = '3'
-            break
-        case 'agentLevel':
-            activeIndex = '4'
-            break
-        case 'timeManage':
-            activeIndex = '5'
-            break
-        case 'announce':
-            activeIndex = '6'
-            break
-        case 'withdrawal':
-            activeIndex = '7'
-            break
-        case 'advertise':
-            activeIndex = '8'
-            break
-        case 'enterprise':
-            activeIndex = '9'
-            break
-        default:
-            break
-    }
-    return activeIndex
-}
-
-module.exports = handler
