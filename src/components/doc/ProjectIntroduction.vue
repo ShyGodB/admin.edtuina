@@ -1,5 +1,6 @@
 <template>
     <div id="ProjectIntroduction" class="bg-white">
+        <el-button @click="save">保存</el-button>
         <div :id="id" />
     </div>
 </template>
@@ -109,7 +110,7 @@ export default {
             this.editor.on("change", () => {
                 this.$emit("input", this.editor.getValue());
             });
-            this.setHtml(this.$store.state.projectIntroduction);
+            this.setHtml(this.$store.state.introduction);
         },
         destroyEditor() {
             if (!this.editor) return;
@@ -153,6 +154,8 @@ export default {
             // this.timer = setInterval(async () => {
             //     this.$message.error('保存中')
             // }, 5000)
+            console.log(this.getHtml());
+            this.$store.state.introduction = this.getHtml();
         }
     },
     mounted() {

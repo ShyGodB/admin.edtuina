@@ -1,5 +1,6 @@
 <template>
     <div id="ProjectNotice" class="bg-white">
+        <el-button @click="save">保存</el-button>
         <div :id="id" />
     </div>
 </template>
@@ -153,6 +154,7 @@ export default {
             // this.timer = setInterval(async () => {
             //     this.$message.error('保存中')
             // }, 5000)
+            this.$store.state.taboo = this.getHtml();
         }
     },
     mounted() {

@@ -459,7 +459,7 @@
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogEdit = false">取 消</el-button>
-                <el-button type="primary" @click="updateProject">确 定</el-button>
+                <el-button type="primary" @click="updateProject">确认修改</el-button>
             </div>
         </el-dialog>
     </div>
@@ -546,7 +546,7 @@ export default {
                 _id: row._id
             });
             this.editForm = res.data.data;
-            this.$store.state.projectIntroduction = this.editForm.introduction;
+            this.$store.state.introduction = this.editForm.introduction;
             this.$store.state.taboo = this.editForm.taboo;
             this.$store.state.notice = this.editForm.notice;
         },
@@ -634,7 +634,14 @@ export default {
             this.$message.success("修改状态成功");
         },
         async add() {},
-        updateProject() {}
+        async updateProject() {
+            this.editForm.introduction = this.$store.state.introduction;
+            this.editForm.taboo = this.$store.state.taboo;
+            this.editForm.notice = this.$store.state.notice;
+            await this.$api.post("/project/update", { project: this.editForm });
+            this.$message.success("修改成功!");
+            this.reload();
+        }
     },
     created() {
         this.listProject();
