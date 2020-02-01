@@ -1,13 +1,7 @@
 <template>
     <div id="Complaint">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师姓名" prop="techName">
@@ -51,30 +45,22 @@
 
                 <el-table-column prop="remark" label="备注" height="120"></el-table-column>
 
-                <el-table-column prop="evidence" label="证据" height="120"></el-table-column>
+                <el-table-column label="证据" height="120">
+                    <template slot-scope="scope">
+                        <el-image style="width: 80px; height: 80px" :src="scope.row.evidence"></el-image>
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -83,7 +69,7 @@
 <script>
 export default {
     name: "Complaint",
-    data() {
+    data () {
         return {
             reports: [],
             pageNum: 1,
@@ -114,13 +100,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listReport();
@@ -129,17 +115,17 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listReport();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listReport(this.ruleForm);
         },
-        async listReport(data) {
+        async listReport (data) {
             const res = await this.$api.post(
                 "/report/list",
                 Object.assign(
@@ -158,7 +144,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listReport();
     }
 };
