@@ -62,40 +62,16 @@ const checkHomeData = (homeData) => {
     ]
     const userCount = homeData.userCount
     const techCount = homeData.techCount
-    const client = [
-        {
-            name: '总交易额',
-            value: tmpClient.turnover
-        },
-        {
-            name: '总盈利额',
-            value: tmpClient.benefit
-        },
-        {
-            name: '总单量',
-            value: tmpClient.allOrder
-        },
-        {
-            name: '总成功单',
-            value: tmpClient.successOrder
-        },
-        {
-            name: '总取消单',
-            value: tmpClient.cancelOrder
-        },
-        {
-            name: '总超时单',
-            value: tmpClient.overTimeOrder
-        },
-        {
-            name: '交通费',
-            value: tmpClient.transFee
-        },
-        {
-            name: '优惠卷',
-            value: tmpClient.couponFee
-        }
-    ]
+    const client = {
+        turnover: tmpClient.turnover,
+        benefit: tmpClient.benefit,
+        transFee: tmpClient.transFee,
+        couponFee: tmpClient.couponFee,
+        totalOrder: tmpClient.totalOrder,
+        successOrder: tmpClient.successOrder,
+        overTimeOrder: tmpClient.overTimeOrder,
+        cancelOrder: tmpClient.cancelOrder
+    }
     return {
         today,
         seven,

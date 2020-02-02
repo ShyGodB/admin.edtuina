@@ -45,12 +45,6 @@
 
                 <el-table-column prop="remark" label="备注" height="120"></el-table-column>
 
-                <el-table-column label="证据" height="120">
-                    <template slot-scope="scope">
-                        <el-image style="width: 80px; height: 80px" :src="scope.row.evidence"></el-image>
-                    </template>
-                </el-table-column>
-
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
