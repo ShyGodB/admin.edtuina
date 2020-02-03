@@ -104,10 +104,6 @@
                 <el-table-column label="操作" width="260">
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
-                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
-                        </el-button>
-                        <el-button size="mini" type="success" @click="lookComments(scope.row, scope.$index)" round>查看评论
-                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -244,10 +240,6 @@ export default {
         agentChange (proxyCodes) {
             console.log(proxyCodes);
             this.$store.state.proxyCodes = proxyCodes;
-        },
-        lookComments (row, index) {
-            this.$store.state.userId = row.userId;
-            this.$router.push("/operating/userComment/list");
         },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {

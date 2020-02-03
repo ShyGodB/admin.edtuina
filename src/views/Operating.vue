@@ -26,6 +26,11 @@
         <el-col :span="21" v-if="tab==='tech'">
             <operating-tech v-if="model==='list'"></operating-tech>
             <operating-tech-detail v-if="model==='detail'"></operating-tech-detail>
+            <operating-tech-orderList v-if="model==='orderList'"></operating-tech-orderList>
+            <operating-tech-commentList v-if="model==='commentList'"></operating-tech-commentList>
+            <operating-tech-growthList v-if="model==='growthList'"></operating-tech-growthList>
+            <operating-tech-locationList v-if="model==='locationList'"></operating-tech-locationList>
+            <operating-tech-overList v-if="model==='overList'"></operating-tech-overList>
         </el-col>
 
         <el-col :span="21" v-if="tab==='promote'">
@@ -104,6 +109,11 @@ import UserLocation from "../components/operating/User/Location";
 import UserReview from "../components/operating/User/Review";
 import Tech from "../components/operating/Tech/List.vue";
 import TechDetail from "../components/operating/Tech/Detail";
+import TechCommentList from "../components/operating/Tech/CommentList.vue";
+import TechGrowthList from "../components/operating/Tech/GrowthList.vue";
+import TechLocationList from "../components/operating/Tech/LocationList.vue";
+import TechOrderList from "../components/operating/Tech/OrderList.vue";
+import TechOverList from "../components/operating/Tech/OverList.vue";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
@@ -142,6 +152,11 @@ export default {
         "operating-order": Order,
         "operating-tech": Tech,
         "operating-tech-detail": TechDetail,
+        "operating-tech-orderList": TechOrderList,
+        "operating-tech-commentList": TechCommentList,
+        "operating-tech-growthList": TechGrowthList,
+        "operating-tech-locationList": TechLocationList,
+        "operating-tech-overList": TechOverList,
         "operating-techApply": TechApply,
         "operating-techTime": TechTime,
         "operating-user": User,

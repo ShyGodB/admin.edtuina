@@ -1,5 +1,5 @@
 <template>
-    <div id="Order" class="bg-white">
+    <div id="UserOrderList" class="bg-white">
         <div class="order-search">
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -15,7 +15,7 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="6">
+                    <!-- <el-col :span="6">
                         <el-form-item label="用户姓名" prop="userName">
                             <el-input v-model="ruleForm.userName"></el-input>
                         </el-form-item>
@@ -25,7 +25,7 @@
                         <el-form-item label="用户手机" prop="userPhone">
                             <el-input v-model="ruleForm.userPhone"></el-input>
                         </el-form-item>
-                    </el-col>
+                    </el-col> -->
 
                     <el-col :span="12">
                         <el-form-item label="时间区间" prop="times">
@@ -51,7 +51,7 @@
                     <el-col :span="24">
                         <el-form-item label="订单状态" prop="orderState">
                             <el-checkbox-group @change="orderStateChange" v-model="ruleForm.orderState" size="medium">
-                                <el-checkbox-button v-for="(state, index) in orderState" :label="index"
+                                <el-checkbox-button v-for="(state, index) in orderState" :label="index + 1"
                                     :key="(index + 1)" :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
@@ -78,25 +78,17 @@
             <el-table :data="orders" @row-click="rowInfo" style="width: 100%">
                 <el-table-column prop="techName" label="技师姓名" width="120"></el-table-column>
 
-                <el-table-column prop="userName" label="用户姓名" width="120"></el-table-column>
+                <el-table-column prop="light" label="灯色" width="120"></el-table-column>
 
-                <el-table-column prop="userDanger" label="危险" width="80"></el-table-column>
+                <el-table-column prop="reason" label="原因" width="80"></el-table-column>
 
-                <el-table-column prop="userPhone" label="用户手机" width="120"></el-table-column>
+                <el-table-column prop="remark" label="备注" width="120"></el-table-column>
 
-                <el-table-column prop="projectsName" label="项目名称" width="160"></el-table-column>
+                <el-table-column prop="money" label="涉及金额" width="160"></el-table-column>
 
-                <el-table-column prop="source" label="来源" width="120"></el-table-column>
+                <el-table-column prop="addTime" label="时间" width="120"></el-table-column>
 
-                <el-table-column prop="payService" label="服务费" width="100"></el-table-column>
-
-                <el-table-column prop="payTrans" label="交通费" width="100"></el-table-column>
-
-                <el-table-column prop="payCoupon" label="优惠卷" width="100"></el-table-column>
-
-                <el-table-column prop="payPrice" label="实际支付" width="100"></el-table-column>
-
-                <el-table-column prop="addTime" label="下单时间" width="180"></el-table-column>
+                <el-table-column prop="addUserName" label="添加人" width="100"></el-table-column>
 
                 <el-table-column label="状态" width="80">
                     <template slot-scope="scope">
@@ -209,12 +201,13 @@ export default {
         },
         async listOrder () {
             const res = await this.$api.post(
-                "/order/list",
+                "/tech/listGrowth",
                 Object.assign(
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
-                    { pageSize: this.pageSize }
+                    { pageSize: this.pageSize },
+                    { userId: this.$store.state.userId }
                 )
             );
             this.orders = res.data.data.list || [];

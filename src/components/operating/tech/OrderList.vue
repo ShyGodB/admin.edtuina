@@ -1,5 +1,5 @@
 <template>
-    <div id="Order" class="bg-white">
+    <div id="TechOrderList" class="bg-white">
         <div class="order-search">
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -15,7 +15,7 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="6">
+                    <!-- <el-col :span="6">
                         <el-form-item label="用户姓名" prop="userName">
                             <el-input v-model="ruleForm.userName"></el-input>
                         </el-form-item>
@@ -25,7 +25,7 @@
                         <el-form-item label="用户手机" prop="userPhone">
                             <el-input v-model="ruleForm.userPhone"></el-input>
                         </el-form-item>
-                    </el-col>
+                    </el-col> -->
 
                     <el-col :span="12">
                         <el-form-item label="时间区间" prop="times">
@@ -214,7 +214,8 @@ export default {
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
-                    { pageSize: this.pageSize }
+                    { pageSize: this.pageSize },
+                    { techId: this.$store.state.techId }
                 )
             );
             this.orders = res.data.data.list || [];
