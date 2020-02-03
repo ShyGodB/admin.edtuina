@@ -1,13 +1,7 @@
 <template>
-    <div id="Apply">
+    <div id="Apply" class="bg-white">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师i姓名" prop="techName">
@@ -43,42 +37,30 @@
 
         <div class="order-table">
             <el-table :data="applys" style="width: 100%">
-                <el-table-column prop="userId" label="用户编号" width="120" ></el-table-column>
+                <el-table-column prop="userId" label="用户编号" width="120"></el-table-column>
 
-                <el-table-column prop="avatar" label="头像" width="120" ></el-table-column>
+                <el-table-column prop="avatar" label="头像" width="120"></el-table-column>
 
-                <el-table-column prop="idCard" label="身份证号" width="80" ></el-table-column>
+                <el-table-column prop="idCard" label="身份证号" width="80"></el-table-column>
 
-                <el-table-column prop="realName" label="真实姓名" width="120" ></el-table-column>
+                <el-table-column prop="realName" label="真实姓名" width="120"></el-table-column>
 
-                <el-table-column prop="state" label="状态" width="160" ></el-table-column>
+                <el-table-column prop="state" label="状态" width="160"></el-table-column>
 
-                <el-table-column prop="remark" label="备注" width="120" ></el-table-column>
+                <el-table-column prop="remark" label="备注" width="120"></el-table-column>
 
-                <el-table-column prop="addTime" label="添加时间" width="100" ></el-table-column>
+                <el-table-column prop="addTime" label="添加时间" width="100"></el-table-column>
 
-                <el-table-column label="操作" >
+                <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -89,7 +71,7 @@ import axios from "axios";
 
 export default {
     name: "Apply",
-    data() {
+    data () {
         return {
             applys: [],
             pageNum: 1,
@@ -120,13 +102,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listApply(this.ruleForm);
@@ -136,17 +118,17 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listApply(this.ruleForm);
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listApply(this.ruleForm);
         },
-        async listApply(data) {
+        async listApply (data) {
             const res = await this.$api.post(
                 "/tech/listTechApply",
                 Object.assign(
@@ -165,7 +147,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listApply();
     }
 };

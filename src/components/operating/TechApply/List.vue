@@ -1,13 +1,7 @@
 <template>
-    <div id="TechApply">
+    <div id="TechApply" class="bg-white">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="用户姓名" prop="userName">
@@ -31,38 +25,26 @@
 
         <div class="techapply-table">
             <el-table :data="reports" style="width: 100%">
-                <el-table-column prop="userId" label="用户编号" ></el-table-column>
+                <el-table-column prop="userId" label="用户编号"></el-table-column>
 
-                <el-table-column prop="techId" label="技师编号" ></el-table-column>
+                <el-table-column prop="techId" label="技师编号"></el-table-column>
 
-                <el-table-column prop="labels" label="标签" ></el-table-column>
+                <el-table-column prop="labels" label="标签"></el-table-column>
 
-                <el-table-column prop="remark" label="备注" ></el-table-column>
+                <el-table-column prop="remark" label="备注"></el-table-column>
 
-                <el-table-column prop="evidence" label="证据" ></el-table-column>
+                <el-table-column prop="evidence" label="证据"></el-table-column>
 
-                <el-table-column label="操作" >
+                <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -71,7 +53,7 @@
 <script>
 export default {
     name: "TechApply",
-    data() {
+    data () {
         return {
             reports: [],
             pageNum: 1,
@@ -100,13 +82,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listTechApply();
@@ -115,17 +97,17 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listTechApply();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listTechApply(this.ruleForm);
         },
-        async listTechApply(data) {
+        async listTechApply (data) {
             const res = await this.$api.post(
                 "/tech/listTechApply",
                 Object.assign(
@@ -144,7 +126,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listTechApply();
     }
 };

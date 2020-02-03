@@ -1,5 +1,5 @@
 <template>
-    <div id="Alarm">
+    <div id="Alarm" class="bg-white">
         <div class="promote-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>

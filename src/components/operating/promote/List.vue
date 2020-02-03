@@ -1,5 +1,5 @@
 <template>
-    <div id="Promote">
+    <div id="Promote" class="bg-white">
         <div class="promote-search">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -18,7 +18,7 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="6">
+                    <el-col :span="12">
                         <el-form-item label="申请状态" prop="state">
                             <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
                                 <el-checkbox-button v-for="(state, index) in states" :label="state" :key="(index + 1)"

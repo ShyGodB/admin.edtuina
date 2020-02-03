@@ -1,13 +1,7 @@
 <template>
-    <div id="TechTime">
+    <div id="TechTime" class="bg-white">
         <div class="techTime-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="技师i姓名" prop="techName">
@@ -111,15 +105,8 @@
         </el-table>
 
         <div class="pagination">
-            <el-pagination
-                ref="fenye"
-                background
-                @size-change="sizeChange"
-                @current-change="pageChange"
-                layout="prev, pager, next"
-                :hide-on-single-page="true"
-                :page-count="pageNum"
-            ></el-pagination>
+            <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
         </div>
     </div>
 </template>
@@ -128,7 +115,7 @@
 <script>
 export default {
     name: "TechTime",
-    data() {
+    data () {
         return {
             tableData: [],
             ruleForm: {
@@ -158,13 +145,13 @@ export default {
         };
     },
     methods: {
-        handleEdit(row, index) {
+        handleEdit (row, index) {
             console.log(row, index);
         },
-        handleDelete(row, index) {
+        handleDelete (row, index) {
             console.log(row, index);
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     console.log(this.ruleForm);
@@ -174,20 +161,20 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
         },
-        handleClick(row) {
+        handleClick (row) {
             console.log(row);
         },
-        pageChange(num) {
+        pageChange (num) {
             this.pageIndex = num;
             this.listOrder();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listOrder(this.ruleForm);
         },
-        async listTechTime() {
+        async listTechTime () {
             const res = await this.$api.post(
                 "/tech/listTime",
                 Object.assign(
@@ -207,7 +194,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listTechTime();
     }
 };

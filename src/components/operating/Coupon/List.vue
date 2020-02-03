@@ -1,30 +1,15 @@
 <template>
-    <div id="Settle-Cash">
+    <div id="Settle-Cash" class="bg-white">
         <div class="techIncome-search">
-            <el-form
-                :model="ruleForm"
-                :inline="true"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :inline="true" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
 
                 <el-form-item label="代理商" prop="proxy">
-                    <el-select
-                        @change="agentChange"
-                        v-model="ruleForm.proxy"
-                        clearable
-                        placeholder="请选择代理商，默认无此限制"
-                    >
-                        <el-option
-                            v-for="item in agentOptions"
-                            :key="item.proxyCode"
-                            :label="item.agentName"
-                            :value="item.proxyCode"
-                        ></el-option>
+                    <el-select @change="agentChange" v-model="ruleForm.proxy" clearable placeholder="请选择代理商，默认无此限制">
+                        <el-option v-for="item in agentOptions" :key="item.proxyCode" :label="item.agentName"
+                            :value="item.proxyCode"></el-option>
                     </el-select>
                 </el-form-item>
 
@@ -61,49 +46,26 @@
 
                 <el-table-column label="状态" width="120">
                     <template slot-scope="scope">
-                        <el-switch
-                            @change="offChange(scope.row)"
-                            v-model="scope.row.off"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                        ></el-switch>
+                        <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                            inactive-color="#ff4949"></el-switch>
                     </template>
                 </el-table-column>
 
                 <el-table-column label="操作" width="260">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="edit(scope.row, scope.$index)"
-                            round
-                        >编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="success"
-                            @click="coupon(scope.row, scope.$index)"
-                            round
-                        >优惠卷</el-button>
-                        <el-button
-                            size="mini"
-                            type="success"
-                            @click="code(scope.row, scope.$index)"
-                            round
-                        >激活码</el-button>
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
+                        </el-button>
+                        <el-button size="mini" type="success" @click="coupon(scope.row, scope.$index)" round>优惠卷
+                        </el-button>
+                        <el-button size="mini" type="success" @click="code(scope.row, scope.$index)" round>激活码
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="pageChange"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
 
             <el-dialog title="赠送优惠卷" :visible.sync="dialogFormVisible">
@@ -112,17 +74,9 @@
                         <el-input v-model="form.phone" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="优惠卷类型" prop="stores">
-                        <el-checkbox-group
-                            @change="storeChange"
-                            v-model="form.stores"
-                            size="medium"
-                        >
-                            <el-checkbox-button
-                                v-for="(name, index) in stores"
-                                :label="name"
-                                :key="index + 1"
-                                :index="index + 1"
-                            >{{name}}</el-checkbox-button>
+                        <el-checkbox-group @change="storeChange" v-model="form.stores" size="medium">
+                            <el-checkbox-button v-for="(name, index) in stores" :label="name" :key="index + 1"
+                                :index="index + 1">{{name}}</el-checkbox-button>
                         </el-checkbox-group>
                     </el-form-item>
                 </el-form>
@@ -143,18 +97,9 @@
 
                         <el-col :span="6">
                             <el-form-item label="类型" prop="danger">
-                                <el-select
-                                    @change="typeChange"
-                                    v-model="storeForm.type"
-                                    clearable
-                                    placeholder="请选择"
-                                >
-                                    <el-option
-                                        v-for="item in storeTypes"
-                                        :key="item"
-                                        :label="item"
-                                        :value="item"
-                                    ></el-option>
+                                <el-select @change="typeChange" v-model="storeForm.type" clearable placeholder="请选择">
+                                    <el-option v-for="item in storeTypes" :key="item" :label="item" :value="item">
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -209,35 +154,19 @@
 
                         <el-col :span="6">
                             <el-form-item label="代理商" prop="proxy">
-                                <el-select
-                                    @change="agentChange"
-                                    v-model="storeForm.proxy"
-                                    clearable
-                                    placeholder="请选择代理商，默认无此限制"
-                                >
-                                    <el-option
-                                        v-for="item in agentOptions"
-                                        :key="item.proxyCode"
-                                        :label="item.agentName"
-                                        :value="item.proxyCode"
-                                    ></el-option>
+                                <el-select @change="agentChange" v-model="storeForm.proxy" clearable
+                                    placeholder="请选择代理商，默认无此限制">
+                                    <el-option v-for="item in agentOptions" :key="item.proxyCode"
+                                        :label="item.agentName" :value="item.proxyCode"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
 
                         <el-col :span="24">
                             <el-form-item label="限定项目" prop="projects">
-                                <el-checkbox-group
-                                    @change="projectChange"
-                                    v-model="storeForm.projects"
-                                    size="medium"
-                                >
-                                    <el-checkbox-button
-                                        v-for="item in projects"
-                                        :label="item.projectId"
-                                        :key="item.proejctId"
-                                        :index="item.projectId"
-                                    >{{item.name}}</el-checkbox-button>
+                                <el-checkbox-group @change="projectChange" v-model="storeForm.projects" size="medium">
+                                    <el-checkbox-button v-for="item in projects" :label="item.projectId"
+                                        :key="item.proejctId" :index="item.projectId">{{item.name}}</el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
                         </el-col>
@@ -253,12 +182,8 @@
 
                         <el-col :span="6">
                             <el-form-item label="生效时间" prop="startTime">
-                                <el-date-picker
-                                    v-model="storeForm.startTime"
-                                    type="datetime"
-                                    placeholder="选择生效时间"
-                                    default-time="12:00:00"
-                                ></el-date-picker>
+                                <el-date-picker v-model="storeForm.startTime" type="datetime" placeholder="选择生效时间"
+                                    default-time="12:00:00"></el-date-picker>
                             </el-form-item>
                         </el-col>
 
@@ -287,18 +212,9 @@
 
                         <el-col :span="6">
                             <el-form-item label="类型" prop="danger">
-                                <el-select
-                                    @change="typeChange"
-                                    v-model="editForm.type"
-                                    clearable
-                                    placeholder="请选择"
-                                >
-                                    <el-option
-                                        v-for="item in storeTypes"
-                                        :key="item"
-                                        :label="item"
-                                        :value="item"
-                                    ></el-option>
+                                <el-select @change="typeChange" v-model="editForm.type" clearable placeholder="请选择">
+                                    <el-option v-for="item in storeTypes" :key="item" :label="item" :value="item">
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -335,11 +251,7 @@
 
                         <el-col :span="6">
                             <el-form-item label="有效天数" prop="indate">
-                                <el-input
-                                    @input="indateChange"
-                                    v-model="editForm.indate"
-                                    autocomplete="off"
-                                ></el-input>
+                                <el-input @input="indateChange" v-model="editForm.indate" autocomplete="off"></el-input>
                             </el-form-item>
                         </el-col>
 
@@ -357,35 +269,19 @@
 
                         <el-col :span="12">
                             <el-form-item label="代理商" prop="proxy">
-                                <el-select
-                                    @change="agentChange"
-                                    v-model="editForm.proxy"
-                                    clearable
-                                    placeholder="请选择代理商，默认无此限制"
-                                >
-                                    <el-option
-                                        v-for="item in agentOptions"
-                                        :key="item.proxyCode"
-                                        :label="item.agentName"
-                                        :value="item.proxyCode"
-                                    ></el-option>
+                                <el-select @change="agentChange" v-model="editForm.proxy" clearable
+                                    placeholder="请选择代理商，默认无此限制">
+                                    <el-option v-for="item in agentOptions" :key="item.proxyCode"
+                                        :label="item.agentName" :value="item.proxyCode"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
 
                         <el-col :span="24">
                             <el-form-item label="限定项目" prop="projects">
-                                <el-checkbox-group
-                                    @change="projectChange"
-                                    v-model="editForm.projects"
-                                    size="medium"
-                                >
-                                    <el-checkbox-button
-                                        v-for="item in projects"
-                                        :label="item.projectId"
-                                        :key="item.proejctId"
-                                        :index="item.projectId"
-                                    >{{item.name}}</el-checkbox-button>
+                                <el-checkbox-group @change="projectChange" v-model="editForm.projects" size="medium">
+                                    <el-checkbox-button v-for="item in projects" :label="item.projectId"
+                                        :key="item.proejctId" :index="item.projectId">{{item.name}}</el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
                         </el-col>
@@ -401,23 +297,15 @@
 
                         <el-col :span="6">
                             <el-form-item label="生效时间" prop="startTime">
-                                <el-date-picker
-                                    @change="startTimeChange"
-                                    v-model="editForm.startTime"
-                                    type="datetime"
-                                    placeholder="选择生效时间"
-                                    default-time="12:00:00"
-                                ></el-date-picker>
+                                <el-date-picker @change="startTimeChange" v-model="editForm.startTime" type="datetime"
+                                    placeholder="选择生效时间" default-time="12:00:00"></el-date-picker>
                             </el-form-item>
                         </el-col>
 
                         <el-col :span="6">
                             <el-form-item label="过期时间" prop="endTime">
-                                <el-date-picker
-                                    v-model="editForm.endTime"
-                                    type="datetime"
-                                    placeholder="过期事件"
-                                ></el-date-picker>
+                                <el-date-picker v-model="editForm.endTime" type="datetime" placeholder="过期事件">
+                                </el-date-picker>
                             </el-form-item>
                         </el-col>
 
@@ -445,7 +333,7 @@ import util from "../../../../util";
 export default {
     inject: ["reload"],
     name: "Settle-Cash",
-    data() {
+    data () {
         return {
             tableData: [],
             pageIndex: 1,
@@ -490,7 +378,7 @@ export default {
         };
     },
     methods: {
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listCoupon();
@@ -499,38 +387,38 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listCoupon();
         },
-        pageChange(pageNum) {
+        pageChange (pageNum) {
             this.pageIndex = pageNum;
             this.listCoupon();
         },
-        sizeChange(num) {},
-        agentChange() {},
-        typeChange() {},
-        projectChange() {},
-        agentChange() {},
-        editChange() {},
-        storeChange(value) {
+        sizeChange (num) { },
+        agentChange () { },
+        typeChange () { },
+        projectChange () { },
+        agentChange () { },
+        editChange () { },
+        storeChange (value) {
             console.log(value);
         },
-        indateChange(value) {
+        indateChange (value) {
             const date = new Date();
             var time =
                 date.getTime(this.editForm.startTime) +
                 Number(value) * 24 * 60 * 60 * 1000;
             this.editForm.endTime = new Date(time);
         },
-        startTimeChange(value) {
+        startTimeChange (value) {
             const date = new Date();
             var time =
                 date.getTime(this.editForm.startTime) +
                 Number(this.editForm.indate || 0) * 24 * 60 * 60 * 1000;
             this.editForm.endTime = new Date(time);
         },
-        selectAll(type) {
+        selectAll (type) {
             if (type === "add") {
                 this.storeForm.projects = [];
                 this.projects.forEach(item => {
@@ -543,7 +431,7 @@ export default {
                 });
             }
         },
-        selectFormal(type) {
+        selectFormal (type) {
             if (type === "add") {
                 this.storeForm.projects = [];
                 this.projects.forEach(item => {
@@ -560,7 +448,7 @@ export default {
                 });
             }
         },
-        selectAddClock(type) {
+        selectAddClock (type) {
             if (type === "add") {
                 this.storeForm.projects = [];
                 this.projects.forEach(item => {
@@ -577,14 +465,14 @@ export default {
                 });
             }
         },
-        selectCancel(type) {
+        selectCancel (type) {
             if (type === "add") {
                 this.storeForm.projects = [];
             } else {
                 this.editForm.projects = [];
             }
         },
-        async edit(row) {
+        async edit (row) {
             this.editDialog = true;
             const res = await this.$api.post("/coupon/getStore", {
                 _id: row._id
@@ -594,7 +482,7 @@ export default {
             await this.listAgent();
             this.editForm = res.data.data;
         },
-        coupon(row) {
+        coupon (row) {
             this.$store.state.couponStoreId = row._id.toString();
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve(
@@ -602,20 +490,20 @@ export default {
             );
             window.open(href, "_blank");
         },
-        async code(row) {
+        async code (row) {
             this.$store.state.couponStoreId = row._id.toString();
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/operating/coupon/codes");
             window.open(href, "_blank");
         },
-        async offChange(row) {
+        async offChange (row) {
             await this.$api.post("/coupon/switch", {
                 _id: row._id,
                 off: !row.off
             });
             this.$message.success("修改状态成功");
         },
-        async listCoupon() {
+        async listCoupon () {
             const res = await this.$api.post(
                 "/coupon/list",
                 Object.assign(
@@ -636,7 +524,7 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async listProject(type) {
+        async listProject (type) {
             const res = await this.$api.get("/project/list", {});
             this.projects = res.data.data.list;
             this.projects.forEach(item => {
@@ -644,11 +532,11 @@ export default {
             });
             return res.data.data.list;
         },
-        async listAgent() {
+        async listAgent () {
             const res = await this.$api.get("/agent/listAgent", {});
             this.agentOptions = res.data.data;
         },
-        async update() {
+        async update () {
             const projects = util.tool.checkProject(
                 this.projects,
                 this.editForm.projects
@@ -665,7 +553,7 @@ export default {
                 this.$message.error(res.data.msg || "修改失败");
             }
         },
-        async give() {
+        async give () {
             this.dialogFormVisible = false;
             const res = await this.$api.post("/coupon/give", this.form);
             if (res.data.success) {
@@ -675,12 +563,12 @@ export default {
                 this.$message.error(res.data.msg || "赠送失败");
             }
         },
-        addCouponStore() {
+        addCouponStore () {
             this.dialog = true;
             this.listAgent();
             this.listProject();
         },
-        async add() {
+        async add () {
             const projects = util.tool.checkProject(
                 this.projects,
                 this.storeForm.projects
@@ -699,7 +587,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listCoupon();
         this.listAgent();
     }

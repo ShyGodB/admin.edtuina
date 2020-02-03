@@ -1,13 +1,7 @@
 <template>
-    <div id="Settle-Cash">
+    <div id="Settle-Cash" class="bg-white">
         <div class="techIncome-search">
-            <el-form
-                :model="ruleForm"
-                :inline="true"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :inline="true" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="姓名" prop="userName">
                     <el-input v-model="ruleForm.userName"></el-input>
                 </el-form-item>
@@ -42,15 +36,8 @@
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="pageChange"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -61,7 +48,7 @@
 export default {
     inject: ["reload"],
     name: "Settle-Cash",
-    data() {
+    data () {
         return {
             tableData: [],
             pageIndex: 1,
@@ -74,7 +61,7 @@ export default {
         };
     },
     methods: {
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listCoupon();
@@ -83,16 +70,16 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listCoupon();
         },
-        pageChange(pageNum) {
+        pageChange (pageNum) {
             this.pageIndex = pageNum;
             this.listCoupon();
         },
-        sizeChange(num) {},
-        async listCoupon() {
+        sizeChange (num) { },
+        async listCoupon () {
             const res = await this.$api.post(
                 "/coupon/listCode",
                 Object.assign(
@@ -111,7 +98,7 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async createCodes() {
+        async createCodes () {
             this.$prompt("请输入正整数", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消"
@@ -139,7 +126,7 @@ export default {
                 });
         }
     },
-    created() {
+    created () {
         this.listCoupon();
     }
 };

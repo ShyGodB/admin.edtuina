@@ -1,61 +1,31 @@
 <template>
-    <div id="Project">
+    <div id="Project" class="bg-white">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="状态" prop="state">
-                            <el-checkbox-group
-                                @change="stateChange"
-                                v-model="ruleForm.state"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in state"
-                                    :label="state"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
+                                <el-checkbox-button v-for="(state, index) in state" :label="state" :key="(index + 1)"
+                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="类别" prop="category">
-                            <el-checkbox-group
-                                @change="categoryChange"
-                                v-model="ruleForm.category"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(category, index) in category"
-                                    :label="category"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{category}}</el-checkbox-button>
+                            <el-checkbox-group @change="categoryChange" v-model="ruleForm.category" size="medium">
+                                <el-checkbox-button v-for="(category, index) in category" :label="category"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{category}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12">
                         <el-form-item label="展示属性" prop="view">
-                            <el-checkbox-group
-                                @change="viewChange"
-                                v-model="ruleForm.view"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(view, index) in view"
-                                    :label="view"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{view}}</el-checkbox-button>
+                            <el-checkbox-group @change="viewChange" v-model="ruleForm.view" size="medium">
+                                <el-checkbox-button v-for="(view, index) in view" :label="view" :key="(index + 1)"
+                                    :index="(index + 1).toString()">{{view}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -71,71 +41,47 @@
 
         <div class="project-table">
             <el-table :data="projects" style="width: 100%">
-                <el-table-column prop="projectId" label="项目编号" width="120" ></el-table-column>
+                <el-table-column prop="projectId" label="项目编号" width="120"></el-table-column>
 
-                <el-table-column prop="name" label="名字" width="200" ></el-table-column>
+                <el-table-column prop="name" label="名字" width="200"></el-table-column>
 
-                <el-table-column prop="originalPrice" label="原价" width="120" ></el-table-column>
+                <el-table-column prop="originalPrice" label="原价" width="120"></el-table-column>
 
-                <el-table-column prop="price" label="默认价格" width="160" ></el-table-column>
+                <el-table-column prop="price" label="默认价格" width="160"></el-table-column>
 
-                <el-table-column prop="isFirst" label="是否首单" width="120" ></el-table-column>
+                <el-table-column prop="isFirst" label="是否首单" width="120"></el-table-column>
 
-                <el-table-column prop="time" label="时长" width="100" ></el-table-column>
+                <el-table-column prop="time" label="时长" width="100"></el-table-column>
 
-                <el-table-column prop="category" label="项目类别" width="100" ></el-table-column>
+                <el-table-column prop="category" label="项目类别" width="100"></el-table-column>
 
-                <el-table-column prop="view" label="展示属性" width="100" ></el-table-column>
+                <el-table-column prop="view" label="展示属性" width="100"></el-table-column>
 
-                <el-table-column prop="saleCount" label="销售量" width="100" ></el-table-column>
+                <el-table-column prop="saleCount" label="销售量" width="100"></el-table-column>
 
-                <el-table-column prop="sort" label="排序" width="180" ></el-table-column>
+                <el-table-column prop="sort" label="排序" width="180"></el-table-column>
 
                 <el-table-column label="状态" width="120">
                     <template slot-scope="scope">
-                        <el-switch
-                            @change="offChange(scope.row)"
-                            v-model="scope.row.off"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                        ></el-switch>
+                        <el-switch @change="offChange(scope.row)" v-model="scope.row.off" active-color="#13ce66"
+                            inactive-color="#ff4949"></el-switch>
                     </template>
                 </el-table-column>
 
                 <el-table-column label="操作" width="240">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="success"
-                            @click="copy(scope.row, scope.$index)"
-                            round
-                        >复制</el-button>
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="edit(scope.row, scope.$index)"
-                            round
-                        >编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click="del(scope.row, scope.$index)"
-                            round
-                        >删除</el-button>
+                        <el-button size="mini" type="success" @click="copy(scope.row, scope.$index)" round>复制
+                        </el-button>
+                        <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑
+                        </el-button>
+                        <el-button size="mini" type="danger" @click="del(scope.row, scope.$index)" round>删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
 
@@ -159,18 +105,8 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="类别" prop="category">
-                            <el-select
-                                @change="categoryChange"
-                                v-model="addForm.category"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in category"
-                                    :key="item"
-                                    :label="item"
-                                    :value="item"
-                                ></el-option>
+                            <el-select @change="categoryChange" v-model="addForm.category" clearable placeholder="请选择">
+                                <el-option v-for="item in category" :key="item" :label="item" :value="item"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -208,18 +144,8 @@
 
                     <el-col :span="6">
                         <el-form-item label="定价方式" prop="category">
-                            <el-select
-                                @change="categoryChange"
-                                v-model="addForm.saleType"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in saleType"
-                                    :key="item"
-                                    :label="item"
-                                    :value="item"
-                                ></el-option>
+                            <el-select @change="categoryChange" v-model="addForm.saleType" clearable placeholder="请选择">
+                                <el-option v-for="item in saleType" :key="item" :label="item" :value="item"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -312,18 +238,8 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="类别" prop="category">
-                            <el-select
-                                @change="categoryChange"
-                                v-model="editForm.category"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in category"
-                                    :key="item"
-                                    :label="item"
-                                    :value="item"
-                                ></el-option>
+                            <el-select @change="categoryChange" v-model="editForm.category" clearable placeholder="请选择">
+                                <el-option v-for="item in category" :key="item" :label="item" :value="item"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -361,18 +277,8 @@
 
                     <el-col :span="6">
                         <el-form-item label="定价方式" prop="category">
-                            <el-select
-                                @change="categoryChange"
-                                v-model="editForm.saleType"
-                                clearable
-                                placeholder="请选择"
-                            >
-                                <el-option
-                                    v-for="item in saleType"
-                                    :key="item"
-                                    :label="item"
-                                    :value="item"
-                                ></el-option>
+                            <el-select @change="categoryChange" v-model="editForm.saleType" clearable placeholder="请选择">
+                                <el-option v-for="item in saleType" :key="item" :label="item" :value="item"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -521,7 +427,7 @@ export default {
         "project-taboo": ProjectTaboo,
         "project-notice": ProjectNotice
     },
-    data() {
+    data () {
         return {
             state: ["正常", "禁用"],
             category: ["正常", "加钟"],
@@ -586,7 +492,7 @@ export default {
         };
     },
     methods: {
-        async edit(row, index) {
+        async edit (row, index) {
             this.dialogEdit = true;
             const res = await this.$api.get("/project/detail", {
                 _id: row._id
@@ -596,7 +502,7 @@ export default {
             this.$store.state.taboo = this.editForm.taboo;
             this.$store.state.notice = this.editForm.notice;
         },
-        async del(row, index) {
+        async del (row, index) {
             this.$confirm("此操作将永久删除该项目, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
@@ -614,12 +520,12 @@ export default {
                     });
                 });
         },
-        async copy(row, index) {
+        async copy (row, index) {
             await this.$api.post("/project/copy", { _id: row._id });
             this.$message.success("复制成功");
             this.reload();
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listProject();
@@ -628,36 +534,36 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listProject();
         },
-        stateChange() {},
-        categoryChange() {},
-        viewChange() {},
-        fileChange(value) {
+        stateChange () { },
+        categoryChange () { },
+        viewChange () { },
+        fileChange (value) {
             console.log(value);
         },
-        addStateChange(value) {
+        addStateChange (value) {
             console.log(value);
         },
-        addTagsChange(value) {
+        addTagsChange (value) {
             console.log(value);
         },
-        addViewChange(value) {
+        addViewChange (value) {
             console.log(value);
         },
-        addIsFirstChange(value) {
+        addIsFirstChange (value) {
             console.log(value);
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listProject();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listProject(this.ruleForm);
         },
-        async listProject() {
+        async listProject () {
             const res = await this.$api.post(
                 "/project/list",
                 Object.assign(
@@ -675,15 +581,15 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async offChange(row) {
+        async offChange (row) {
             await this.$api.post("/project/switch", {
                 _id: row._id,
                 off: !row.off
             });
             this.$message.success("修改状态成功");
         },
-        async add() {},
-        async updateProject() {
+        async add () { },
+        async updateProject () {
             this.editForm.introduction = this.$store.state.introduction;
             this.editForm.taboo = this.$store.state.taboo;
             this.editForm.notice = this.$store.state.notice;
@@ -691,18 +597,18 @@ export default {
             this.$message.success("修改成功!");
             this.reload();
         },
-        async submitUpload() {
+        async submitUpload () {
             const res = await this.$refs.upload.submit();
             console.log(res);
         },
-        handleRemove(file, fileList) {
+        handleRemove (file, fileList) {
             console.log(file, fileList);
         },
-        handlePreview(file) {
+        handlePreview (file) {
             console.log(file);
         }
     },
-    created() {
+    created () {
         this.listProject();
     }
 };

@@ -1,30 +1,16 @@
 <template>
-    <div id="Agent">
+    <div id="Agent" class="bg-white">
         <div class="agent-search">
-            <el-form
-                :model="ruleForm"
-                :inline="true"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="100px"
+                class="demo-ruleForm">
                 <el-form-item label="渠道名称" prop="agentName">
                     <el-input v-model="ruleForm.agentName"></el-input>
                 </el-form-item>
                 <el-form-item label="代理商" prop="parentProxyCode">
-                    <el-select
-                        @change="agentChange"
-                        v-model="ruleForm.parentProxyCode"
-                        clearable
-                        placeholder="请选择代理商，默认无此限制"
-                    >
-                        <el-option
-                            v-for="item in agentOptions"
-                            :key="item.proxyCode"
-                            :label="item.agentName"
-                            :value="item.proxyCode"
-                        ></el-option>
+                    <el-select @change="agentChange" v-model="ruleForm.parentProxyCode" clearable
+                        placeholder="请选择代理商，默认无此限制">
+                        <el-option v-for="item in agentOptions" :key="item.proxyCode" :label="item.agentName"
+                            :value="item.proxyCode"></el-option>
                     </el-select>
                 </el-form-item>
 
@@ -53,35 +39,18 @@
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button
-                            v-if="scope.row.state=='待审核'"
-                            size="mini"
-                            type="danger"
-                            @click="agree(scope.row, scope.$index)"
-                            round
-                        >同意</el-button>
-                        <el-button
-                            v-if="scope.row.state=='待审核'"
-                            size="mini"
-                            type="primary"
-                            @click="refuse(scope.row, scope.$index)"
-                            round
-                        >拒绝</el-button>
+                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="danger"
+                            @click="agree(scope.row, scope.$index)" round>同意</el-button>
+                        <el-button v-if="scope.row.state=='待审核'" size="mini" type="primary"
+                            @click="refuse(scope.row, scope.$index)" round>拒绝</el-button>
                         <div v-if="scope.row.state!='待审核'">{{ scope.row.state }}</div>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -93,7 +62,7 @@ import util from "../../../../util";
 
 export default {
     name: "Agent",
-    data() {
+    data () {
         return {
             promotes: [],
             agentOptions: [],
@@ -124,19 +93,19 @@ export default {
         };
     },
     methods: {
-        agree(row, index) {
+        agree (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        refuse(row, index) {
+        refuse (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listAgent();
@@ -145,19 +114,19 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listAgent();
         },
-        change(pageNum) {
+        change (pageNum) {
             this.pageIndex = pageNum;
             this.listAgent();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             console.log("funtion: sizeChange", num);
         },
-        agentChange(value) {},
-        async listAgent(data) {
+        agentChange (value) { },
+        async listAgent (data) {
             const res = await this.$api.post(
                 "/agent/list",
                 Object.assign(
@@ -175,16 +144,16 @@ export default {
                 this.pageNum += 1;
             }
         },
-        async getAgentOptions() {
+        async getAgentOptions () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         },
-        async listProxy() {
+        async listProxy () {
             const res = await this.$api.get("/agent/listAgent", {});
             this.agentOptions = res.data.data;
         }
     },
-    created() {
+    created () {
         this.listAgent();
         this.listProxy();
     }

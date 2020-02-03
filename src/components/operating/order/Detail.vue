@@ -1,5 +1,5 @@
 <template>
-    <div id="OrderDetail">
+    <div id="OrderDetail" class="bg-white">
         <div class="order-detail-steps bg-white p-3 mt-3 mr-3">
             <el-steps class="ml-5" :space="500" :active="activeIndex" finish-status="success">
                 <el-step title="已下单"></el-step>
