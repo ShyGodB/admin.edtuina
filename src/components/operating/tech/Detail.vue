@@ -1,7 +1,7 @@
 <template>
     <div id="TechDetail">
-        <div id="tech-detail-baseinfo" class="p-3">
-            <p>基本信息</p>
+        <div id="tech-detail-baseinfo" class="mt-3 mr-3 p-3 border-8 bg-white">
+            <p class="tc-green">基本信息</p>
             <el-row class="p-3">
                 <el-col :span="4">
                     <img class="img" :src="tech.headImg" alt="图片显示错误或无图片">
@@ -10,51 +10,51 @@
                 <el-col :span="18">
                     <el-row>
                         <el-col :span="8">
-                            <p>姓名： {{ tech.realName }}</p>
-                            <p>性别： {{ tech.gender }} </p>
-                            <p>生日： {{ tech.birthday }} </p>
-                            <p>状态： {{ tech.state }} </p>
+                            <p>姓名： <span class="tc-orange">{{ tech.realName }}</span></p>
+                            <p>性别： <span class="tc-orange">{{ tech.gender }}</span> </p>
+                            <p>生日： <span class="tc-orange">{{ tech.birthday }}</span> </p>
+                            <p>状态： <span class="tc-orange">{{ tech.state }}</span> </p>
                         </el-col>
                         <el-col :span="8">
-                            <p>城市： {{ tech.city }}</p>
-                            <p>认证级别： {{ tech.level }} </p>
-                            <p>从业时间： {{ tech.jobYear }} </p>
-                            <p>服务项目： {{ tech.projects }} </p>
+                            <p>城市： <span class="tc-orange">{{ tech.city }}</span></p>
+                            <p>认证级别： <span class="tc-orange">{{ tech.level }}</span> </p>
+                            <p>从业时间： <span class="tc-orange">{{ tech.jobYear }}</span> </p>
+                            <p>服务项目： <span class="tc-orange">{{ tech.projects }}</span> </p>
                         </el-col>
                         <el-col :span="8">
-                            <p>手机系统： {{ tech.phoneSystem }}</p>
-                            <p>审核通过时间： {{ tech.regtime }} </p>
-                            <p>手机： {{ tech.phone }} </p>
-                            <p>定位设备号： {{ tech.posDeviceId }} </p>
+                            <p>手机系统： <span class="tc-orange">{{ tech.phoneSystem }}</span></p>
+                            <p>审核通过时间： <span class="tc-orange">{{ tech.regtime }}</span> </p>
+                            <p>手机： <span class="tc-orange">{{ tech.phone }}</span> </p>
+                            <p>定位设备号： <span class="tc-orange">{{ tech.posDeviceId }}</span> </p>
                         </el-col>
                     </el-row>
-                    <p>简介： {{ tech.remark }} </p>
+                    <p>简介： <span class="tc-orange">{{ tech.remark }}</span> </p>
                     <el-row>
                         <el-col :span="4">
 
                         </el-col>
                         <el-col :span="20">
-                            <span>星级： {{ tech.star }} </span>
-                            <span>单量： {{ tech.orders }} </span>
-                            <span>点击： {{ tech.clicks }} </span>
-                            <span>加钟： {{ tech.clocks }} </span>
+                            <span>星级： <span class="tc-orange mr-4">{{ tech.star }}</span> </span>
+                            <span>单量： <span class="tc-orange mr-4">{{ tech.orders }}</span> </span>
+                            <span>点击： <span class="tc-orange mr-4">{{ tech.clicks }}</span> </span>
+                            <span>加钟： <span class="tc-orange mr-4">{{ tech.clocks }}</span> </span>
                         </el-col>
                     </el-row>
                 </el-col>
             </el-row>
         </div>
 
-        <div id="tech-card-baseinfo" class="p-3">
-            <p>身份证信息</p>
+        <div id="tech-card-baseinfo" class="mt-3 mr-3 p-3 border-8 bg-white">
+            <p class="tc-green">身份证信息</p>
             <el-row class="p-3">
                 <el-col :span="24">
-                    <p>身份证号： {{ tech.IDCard }} </p>
+                    <p>身份证号： {{ tech.IDCard || '暂无数据，待补充' }} </p>
                     <img class="img" v-for="(img, index) in imgs" :key="index + 1" :src="img" alt="图片显示错误或无图片">
                 </el-col>
             </el-row>
         </div>
 
-        <div id="tech-detail-grid" class="mt-3 border-8 bg-white">
+        <div id="tech-detail-grid" class="mt-3 pr-3 py-3 border-8">
             <el-row>
                 <el-col :span="4" class="grid">
                     <div class="fullbox pt-5 ta-center" @click="listOrder">
