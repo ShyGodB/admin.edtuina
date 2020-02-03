@@ -1,7 +1,7 @@
 <template>
-    <div id="Index" class="w-100 bg-second">
+    <div id="Index" class="w-100 bg-offwhite" style="padding: 5px;">
         <el-row class="index-today">
-            <p>今日数据</p>
+            <p class="tc-orange">今日数据</p>
             <el-col :span="4">
                 <el-row>
                     <el-col :span="10">
@@ -9,7 +9,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>交易额</div>
-                        <div style="font-size: x-large">{{ today.turnover }}</div>
+                        <div>{{ today.turnover }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -21,7 +21,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>总单量</div>
-                        <div style="font-size: x-large">{{ today.totalOrder }}</div>
+                        <div>{{ today.totalOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -33,7 +33,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>超时单</div>
-                        <div style="font-size: x-large">{{ today.overTimeOrder }}</div>
+                        <div>{{ today.overTimeOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -45,7 +45,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>用户取消</div>
-                        <div style="font-size: x-large">{{ today.cancelOrder }}</div>
+                        <div>{{ today.cancelOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -57,7 +57,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>交通费</div>
-                        <div style="font-size: x-large">{{ today.transFee }}</div>
+                        <div>{{ today.transFee }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -69,14 +69,14 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>优惠卷</div>
-                        <div style="font-size: x-large">{{ today.couponFee }}</div>
+                        <div>{{ today.couponFee }}</div>
                     </el-col>
                 </el-row>
             </el-col>
         </el-row>
 
         <el-row class="index-seven mt-3">
-            <p>近7天交易数据</p>
+            <p class="tc-orange">近7天交易数据</p>
             <el-col :span="14" class="seven-recent-serven">
                 <div ref="myChart" id="myChart"></div>
             </el-col>
@@ -89,8 +89,8 @@
                                 src="../assets/img/totalUser.png" alt="">
                         </el-col>
                         <el-col :span="12" class="index-count height-half"
-                            style="text-align: left; margin-top: 60px; color: #ffffff;">
-                            <p>{{ userCount }}</p>
+                            style="text-align: left; margin-top: 53px; color: #ffffff;">
+                            <p class="tfs-33 tfw-bold">{{ userCount }}</p>
                             <p>总用户</p>
                         </el-col>
                     </el-row>
@@ -103,8 +103,8 @@
                                 src="../assets/img/totalTech.png" alt="">
                         </el-col>
                         <el-col :span="12" class="index-count height-half"
-                            style="text-align: left; margin-top: 60px; color: #ffffff;">
-                            <p>{{ techCount }}</p>
+                            style="text-align: left; margin-top: 53px; color: #ffffff;">
+                            <p class="tfs-33 tfw-bold">{{ techCount }}</p>
                             <p>总技师</p>
                         </el-col>
                     </el-row>
@@ -113,7 +113,7 @@
         </el-row>
 
         <el-row class="index-yesterday mt-3">
-            <p>昨日数据</p>
+            <p class="tc-orange">昨日数据</p>
             <el-col :span="4">
                 <el-row>
                     <el-col :span="10">
@@ -121,7 +121,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>交易额</div>
-                        <div style="font-size: x-large">{{ yesterday.turnover }}</div>
+                        <div>{{ yesterday.turnover }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -133,7 +133,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>总单量</div>
-                        <div style="font-size: x-large">{{ yesterday.totalOrder }}</div>
+                        <div>{{ yesterday.totalOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -145,7 +145,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>超时单</div>
-                        <div style="font-size: x-large">{{ yesterday.overTimeOrder }}</div>
+                        <div>{{ yesterday.overTimeOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -157,7 +157,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>用户取消</div>
-                        <div style="font-size: x-large">{{ yesterday.cancelOrder }}</div>
+                        <div>{{ yesterday.cancelOrder }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -169,7 +169,7 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>交通费</div>
-                        <div style="font-size: x-large">{{ yesterday.transFee }}</div>
+                        <div>{{ yesterday.transFee }}</div>
                     </el-col>
                 </el-row>
             </el-col>
@@ -181,50 +181,49 @@
                     </el-col>
                     <el-col :span="14" class="pl-2">
                         <div>优惠卷</div>
-                        <div style="font-size: x-large">{{ yesterday.couponFee }}</div>
+                        <div>{{ yesterday.couponFee }}</div>
                     </el-col>
                 </el-row>
             </el-col>
         </el-row>
 
-        <div>
-            <p>累计数据</p>
-            <el-row class="index-yesterday bg-second mt-3 pl-3">
-                <el-col :span="6">
+        <div class="index-total mt-3">
+            <p class="tc-orange">累计数据</p>
+            <el-row class="pl-3">
+                <el-col :span="5" class="index-total-box bg-index-total-1">
                     <p>总交易额</p>
                     <p>{{turnover}}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-2">
                     <p>总盈利额</p>
                     <p>{{ benefit }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-3">
                     <p>总单量</p>
                     <p>{{ totalOrder }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-4">
                     <p>成功单量</p>
                     <p>{{ successOrder }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-5">
                     <p>取消单量</p>
                     <p>{{ cancelOrder }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-6">
                     <p>超时单量</p>
                     <p>{{ overTimeOrder }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-7">
                     <p>交通费</p>
                     <p>{{ transFee }}</p>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5" class="index-total-box bg-index-total-8">
                     <p>优惠卷</p>
                     <p>{{ couponFee }}</p>
                 </el-col>
             </el-row>
         </div>
-
     </div>
 </template>
 
@@ -371,12 +370,73 @@ export default {
     display: inline;
 }
 .bg-second {
-    background-color: #dddddd;
+    background-color: #ffffff;
     padding: 0.5rem;
 }
 .all {
     background-color: red;
     height: 192px;
     border-radius: 8px;
+}
+.index-total {
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* border: 1px solid #ff0000; */
+    padding: 3px 6px 3px 6px;
+}
+.index-today,
+.index-yesterday {
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* border: 1px solid #ff0000; */
+    padding: 3px 6px 16px 6px;
+}
+.index-seven {
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* border: 1px solid #ff0000; */
+    padding: 3px 6px 3px 6px;
+}
+
+.index-total-box {
+    padding: 18px 12px 6px 12px;
+    border-radius: 8px;
+    margin: 1.5rem;
+    text-align: center;
+}
+
+.bg-index-total-1 {
+    background-color: #a6b8ea;
+}
+
+.bg-index-total-2 {
+    background-color: #f9c361;
+}
+
+.bg-index-total-3 {
+    background-color: #eaa6b5;
+}
+
+.bg-index-total-4 {
+    background-color: #88adda;
+}
+
+.bg-index-total-5 {
+    background-color: #89c997;
+}
+
+.bg-index-total-6 {
+    background-color: #7fd4e8;
+}
+
+.bg-index-total-7 {
+    background-color: #84ccc9;
+}
+
+.bg-index-total-8 {
+    background-color: #f29b76;
+}
+.bg-offwhite {
+    background-color: #f2f2f2;
 }
 </style>

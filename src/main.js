@@ -15,10 +15,10 @@ import '../public/css/bootstrap-grid.css'
 import '../public/css/bootstrap.css'
 import '../public/css/bootstrap-reboot.css'
 import '../public/css/main.css'
-import '../public/css/mg.css'
-import '../public/css/pd.css'
+import '../public/css/bg.css'
 import '../public/css/text.css'
 import '../public/css/img.css'
+import '../public/css/wh.css'
 
 var options = {
     persist: true

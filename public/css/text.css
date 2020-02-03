@@ -1,7 +1,36 @@
-.text-white {
+/*
+ * tc === text + color
+ * tfs === text + font + size
+ * tfw === text + font + weight
+ * ta === text + align
+ * tfs === text + font + size
+ * tfs === text + font + size
+ */
+
+.tc-white {
     color: #ffffff;
 }
 
-.text-red {
+.tc-red {
     color: #ff0000;
+}
+
+.tc-orange {
+    color: #fc7c00;
+}
+
+.tc-green {
+    color: #65a031;
+}
+
+.tfs-33 {
+    font-size: 33px;
+}
+
+.tfw-bold {
+    font-weight: bold;
+}
+
+.ta-center {
+    text-align: center;
 }

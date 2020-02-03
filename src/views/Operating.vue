@@ -1,5 +1,5 @@
 <template>
-    <el-row class="w-100 h-100" id="operating">
+    <el-row class="w-100 h-100 bg-offwhite" id="operating">
         <el-col :span="3" class="pr-3">
             <operating-nav></operating-nav>
         </el-col>
@@ -12,6 +12,8 @@
         <el-col :span="21" v-if="tab==='user'">
             <operating-user v-if="model==='list'"></operating-user>
             <operating-user-detail v-if="model==='detail'"></operating-user-detail>
+            <operating-user-orderList v-if="model==='orderList'"></operating-user-orderList>
+            <operating-user-techList v-if="model==='techList'"></operating-user-techList>
         </el-col>
 
         <el-col :span="21" v-if="tab==='tech'">
@@ -84,6 +86,8 @@ import Order from "../components/operating/Order/List.vue";
 import OrderDetail from "../components/operating/Order/Detail.vue";
 import User from "../components/operating/User/List.vue";
 import UserDetail from "../components/operating/User/Detail.vue";
+import UserOrderList from "../components/operating/User/OrderList";
+import UserTechList from "../components/operating/User/TechList";
 import Tech from "../components/operating/Tech/List.vue";
 import TechDetail from "../components/operating/Tech/Detail";
 import Promote from "../components/operating/Promote/List.vue";
@@ -127,16 +131,18 @@ export default {
         "operating-techApply": TechApply,
         "operating-techTime": TechTime,
         "operating-user": User,
-        "operating-user-detail": UserDetail
+        "operating-user-detail": UserDetail,
+        "operating-user-orderList": UserOrderList,
+        "operating-user-techList": UserTechList,
     },
-    data() {
+    data () {
         return {
             tab: "order",
             model: "detail"
         };
     },
     methods: {
-        changeRoute() {
+        changeRoute () {
             const { tab, model } = this.$route.params;
             this.tab = tab;
             this.model = model;
@@ -145,7 +151,7 @@ export default {
     watch: {
         $route: "changeRoute"
     },
-    created() {
+    created () {
         this.tab = this.$route.params.tab;
         this.model = this.$route.params.model;
     }

@@ -1,5 +1,5 @@
 <template>
-    <div id="Order">
+    <div id="Order" class="bg-white">
         <div class="order-search">
             <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
@@ -29,27 +29,16 @@
 
                     <el-col :span="12">
                         <el-form-item label="时间区间" prop="times">
-                            <el-date-picker
-                                v-model="ruleForm.times"
-                                type="datetimerange"
-                                :picker-options="timeDouble"
-                                @change="timeChange"
-                                range-separator="至"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期"
-                            ></el-date-picker>
+                            <el-date-picker v-model="ruleForm.times" type="datetimerange" :picker-options="timeDouble"
+                                @change="timeChange" range-separator="至" start-placeholder="开始日期"
+                                end-placeholder="结束日期"></el-date-picker>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
-                            <el-cascader
-                                v-model="ruleForm.proxyCodes"
-                                :options="agentOptions"
-                                size="medium"
-                                :props="{ expandTrigger: 'hover', size: 'medium' }"
-                                @change="agentChange"
-                            ></el-cascader>
+                            <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
+                                :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
                         </el-form-item>
                     </el-col>
 
@@ -61,17 +50,9 @@
 
                     <el-col :span="24">
                         <el-form-item label="订单状态" prop="orderState">
-                            <el-checkbox-group
-                                @change="orderStateChange"
-                                v-model="ruleForm.orderState"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in orderState"
-                                    :label="index + 1"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="orderStateChange" v-model="ruleForm.orderState" size="medium">
+                                <el-checkbox-button v-for="(state, index) in orderState" :label="index + 1"
+                                    :key="(index + 1)" :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -125,26 +106,14 @@
 
                 <el-table-column label="操作" height="120">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="pageChange"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -155,7 +124,7 @@ import util from "../../../../util";
 
 export default {
     name: "Order",
-    data() {
+    data () {
         return {
             timeDouble: util.config.timeDouble,
             agentOptions: [],
@@ -197,19 +166,19 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$store.state.orderId = row.orderId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/operating/order/detail");
             window.open(href, "_blank");
         },
-        rowInfo(row, column, event) {
+        rowInfo (row, column, event) {
             this.$store.state.orderId = row.orderId;
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/operating/order/detail");
             window.open(href, "_blank");
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listOrder();
@@ -218,27 +187,27 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listOrder();
         },
-        orderStateChange(value) {
+        orderStateChange (value) {
             console.log(this.ruleForm);
         },
-        orderTypeChange(value) {
+        orderTypeChange (value) {
             console.log(this.ruleForm);
         },
-        timeChange(times) {
+        timeChange (times) {
             this.$store.state.times = times;
         },
-        pageChange(num) {
+        pageChange (num) {
             this.pageIndex = num;
             this.listOrder();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listOrder(this.ruleForm);
         },
-        async listOrder() {
+        async listOrder () {
             const res = await this.$api.post(
                 "/order/list",
                 Object.assign(
@@ -257,15 +226,15 @@ export default {
             }
             // this.$loading.close()
         },
-        agentChange(proxyCodes) {
+        agentChange (proxyCodes) {
             this.$store.state.proxyCodes = proxyCodes;
         },
-        async listAgent() {
+        async listAgent () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
         }
     },
-    created() {
+    created () {
         this.listOrder();
         this.listAgent();
     }

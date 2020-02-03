@@ -98,7 +98,7 @@
                         <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="备注" :label-width="formLabelWidth">
-                        <span class="text-red">默认密码为 z157456</span>
+                        <span class="tc-red">默认密码为 z157456</span>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -129,7 +129,7 @@
                         <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="备注" :label-width="formLabelWidth">
-                        <span class="text-red">默认密码为 z157456</span>
+                        <span class="tc-red">默认密码为 z157456</span>
                     </el-form-item>
 
                 </el-form>
