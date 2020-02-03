@@ -17,19 +17,19 @@
 
         <div class="techIncome-table">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="startTime" label="姓名" width="180"></el-table-column>
+                <el-table-column prop="startTime" label="开始时间" width="180"></el-table-column>
 
-                <el-table-column prop="endTime" label="手机" width="180"></el-table-column>
+                <el-table-column prop="endTime" label="结束时间" width="180"></el-table-column>
 
-                <el-table-column prop="totalServiceFee" label="单量"></el-table-column>
+                <el-table-column prop="totalServiceFee" label="服务费"></el-table-column>
 
-                <el-table-column prop="totalTransFee" label="加单"></el-table-column>
+                <el-table-column prop="totalTransFee" label="交通费"></el-table-column>
 
-                <el-table-column prop="totalCouponFee" label="加钟"></el-table-column>
+                <el-table-column prop="totalCouponFee" label="优惠卷"></el-table-column>
 
-                <el-table-column prop="totalRewardFee" label="服务费"></el-table-column>
+                <el-table-column prop="totalRewardFee" label="打赏"></el-table-column>
 
-                <el-table-column prop="outSourceFee" label="加钟费"></el-table-column>
+                <el-table-column prop="outSourceFee" label="来源分成支出"></el-table-column>
 
                 <el-table-column label="操作">
                     <template slot-scope="scope">
