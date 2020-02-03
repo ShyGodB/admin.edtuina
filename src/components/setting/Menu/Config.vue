@@ -67,7 +67,7 @@
 
                     <el-table-column prop="off" label="状态" width="120"></el-table-column>
 
-                    <el-table-column label="操作" height="120">
+                    <el-table-column label="操作" >
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"

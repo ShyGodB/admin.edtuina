@@ -16,18 +16,6 @@
                     </el-col>
 
                     <el-col :span="6">
-                        <el-form-item label="用户姓名" prop="userName">
-                            <el-input v-model="ruleForm.userName"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="用户手机" prop="userPhone">
-                            <el-input v-model="ruleForm.userPhone"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
                         <el-form-item label="代理商" prop="proxyCodes">
                             <el-cascader v-model="ruleForm.proxyCodes" :options="agentOptions" size="medium"
                                 :props="{ expandTrigger: 'hover', size: 'medium' }" @change="agentChange"></el-cascader>
@@ -138,7 +126,8 @@ export default {
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
-                    { pageSize: this.pageSize }
+                    { pageSize: this.pageSize },
+                    { userId: this.$store.state.userId }
                 )
             );
             this.techComments = res.data.data.list || [];

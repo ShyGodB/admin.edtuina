@@ -1,39 +1,13 @@
 <template>
     <div id="Feedback">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="用户姓名" prop="userName">
-                            <el-input v-model="ruleForm.userName"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
-                        <el-form-item label="用户手机" prop="userPhone">
-                            <el-input v-model="ruleForm.userPhone"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="6">
                         <el-form-item label="是否回复" prop="state">
-                            <el-checkbox-group
-                                @change="stateChange"
-                                v-model="ruleForm.state"
-                                size="medium"
-                            >
-                                <el-checkbox-button
-                                    v-for="(state, index) in state"
-                                    :label="state"
-                                    :key="(index + 1)"
-                                    :index="(index + 1).toString()"
-                                >{{state}}</el-checkbox-button>
+                            <el-checkbox-group @change="stateChange" v-model="ruleForm.state" size="medium">
+                                <el-checkbox-button v-for="(state, index) in state" :label="state" :key="(index + 1)"
+                                    :index="(index + 1).toString()">{{state}}</el-checkbox-button>
                             </el-checkbox-group>
                         </el-form-item>
                     </el-col>
@@ -60,26 +34,14 @@
 
                 <el-table-column label="操作" >
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -88,7 +50,7 @@
 <script>
 export default {
     name: "Feedback",
-    data() {
+    data () {
         return {
             state: ["未回复", "已回复"],
             feedbacks: [],
@@ -119,13 +81,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listFeedback();
@@ -134,27 +96,28 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listFeedback();
         },
-        sizeChange(num) {
+        sizeChange (num) {
             // this.listFeedback(this.ruleForm);
         },
-        stateChange(state) {
+        stateChange (state) {
             console.log(state);
         },
-        async listFeedback(data) {
+        async listFeedback (data) {
             const res = await this.$api.post(
                 "/feedback/list",
                 Object.assign(
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
-                    { pageSize: this.pageSize }
+                    { pageSize: this.pageSize },
+                    { userId: this.$store.state.userId }
                 )
             );
             this.feedbacks = res.data.data.list || [];
@@ -166,7 +129,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listFeedback();
     }
 };

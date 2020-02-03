@@ -50,25 +50,25 @@
 
         <div class="tech-table">
             <el-table :data="techs" style="width: 100%">
-                <el-table-column prop="techId" label="技师编号" width="120" height="120"></el-table-column>
+                <el-table-column prop="techId" label="技师编号" width="120" ></el-table-column>
 
-                <el-table-column prop="realName" label="姓名" width="120" height="120"></el-table-column>
+                <el-table-column prop="realName" label="姓名" width="120" ></el-table-column>
 
-                <el-table-column prop="gender" label="性别" width="80" height="120"></el-table-column>
+                <el-table-column prop="gender" label="性别" width="80" ></el-table-column>
 
-                <el-table-column prop="phone" label="手机" width="120" height="120"></el-table-column>
+                <el-table-column prop="phone" label="手机" width="120" ></el-table-column>
 
-                <el-table-column prop="orders" label="订单量" width="160" height="120"></el-table-column>
+                <el-table-column prop="orders" label="订单量" width="160" ></el-table-column>
 
                 <el-table-column prop="clicks" label="点击量" width="120" height="180"></el-table-column>
 
-                <el-table-column prop="star" label="星级" width="100" height="120"></el-table-column>
+                <el-table-column prop="star" label="星级" width="100" ></el-table-column>
 
-                <el-table-column prop="group" label="分组" width="100" height="120"></el-table-column>
+                <el-table-column prop="group" label="分组" width="100" ></el-table-column>
 
-                <el-table-column prop="state" label="状态" width="100" height="120"></el-table-column>
+                <el-table-column prop="state" label="状态" width="100" ></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" >
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>

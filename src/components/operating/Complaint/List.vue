@@ -37,15 +37,15 @@
 
         <div class="complaint-table">
             <el-table :data="reports" style="width: 100%">
-                <el-table-column prop="userId" label="用户编号" height="120"></el-table-column>
+                <el-table-column prop="userId" label="用户编号" ></el-table-column>
 
-                <el-table-column prop="techId" label="技师编号" height="120"></el-table-column>
+                <el-table-column prop="techId" label="技师编号" ></el-table-column>
 
-                <el-table-column prop="labels" label="标签" height="120"></el-table-column>
+                <el-table-column prop="labels" label="标签" ></el-table-column>
 
-                <el-table-column prop="remark" label="备注" height="120"></el-table-column>
+                <el-table-column prop="remark" label="备注" ></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" >
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>

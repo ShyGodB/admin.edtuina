@@ -82,18 +82,120 @@
                 </el-col>
 
                 <el-col :span="4" class="grid">
-                    <div class="fullbox pt-5 ta-center" @click="addReview">
+                    <div class="fullbox pt-5 ta-center" @click="openReviewDialog">
                         <p>添加回访记录</p>
                     </div>
                 </el-col>
 
                 <el-col :span="4" class="grid">
-                    <div class="fullbox pt-5 ta-center" @click="addDanger">
+                    <div class="fullbox pt-5 ta-center" @click="openDangerDialog">
                         <p>添加危险标识</p>
                     </div>
                 </el-col>
             </el-row>
         </div>
+
+        <el-dialog title="添加回访记录" :visible.sync="dialogAddReview">
+            <el-form :model="addDangerForm" ref="addDangerForm" label-width="100px">
+                <el-form-item label="用户手机" prop="userPhone">
+                    <el-input v-model="addReviewForm.userPhone"></el-input>
+                </el-form-item>
+
+                <el-form-item label="用户姓名" prop="userName">
+                    <el-input v-model="addReviewForm.userName"></el-input>
+                </el-form-item>
+
+                <el-form-item label="性别" prop="gender">
+                    <el-select v-model="addReviewForm.gender" placeholder="请选择性别">
+                        <el-option label="男" value="男"></el-option>
+                        <el-option label="女" value="女"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="来源" prop="source">
+                    <el-select v-model="addReviewForm.source" placeholder="请选择来源">
+                        <el-option label="大众点评" value="大众点评"></el-option>
+                        <el-option label="百度糯米" value="百度糯米"></el-option>
+                        <el-option label="到位" value="到位"></el-option>
+                        <el-option label="美团" value="美团"></el-option>
+                        <el-option label="支付宝口碑" value="支付宝口碑"></el-option>
+                        <el-option label="公众号" value="公众号"></el-option>
+                        <el-option label="小程序" value="小程序"></el-option>
+                        <el-option label="App" value="App"></el-option>
+                        <el-option label="其它" value="其它"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="类别" prop="style">
+                    <el-select v-model="addReviewForm.style" placeholder="请选择回访类别">
+                        <el-option label="软件" value="软件"></el-option>
+                        <el-option label="服务" value="服务"></el-option>
+                        <el-option label="商务合作" value="商务合作"></el-option>
+                        <el-option label="服务完成" value="服务完成"></el-option>
+                        <el-option label="取消订单" value="取消订单"></el-option>
+                        <el-option label="新注册下单" value="新注册下单"></el-option>
+                        <el-option label="团单客户联系" value="团单客户联系"></el-option>
+                        <el-option label="技师安排调动" value="技师安排调动"></el-option>
+                        <el-option label="客户建议反馈" value="客户建议反馈"></el-option>
+                        <el-option label="其它" value="其它"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="呼叫类型" prop="callType">
+                    <el-select v-model="addReviewForm.callType" placeholder="请选择呼叫类型">
+                        <el-option label="400呼入" value="400呼入"></el-option>
+                        <el-option label="3110呼入" value="3110呼入"></el-option>
+                        <el-option label="呼出" value="呼出"></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label="来电时间" prop="callTime">
+                    <el-date-picker v-model="addReviewForm.callTime" type="datetime" placeholder="来电时间">
+                    </el-date-picker>
+                </el-form-item>
+
+                <el-form-item label="城市" prop="city">
+                    <el-input v-model="addReviewForm.city"></el-input>
+                </el-form-item>
+
+                <el-form-item label="订单号" prop="orderId">
+                    <el-input v-model="addReviewForm.orderId"></el-input>
+                </el-form-item>
+
+                <el-form-item label="询问内容" prop="orderId">
+                    <el-input type="textarea" :rows="3" placeholder="请输入询问内容" v-model="addReviewForm.content">
+                    </el-input>
+                </el-form-item>
+
+                <el-form-item label="备注" prop="orderId">
+                    <el-input type="textarea" :rows="3" placeholder="请输入备注" v-model="addReviewForm.remark">
+                    </el-input>
+                </el-form-item>
+
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogAddReview = false">取 消</el-button>
+                <el-button type="primary" @click="addReview">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog title="添加危险标识" :visible.sync="dialogAddDanger">
+            <el-form :model="addDangerForm" ref="addDangerForm" label-width="100px">
+                <el-form-item label="名称" prop="name">
+                    <el-select v-model="addDangerForm.danger" placeholder="请选择危险等级">
+                        <el-option label="一级红色" value="1"></el-option>
+                        <el-option label="二级黄色" value="2"></el-option>
+                        <el-option label="三级蓝色" value="3"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogAddDanger = false">取 消</el-button>
+                <el-button type="primary" @click="addDanger">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
   
@@ -106,63 +208,24 @@ export default {
     data () {
         return {
             user: {},
-            grids: [
-                {
-                    icon: "el-icon-s-order",
-                    name: "订单列表",
-                    method: "listOrder"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "收藏列表",
-                    method: "listCollectTech"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "意见反馈",
-                    method: "listAdvice"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "评论列表",
-                    method: "listComment"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "优惠卷",
-                    method: "listCoupon"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "邀请有奖",
-                    method: "listInvite"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "余额明细",
-                    method: "listBalanceRecord"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "位置记录",
-                    method: "listLocation"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "回访记录",
-                    method: "listReview"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "添加回访记录",
-                    method: "addReview"
-                },
-                {
-                    icon: "el-icon-s-order",
-                    name: "添加危险标识",
-                    method: "addDanger"
-                }
-            ]
+            dialogAddDanger: false,
+            dialogAddReview: false,
+            addDangerForm: {
+                danger: 0
+            },
+            addReviewForm: {
+                userPhone: '',
+                userName: '',
+                gender: '',
+                source: '',
+                style: '',
+                callType: '',
+                callTime: '',
+                city: '',
+                orderId: '',
+                content: '',
+                remark: '',
+            },
         };
     },
     methods: {
@@ -173,31 +236,58 @@ export default {
             this.$router.push("/operating/user/techList");
         },
         listAdvice () {
-            console.log("abc");
+            this.$router.push("/operating/user/feedback");
         },
         listComment () {
-            console.log("abc");
+            this.$router.push("/operating/user/comment");
         },
         listCoupon () {
-            console.log("abc");
+            this.$router.push("/operating/user/coupon");
         },
         listInvite () {
-            console.log("abc");
+            this.$router.push("/operating/user/invite");
         },
         listBalanceRecord () {
-            console.log("abc");
+            this.$router.push("/operating/user/balance");
         },
         listLocation () {
-            console.log("abc");
+            this.$router.push("/operating/user/location");
         },
         listReview () {
-            console.log("abc");
+            this.$router.push("/operating/user/review");
         },
-        addReview () {
-            console.log("abc");
+        openReviewDialog () {
+            this.dialogAddReview = true
+            this.addReviewForm.userName = this.user.nickName
+            this.addReviewForm.userPhone = this.user.phone
+            this.addReviewForm.gender = this.user.gender
         },
-        addDanger () {
-            console.log("abc");
+        async addReview () {
+            this.addReviewForm.userId = this.user.userId
+            const res = await this.$api.post('/user/addReview', this.addReviewForm)
+            if (res.data.success) this.$message.success('设置成功！')
+            this.dialogAddReview = false
+            this.addReviewForm.userPhone = ''
+            this.addReviewForm.userName = ''
+            this.addReviewForm.gender = ''
+            this.addReviewForm.source = ''
+            this.addReviewForm.style = ''
+            this.addReviewForm.callType = ''
+            this.addReviewForm.callTime = ''
+            this.addReviewForm.city = ''
+            this.addReviewForm.orderId = ''
+            this.addReviewForm.content = ''
+            this.addReviewForm.remark = ''
+        },
+        openDangerDialog () {
+            this.dialogAddDanger = true
+        },
+        async addDanger () {
+            const res = await this.$api.post('/user/setDanger', {
+                userId: this.$store.state.userId,
+                danger: this.addDangerForm.danger
+            })
+            if (res.data.success) this.$message.success('设置成功！')
         },
         async getUserDetail (userId) {
             const res = await this.$api.get("/user/detail", {
@@ -216,6 +306,7 @@ export default {
 <style scoped>
 .grid {
     height: 186px;
+    background-color: aquamarine;
     border: 1px solid #dddddd;
 }
 

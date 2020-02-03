@@ -32,7 +32,7 @@
 
                 <el-table-column prop="regSource" label="注册来源" width="100"></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" >
                     <template slot-scope="scope">
                         <!-- <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button> -->
                         <el-button size="mini" type="success" @click.stop="lookOrders(scope.row, scope.$index)" round>

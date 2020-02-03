@@ -44,17 +44,17 @@
 
         <div class="techcomment-table">
             <el-table :data="techComments" style="width: 100%">
-                <el-table-column prop="techName" label="技师姓名" width="120" height="120"></el-table-column>
+                <el-table-column prop="techName" label="技师姓名" width="120" ></el-table-column>
 
-                <el-table-column prop="userName" label="用户姓名" width="120" height="120"></el-table-column>
+                <el-table-column prop="userName" label="用户姓名" width="120" ></el-table-column>
 
-                <el-table-column prop="behavior" label="用户行为" width="160" height="120"></el-table-column>
+                <el-table-column prop="behavior" label="用户行为" width="160" ></el-table-column>
 
-                <el-table-column prop="remark" label="技师备注" width="120" height="120"></el-table-column>
+                <el-table-column prop="remark" label="技师备注" width="120" ></el-table-column>
 
-                <el-table-column prop="addTime" label="评论时间" width="200" height="120"></el-table-column>
+                <el-table-column prop="addTime" label="评论时间" width="200" ></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" >
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>

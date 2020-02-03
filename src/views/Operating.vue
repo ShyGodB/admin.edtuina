@@ -14,6 +14,13 @@
             <operating-user-detail v-if="model==='detail'"></operating-user-detail>
             <operating-user-orderList v-if="model==='orderList'"></operating-user-orderList>
             <operating-user-techList v-if="model==='techList'"></operating-user-techList>
+            <operating-user-feedback v-if="model==='feedback'"></operating-user-feedback>
+            <operating-user-comment v-if="model==='comment'"></operating-user-comment>
+            <operating-user-coupon v-if="model==='coupon'"></operating-user-coupon>
+            <operating-user-invite v-if="model==='invite'"></operating-user-invite>
+            <operating-user-balance v-if="model==='balance'"></operating-user-balance>
+            <operating-user-location v-if="model==='location'"></operating-user-location>
+            <operating-user-review v-if="model==='review'"></operating-user-review>
         </el-col>
 
         <el-col :span="21" v-if="tab==='tech'">
@@ -88,6 +95,13 @@ import User from "../components/operating/User/List.vue";
 import UserDetail from "../components/operating/User/Detail.vue";
 import UserOrderList from "../components/operating/User/OrderList";
 import UserTechList from "../components/operating/User/TechList";
+import UserFeedback from "../components/operating/User/Feedback";
+import UserCommentList from "../components/operating/User/Comment";
+import UserCouponList from "../components/operating/User/Coupon";
+import UserInvite from "../components/operating/User/Invite";
+import UserBalance from "../components/operating/User/Balance";
+import UserLocation from "../components/operating/User/Location";
+import UserReview from "../components/operating/User/Review";
 import Tech from "../components/operating/Tech/List.vue";
 import TechDetail from "../components/operating/Tech/Detail";
 import Promote from "../components/operating/Promote/List.vue";
@@ -134,6 +148,13 @@ export default {
         "operating-user-detail": UserDetail,
         "operating-user-orderList": UserOrderList,
         "operating-user-techList": UserTechList,
+        "operating-user-feedback": UserFeedback,
+        "operating-user-comment": UserCommentList,
+        "operating-user-coupon": UserCouponList,
+        "operating-user-invite": UserInvite,
+        "operating-user-balance": UserBalance,
+        "operating-user-location": UserLocation,
+        "operating-user-review": UserReview,
     },
     data () {
         return {

@@ -1,13 +1,7 @@
 <template>
-    <div id="Review">
+    <div id="UserReview">
         <div class="order-search">
-            <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="100px"
-                class="demo-ruleForm"
-            >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="用户姓名" prop="userName">
@@ -31,38 +25,26 @@
 
         <div class="order-table">
             <el-table :data="reviews" style="width: 100%">
-                <el-table-column prop="orderId" label="订单编号" width="120" ></el-table-column>
+                <el-table-column prop="orderId" label="订单编号" width="120"></el-table-column>
 
-                <el-table-column prop="userName" label="用户姓名" width="120" ></el-table-column>
+                <el-table-column prop="userName" label="用户姓名" width="120"></el-table-column>
 
-                <el-table-column prop="userPhone" label="用户手机号" width="80" ></el-table-column>
+                <el-table-column prop="userPhone" label="用户手机号" width="100"></el-table-column>
 
-                <el-table-column prop="reviewRemark" label="回访内容" width="500" ></el-table-column>
+                <el-table-column prop="reviewRemark" label="回访内容" width="500"></el-table-column>
 
-                <el-table-column prop="reviewTime" label="回访时间" width="160" ></el-table-column>
+                <el-table-column prop="reviewTime" label="回访时间" width="160"></el-table-column>
 
-                <el-table-column label="操作" >
+                <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="info"
-                            @click="info(scope.row, scope.$index)"
-                            round
-                        >详情</el-button>
+                        <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <div class="pagination">
-                <el-pagination
-                    ref="fenye"
-                    background
-                    @size-change="sizeChange"
-                    @current-change="change"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-count="pageNum"
-                ></el-pagination>
+                <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
+                    layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
         </div>
     </div>
@@ -73,7 +55,7 @@ import axios from "axios";
 
 export default {
     name: "Review",
-    data() {
+    data () {
         return {
             reviews: [],
             pageNum: 1,
@@ -102,13 +84,13 @@ export default {
         };
     },
     methods: {
-        info(row, index) {
+        info (row, index) {
             this.$message({
                 message: "暂未完成",
                 type: "success"
             });
         },
-        submitForm(formName) {
+        submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.listReview();
@@ -117,23 +99,24 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
+        resetForm (formName) {
             this.$refs[formName].resetFields();
             this.listReview();
         },
-        change(num) {
+        change (num) {
             this.pageIndex = num;
             this.listReview();
         },
-        sizeChange(num) {},
-        async listReview(data) {
+        sizeChange (num) { },
+        async listReview (data) {
             const res = await this.$api.post(
                 "/review/list",
                 Object.assign(
                     {},
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
-                    { pageSize: this.pageSize }
+                    { pageSize: this.pageSize },
+                    { userId: this.$store.state.userId }
                 )
             );
             this.reviews = res.data.data.list || [];
@@ -145,7 +128,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         this.listReview();
     }
 };

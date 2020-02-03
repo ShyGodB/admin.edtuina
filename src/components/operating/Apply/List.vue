@@ -43,21 +43,21 @@
 
         <div class="order-table">
             <el-table :data="applys" style="width: 100%">
-                <el-table-column prop="userId" label="用户编号" width="120" height="120"></el-table-column>
+                <el-table-column prop="userId" label="用户编号" width="120" ></el-table-column>
 
-                <el-table-column prop="avatar" label="头像" width="120" height="120"></el-table-column>
+                <el-table-column prop="avatar" label="头像" width="120" ></el-table-column>
 
-                <el-table-column prop="idCard" label="身份证号" width="80" height="120"></el-table-column>
+                <el-table-column prop="idCard" label="身份证号" width="80" ></el-table-column>
 
-                <el-table-column prop="realName" label="真实姓名" width="120" height="120"></el-table-column>
+                <el-table-column prop="realName" label="真实姓名" width="120" ></el-table-column>
 
-                <el-table-column prop="state" label="状态" width="160" height="120"></el-table-column>
+                <el-table-column prop="state" label="状态" width="160" ></el-table-column>
 
-                <el-table-column prop="remark" label="备注" width="120" height="120"></el-table-column>
+                <el-table-column prop="remark" label="备注" width="120" ></el-table-column>
 
-                <el-table-column prop="addTime" label="添加时间" width="100" height="120"></el-table-column>
+                <el-table-column prop="addTime" label="添加时间" width="100" ></el-table-column>
 
-                <el-table-column label="操作" height="120">
+                <el-table-column label="操作" >
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

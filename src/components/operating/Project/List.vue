@@ -71,25 +71,25 @@
 
         <div class="project-table">
             <el-table :data="projects" style="width: 100%">
-                <el-table-column prop="projectId" label="项目编号" width="120" height="120"></el-table-column>
+                <el-table-column prop="projectId" label="项目编号" width="120" ></el-table-column>
 
-                <el-table-column prop="name" label="名字" width="200" height="120"></el-table-column>
+                <el-table-column prop="name" label="名字" width="200" ></el-table-column>
 
-                <el-table-column prop="originalPrice" label="原价" width="120" height="120"></el-table-column>
+                <el-table-column prop="originalPrice" label="原价" width="120" ></el-table-column>
 
-                <el-table-column prop="price" label="默认价格" width="160" height="120"></el-table-column>
+                <el-table-column prop="price" label="默认价格" width="160" ></el-table-column>
 
-                <el-table-column prop="isFirst" label="是否首单" width="120" height="120"></el-table-column>
+                <el-table-column prop="isFirst" label="是否首单" width="120" ></el-table-column>
 
-                <el-table-column prop="time" label="时长" width="100" height="120"></el-table-column>
+                <el-table-column prop="time" label="时长" width="100" ></el-table-column>
 
-                <el-table-column prop="category" label="项目类别" width="100" height="120"></el-table-column>
+                <el-table-column prop="category" label="项目类别" width="100" ></el-table-column>
 
-                <el-table-column prop="view" label="展示属性" width="100" height="120"></el-table-column>
+                <el-table-column prop="view" label="展示属性" width="100" ></el-table-column>
 
-                <el-table-column prop="saleCount" label="销售量" width="100" height="120"></el-table-column>
+                <el-table-column prop="saleCount" label="销售量" width="100" ></el-table-column>
 
-                <el-table-column prop="sort" label="排序" width="180" height="120"></el-table-column>
+                <el-table-column prop="sort" label="排序" width="180" ></el-table-column>
 
                 <el-table-column label="状态" width="120">
                     <template slot-scope="scope">

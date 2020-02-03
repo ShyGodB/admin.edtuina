@@ -10,8 +10,8 @@
                     </el-col>
 
                     <el-col :span="6">
-                        <el-form-item label="用户手机" prop="userPhone">
-                            <el-input v-model="ruleForm.userPhone"></el-input>
+                        <el-form-item label="用户手机" prop="phone">
+                            <el-input v-model="ruleForm.phone"></el-input>
                         </el-form-item>
                     </el-col>
 
