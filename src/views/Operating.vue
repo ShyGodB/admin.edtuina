@@ -32,6 +32,8 @@
             <operating-tech-growthList v-if="model==='growthList'"></operating-tech-growthList>
             <operating-tech-locationList v-if="model==='locationList'"></operating-tech-locationList>
             <operating-tech-overList v-if="model==='overList'"></operating-tech-overList>
+            <operating-tech-growth v-if="model==='growth'"></operating-tech-growth>
+            <operating-tech-avatar v-if="model==='avatar'"></operating-tech-avatar>
         </el-col>
 
         <el-col :span="21" v-if="tab==='promote'">
@@ -116,6 +118,8 @@ import TechGrowthList from "../components/operating/Tech/GrowthList.vue";
 import TechLocationList from "../components/operating/Tech/LocationList.vue";
 import TechOrderList from "../components/operating/Tech/OrderList.vue";
 import TechOverList from "../components/operating/Tech/OverList.vue";
+import TechAvatar from "../components/operating/Tech/Avatar.vue";
+import TechGrowth from "../components/operating/Tech/Growth.vue";
 import Promote from "../components/operating/Promote/List.vue";
 import TechComment from "../components/operating/TechComment/List.vue";
 import UserComment from "../components/operating/UserComment/List.vue";
@@ -160,6 +164,8 @@ export default {
         "operating-tech-growthList": TechGrowthList,
         "operating-tech-locationList": TechLocationList,
         "operating-tech-overList": TechOverList,
+        "operating-tech-growth": TechGrowth,
+        "operating-tech-avatar": TechAvatar,
         "operating-techApply": TechApply,
         "operating-techTime": TechTime,
         "operating-user": User,

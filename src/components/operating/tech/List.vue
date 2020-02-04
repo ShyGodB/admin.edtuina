@@ -44,6 +44,8 @@
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    <el-button type="success" @click="avatar">头像审核</el-button>
+                    <el-button type="warning" @click="growth">成长记录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -246,6 +248,12 @@ export default {
         },
         normalChange (value) { },
         clockChange (value) { },
+        avatar () {
+            this.$router.push("/operating/tech/avatar")
+        },
+        growth () {
+            this.$router.push("/operating/tech/growth")
+        },
         info (row, index) {
             this.$store.state.techId = row.techId;
             this.$router.push("/operating/tech/detail");
