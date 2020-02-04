@@ -7,6 +7,7 @@
         <el-col :span="21" v-if="tab==='order'">
             <operating-order v-if="model==='list'"></operating-order>
             <operating-order-detail v-if="model==='detail'"></operating-order-detail>
+            <operating-order-replenish v-if="model==='replenish'"></operating-order-replenish>
         </el-col>
 
         <el-col :span="21" v-if="tab==='user'">
@@ -96,6 +97,7 @@ import md5 from "md5";
 import Nav from "../components/SecondNav.vue";
 import Order from "../components/operating/Order/List.vue";
 import OrderDetail from "../components/operating/Order/Detail.vue";
+import OrderReplenish from "../components/operating/Order/Add.vue";
 import User from "../components/operating/User/List.vue";
 import UserDetail from "../components/operating/User/Detail.vue";
 import UserOrderList from "../components/operating/User/OrderList";
@@ -146,6 +148,7 @@ export default {
         "operating-feedback": Feedback,
         "operating-order": Order,
         "operating-order-detail": OrderDetail,
+        "operating-order-replenish": OrderReplenish,
         "operating-project": Project,
         "operating-promote": Promote,
         "operating-review": Review,

@@ -70,6 +70,7 @@
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    <el-button @click="replenishOrder">补单</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -232,6 +233,11 @@ export default {
         async listAgent () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
+        },
+        replenishOrder () {
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/order/replenish");
+            window.open(href, "_blank");
         }
     },
     created () {
