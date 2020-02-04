@@ -149,6 +149,27 @@ const getDefaultChecked = (menus) => {
     return result
 }
 
+const checkProjectIds = (normalProjects, clockProjects, projectIds) => {
+    let resultNormal = []
+    let resultClock = []
+    projectIds.forEach(item => {
+        clockProjects.forEach(i => {
+            if (i.projectId === item) {
+                resultClock.push(item)
+            }
+        })
+    })
+    projectIds.forEach(item => {
+        normalProjects.forEach(i => {
+            if (i.projectId === item) {
+                resultNormal.push(item)
+            }
+        })
+    })
+    return { resultNormal, resultClock }
+}
+
+
 export default {
-    checkHomeData, checkMenus, checkProject, getDefaultChecked
+    checkHomeData, checkMenus, checkProject, getDefaultChecked, checkProjectIds
 }

@@ -68,9 +68,14 @@
 
                 <el-table-column prop="state" label="状态" width="100"></el-table-column>
 
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="240">
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
+                        <el-button size="mini" type="primary" @click="openEditDialog(scope.row, scope.$index)" round>编辑
+                        </el-button>
+                        <el-button size="mini" type="success" @click="openProjectEditDialog(scope.row, scope.$index)"
+                            round>项目管理
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -79,15 +84,105 @@
                 <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change"
                     layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
             </div>
+
+            <el-dialog title="编辑" :visible.sync="editDialog">
+                <el-form :model="editForm" ref="editForm" label-width="100px">
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="用户姓名" prop="realName">
+                                <el-input v-model="editForm.realName"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <el-form-item label="用户手机" prop="phone">
+                                <el-input v-model="editForm.phone"></el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <el-form-item label="性别" prop="gender">
+                                <el-select v-model="editForm.gender" placeholder="请选择性别">
+                                    <el-option label="男" value="男"></el-option>
+                                    <el-option label="女" value="女"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <el-form-item label="星级" prop="star">
+                                <el-select v-model="editForm.star" placeholder="请选择星级">
+                                    <el-option label="4星" value="4"></el-option>
+                                    <el-option label="5星" value="5"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="24">
+                            <el-form-item label="分组" prop="group">
+                                <el-select v-model="editForm.group" placeholder="请选择分组">
+                                    <el-option label="软件" value="软件"></el-option>
+                                    <el-option label="服务" value="服务"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="24">
+                            <el-form-item label="手法" prop="labels">
+                                <el-checkbox-group @change="labelsChange" v-model="editForm.labels" size="medium">
+                                    <el-checkbox-button v-for="(state, index) in labels" :label="state"
+                                        :key="(index + 1)" :index="(index + 1).toString()">{{state}}
+                                    </el-checkbox-button>
+                                </el-checkbox-group>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
+                    <el-form-item label="个人简介" prop="orderId">
+                        <el-input type="textarea" :rows="3" placeholder="请输入简介" v-model="editForm.introduction">
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="editDialog = false">取 消</el-button>
+                    <el-button type="primary" @click="edit">确 定</el-button>
+                </div>
+            </el-dialog>
+
+            <el-dialog title="项目设置" :visible.sync="projectDialog">
+                <el-form :model="projectForm" ref="projectForm" label-width="100px">
+
+                    <el-form-item label="正常" prop="normalProjects">
+                        <el-checkbox-group @change="normalChange" v-model="projectForm.normalProjects" size="medium">
+                            <el-checkbox-button v-for="item in normalProjects" :label="item.projectId"
+                                :key="item.projectId" :index="item.projectId">{{ item.name }}
+                            </el-checkbox-button>
+                        </el-checkbox-group>
+                    </el-form-item>
+
+                    <el-form-item label="加钟" prop="clockProjects">
+                        <el-checkbox-group @change="clockChange" v-model="projectForm.clockProjects" size="medium">
+                            <el-checkbox-button v-for="item in clockProjects" :label="item.projectId"
+                                :key="item.projectId" :index="item.projectId">{{ item.name }}
+                            </el-checkbox-button>
+                        </el-checkbox-group>
+                    </el-form-item>
+                </el-form>
+
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="projectDialog = false">取 消</el-button>
+                    <el-button type="primary" @click="editProject">确 定</el-button>
+                </div>
+            </el-dialog>
         </div>
     </div>
 </template>
 
 
 <script>
-import axios from "axios";
+import util from '../../../../util'
 
 export default {
+    inject: ['reload'],
     name: "Tech",
     data () {
         return {
@@ -99,6 +194,10 @@ export default {
             pageNum: 1,
             pageIndex: 1,
             pageSize: 10,
+            editDialog: false,
+            projectDialog: false,
+            formLabelWidth: '80px',
+            labels: [],
             ruleForm: {
                 realName: "",
                 phone: "",
@@ -121,13 +220,62 @@ export default {
                     }
                 ]
             },
-            loading: true
+            loading: true,
+            editForm: {
+                techId: '',
+                realName: '',
+                phone: '',
+                gender: '',
+                star: '',
+                group: '',
+                labels: [],
+                introduction: '',
+            },
+            normalProjects: [],
+            clockProjects: [],
+            projectForm: {
+                techId: '',
+                normalProjects: [],
+                clockProjects: []
+            }
         };
     },
     methods: {
+        labelsChange (value) {
+            console.log(value);
+        },
+        normalChange (value) { },
+        clockChange (value) { },
         info (row, index) {
             this.$store.state.techId = row.techId;
             this.$router.push("/operating/tech/detail");
+        },
+        async edit () {
+            const res = await this.$api.post('/tech/update', this.editForm)
+            if (res.data.success) this.$message.success('修改成功！')
+            this.reload()
+        },
+        async editProject () {
+            const res = await this.$api.post('/tech/updateProject', this.projectForm)
+            if (res.data.success) this.$message.success('修改成功！')
+            this.reload()
+        },
+        openEditDialog (row, index) {
+            this.listLabelName()
+            this.editDialog = true
+            this.editForm.techId = row.techId
+            this.editForm.realName = row.realName
+            this.editForm.phone = row.phone
+            this.editForm.gender = row.gender
+            this.editForm.star = row.star
+            this.editForm.group = row.group || ''
+            this.editForm.labels = row.labels || []
+            this.editForm.introduction = row.introduction || ''
+        },
+        openProjectEditDialog (row, index) {
+            this.listProjects(row.projectIds)
+            this.projectDialog = true
+            this.projectForm.techId = row.techId
         },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
@@ -174,9 +322,21 @@ export default {
                 this.pageNum += 1;
             }
         },
+        async listLabelName () {
+            const res = await this.$api.get('/tech/listLabelName', Object.assign({}, this.ruleForm, { pageIndex: this.pageIndex }, { pageSize: this.pageSize }))
+            this.labels = res.data.data.list || []
+        },
         async listAgent () {
             const res = await this.$api.get("/agent/getOptions", {});
             this.agentOptions = res.data.data;
+        },
+        async listProjects (projectIds) {
+            const res = await this.$api.get("/project/listProject", {});
+            this.normalProjects = res.data.data.normalProjects;
+            this.clockProjects = res.data.data.clockProjects;
+            const { resultNormal, resultClock } = util.tool.checkProjectIds(this.normalProjects, this.clockProjects, projectIds)
+            this.projectForm.normalProjects = resultNormal
+            this.projectForm.clockProjects = resultClock
         }
     },
     created () {
