@@ -29,7 +29,7 @@
 export default {
     inject: ["reload"],
     name: "login",
-    data() {
+    data () {
         return {
             form: {
                 userPhone: "",
@@ -38,7 +38,7 @@ export default {
         };
     },
     methods: {
-        async login() {
+        async login () {
             const res = await this.$api.post("/index/login", this.form);
             if (!res.data.success) {
                 this.$message.error(res.data.msg);
@@ -50,7 +50,7 @@ export default {
             }
         }
     },
-    created() {
+    created () {
         if (this.$store.state.userinfo) {
             this.$router.push("/");
         }
@@ -61,8 +61,9 @@ export default {
 
 <style scoped>
 #login {
-    width: 100%;
-    height: 100%;
+    /* width: 100%; */
+    /* height: 100%; */
+    min-height: 800px;
     background-image: url(../../public/img/bg.png);
     background-size: 100% 100%;
 }

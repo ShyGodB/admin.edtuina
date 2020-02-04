@@ -12,29 +12,6 @@
             </el-form-item>
         </el-form>
 
-        <div>
-            <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
-                <el-form :model="form">
-                    <el-form-item label="角色名称" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="权限分配" :label-width="formLabelWidth">
-                        <el-input class="mb-3 w-50 mr-3" placeholder="快速查找" v-model="filterText"></el-input>
-                        <el-button type="primary" style="display: inline-block;" @click="checkAll">全选</el-button>
-                        <el-button type="danger" style="display: inline-block;" @click="resetChecked">清空</el-button>
-                        <div class="mb-3 role-tree">
-                            <el-tree :data="data" show-checkbox default-expand-all node-key="_id" ref="tree" accordion
-                                highlight-current :props="defaultProps" :filter-node-method="filterNode"></el-tree>
-                        </div>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addRole">确 定</el-button>
-                </div>
-            </el-dialog>
-        </div>
-
         <el-table :data="roles" style="width: 100%">
             <el-table-column prop="name" label="名称"></el-table-column>
 
@@ -48,7 +25,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作"  width="280">
+            <el-table-column label="操作" width="280">
                 <template slot-scope="scope">
                     <el-button size="mini" type="info" @click="edit(scope.row, scope.$index)" round>编辑</el-button>
                 </template>
@@ -59,6 +36,50 @@
             <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="pageChange"
                 layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
         </div>
+
+        <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="角色名称" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="权限分配" :label-width="formLabelWidth">
+                    <el-input class="mb-3 w-50 mr-3" placeholder="快速查找" v-model="filterText"></el-input>
+                    <el-button type="primary" style="display: inline-block;" @click="checkAll">全选</el-button>
+                    <el-button type="danger" style="display: inline-block;" @click="resetChecked">清空</el-button>
+                    <div class="mb-3 role-tree">
+                        <el-tree :data="data" show-checkbox node-key="_id" ref="tree" accordion highlight-current
+                            :props="defaultProps" :filter-node-method="filterNode">
+                        </el-tree>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addRole">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog title="编辑角色" :visible.sync="roleDialogEdit">
+            <el-form :model="editForm">
+                <el-form-item label="角色名称" :label-width="formLabelWidth">
+                    <el-input v-model="editForm.name" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="权限分配" :label-width="formLabelWidth">
+                    <el-input class="mb-3 w-50 mr-3" placeholder="快速查找" v-model="filterText"></el-input>
+                    <el-button type="primary" style="display: inline-block;" @click="checkAll">全选</el-button>
+                    <el-button type="danger" style="display: inline-block;" @click="resetChecked">清空</el-button>
+                    <div class="mb-3 role-tree">
+                        <el-tree :data="data" show-checkbox :default-checked-keys="defaultChecked" node-key="_id"
+                            ref="etree" accordion highlight-current :props="defaultProps"
+                            :filter-node-method="filterNode"></el-tree>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="roleDialogEdit = false">取 消</el-button>
+                <el-button type="primary" @click="editRole">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -90,23 +111,40 @@ export default {
             defaultProps: { children: "children", label: "name" },
             filterText: "",
             dialogFormVisible: false,
+            roleDialogEdit: false,
             form: {
                 name: "",
-                region: "",
-                date1: "",
-                date2: "",
-                delivery: false,
-                type: [],
-                resource: "",
-                desc: ""
             },
-            formLabelWidth: "120px"
+            editForm: {
+                name: "",
+                _id: ''
+            },
+            formLabelWidth: "120px",
+            defaultChecked: []
         };
     },
     methods: {
         edit (row, index) {
-            this.$store.state.userId = row.userId;
-            this.$router.push("/operating/user/detail");
+            this.roleDialogEdit = true
+            this.defaultChecked = util.tool.getDefaultChecked(row.menus)
+            this.editForm.name = row.name
+            this.editForm._id = row._id
+        },
+        async editRole () {
+            this.roleDialogEdit = false;
+            const checkedNodes = this.$refs.etree.getCheckedNodes();
+            const menus = util.tool.checkMenus(this.data, checkedNodes);
+            const res = await this.$api.post("/role/edit", {
+                _id: this.editForm._id,
+                name: this.editForm.name,
+                menus: menus
+            });
+            if (res.data.success) {
+                this.$message.success("编辑角色成功");
+                this.reload();
+            } else {
+                this.$message.error("编辑角色失败，请联系技术人员！");
+            }
         },
         async addRole () {
             this.dialogFormVisible = false;

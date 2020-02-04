@@ -134,7 +134,21 @@ const checkProject = (projectList, projectIds) => {
     return result
 }
 
+const getDefaultChecked = (menus) => {
+    console.log(menus)
+    let result = []
+    menus.forEach(item => {
+        result.push(item._id)
+        if (item.children.length > 0) {
+            item.children.forEach(i => {
+                result.push(i._id)
+            })
+        }
+    })
+    console.log(result)
+    return result
+}
 
 export default {
-    checkHomeData, checkMenus, checkProject
+    checkHomeData, checkMenus, checkProject, getDefaultChecked
 }
