@@ -45,7 +45,7 @@
                         </el-button>
                         <el-button type="primary" size="mini" @click="techSettle(scope.row, scope.$index)" round>技师结算
                         </el-button>
-                        <el-button type="warning" size="mini" @click="sendBill(scope.row, scope.$index)" round>发送工资单
+                        <el-button type="warning" size="mini" @click="sendPayrolls(scope.row, scope.$index)" round>发送工资单
                         </el-button>
                     </template>
                 </el-table-column>
@@ -113,7 +113,11 @@ export default {
             const { href } = this.$router.resolve("/settle/settlement/tech");
             window.open(href, "_blank");
         },
-        sendBill (row, index) { },
+        async sendPayrolls (row, index) {
+            const res = await this.$api.post('/settle/sendPayrolls', { _id: row._id })
+            this.$message.success('发送成功！')
+            this.reload()
+        },
         async listSettle () {
             const res = await this.$api.post(
                 "/settle/listProxy",

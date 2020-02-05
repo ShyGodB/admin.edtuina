@@ -59,33 +59,23 @@
                 <template slot-scope="scope">
                     <el-button size="mini" type="success" @click="lookOrders(scope.row, scope.$index)" round>查看订单
                     </el-button>
-                    <!-- <el-button size="mini" v-if="scope.row.state==='审核中'" type="primary"
-                        @click="lookOrders(scope.row, scope.$index)" round>审核完成
+                    <el-button size="mini" v-if="scope.row.state==='审核中'" type="primary"
+                        @click="auditDone(scope.row, scope.$index)" round>审核完成
                     </el-button>
                     <el-button size="mini" v-if="scope.row.state==='审核完成'" type="primary"
-                        @click="lookOrders(scope.row, scope.$index)" round>发送工资单
+                        @click="sendPayroll(scope.row, scope.$index)" round>发送工资单
                     </el-button>
                     <el-button size="mini" v-if="scope.row.state==='已发送工资单'" type="primary"
-                        @click="lookOrders(scope.row, scope.$index)" round>核对
+                        @click="check(scope.row, scope.$index)" round>核对
                     </el-button>
                     <el-button size="mini" v-if="scope.row.state==='已核对'" type="primary"
-                        @click="lookOrders(scope.row, scope.$index)" round>打开提现
+                        @click="openCash(scope.row, scope.$index)" round>打开提现
                     </el-button>
                     <el-button size="mini" v-if="scope.row.state==='可提现'" type="primary"
-                        @click="lookOrders(scope.row, scope.$index)" round>关闭提现
-                    </el-button> -->
-                    <!-- <el-button size="mini" type="primary" @click="lookOrders(scope.row, scope.$index)" round>审核完成
-                    </el-button>
-                    <el-button size="mini" type="primary" @click="lookOrders(scope.row, scope.$index)" round>发送工资单
-                    </el-button>
-                    <el-button size="mini" type="primary" @click="lookOrders(scope.row, scope.$index)" round>核对
-                    </el-button>
-                    <el-button size="mini" type="primary" @click="lookOrders(scope.row, scope.$index)" round>打开提现
-                    </el-button>
-                    <el-button size="mini" type="primary" @click="lookOrders(scope.row, scope.$index)" round>关闭提现
+                        @click="closeCash(scope.row, scope.$index)" round>关闭提现
                     </el-button>
                     <el-button size="mini" type="danger" @click="reset(scope.row, scope.$index)" round>重置
-                    </el-button> -->
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -176,7 +166,36 @@ export default {
             const { href } = this.$router.resolve("/settle/settlement/techOrder");
             window.open(href, "_blank");
         },
-        reset (row, index) { },
+        async closeCash (row, index) {
+            const res = await this.$api.post('/settle/closeCash', { _id: row._id })
+            this.$message.success('关闭提现成功！')
+            this.reload()
+        },
+        async auditDone (row, index) {
+            const res = await this.$api.post('/settle/auditDone', { _id: row._id })
+            this.$message.success('审核完成！')
+            this.reload()
+        },
+        async reset (row, index) {
+            const res = await this.$api.post('/settle/reset', { _id: row._id })
+            this.$message.success('重置成功！')
+            this.reload()
+        },
+        async check (row, index) {
+            const res = await this.$api.post('/settle/check', { _id: row._id })
+            this.$message.success('替技师核对账单成功！')
+            this.reload()
+        },
+        async openCash (row, index) {
+            const res = await this.$api.post('/settle/openCash', { _id: row._id })
+            this.$message.success('打开提现成功！')
+            this.reload()
+        },
+        async sendPayroll (row, index) {
+            const res = await this.$api.post('/settle/sendPayroll', { _id: row._id })
+            this.$message.success('发送成功！')
+            this.reload()
+        },
         async listTech () {
             const res = await this.$api.post(
                 "/settle/listTech",
