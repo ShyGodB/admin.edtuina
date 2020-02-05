@@ -239,7 +239,9 @@ export default {
             this.$router.push("/operating/user/feedback");
         },
         listComment () {
-            this.$router.push("/operating/user/comment");
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/user/comment");
+            window.open(href, "_blank");
         },
         listCoupon () {
             this.$router.push("/operating/user/coupon");

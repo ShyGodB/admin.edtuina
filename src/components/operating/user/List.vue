@@ -104,6 +104,8 @@
                 <el-table-column label="操作" width="260">
                     <template slot-scope="scope">
                         <el-button size="mini" type="info" @click="info(scope.row, scope.$index)" round>详情</el-button>
+                        <el-button size="mini" type="success" @click="lookComments(scope.row, scope.$index)" round>查看评论
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -212,6 +214,12 @@ export default {
         info (row, index) {
             this.$store.state.userId = row.userId;
             this.$router.push("/operating/user/detail");
+        },
+        lookComments (row, index) {
+            this.$store.state.userId = row.userId;
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/user/comment");
+            window.open(href, "_blank");
         },
         edit (row, index) { },
         getProxyCodes (proxyCodes) {

@@ -249,10 +249,14 @@ export default {
         normalChange (value) { },
         clockChange (value) { },
         avatar () {
-            this.$router.push("/operating/tech/avatar")
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/tech/avatar");
+            window.open(href, "_blank");
         },
         growth () {
-            this.$router.push("/operating/tech/growth")
+            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            const { href } = this.$router.resolve("/operating/tech/growth");
+            window.open(href, "_blank");
         },
         info (row, index) {
             this.$store.state.techId = row.techId;

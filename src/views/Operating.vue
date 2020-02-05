@@ -1,6 +1,6 @@
 <template>
     <el-row class="w-100 h-100 bg-offwhite" id="operating">
-        <el-col :span="3">
+        <el-col :span="3" class="pr-3">
             <operating-nav></operating-nav>
         </el-col>
 

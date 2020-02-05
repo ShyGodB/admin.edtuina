@@ -173,7 +173,7 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listOrder();
+                    this.listGrowth();
                 } else {
                     return false;
                 }
@@ -181,7 +181,7 @@ export default {
         },
         resetForm (formName) {
             this.$refs[formName].resetFields();
-            this.listOrder();
+            this.listGrowth();
         },
         orderStateChange (value) {
             console.log(this.ruleForm);
@@ -194,12 +194,12 @@ export default {
         },
         pageChange (num) {
             this.pageIndex = num;
-            this.listOrder();
+            this.listGrowth();
         },
         sizeChange (num) {
-            // this.listOrder(this.ruleForm);
+            // this.listGrowth(this.ruleForm);
         },
-        async listOrder () {
+        async listGrowth () {
             const res = await this.$api.post(
                 "/tech/listGrowth",
                 Object.assign(
@@ -207,7 +207,6 @@ export default {
                     this.ruleForm,
                     { pageIndex: this.pageIndex },
                     { pageSize: this.pageSize },
-                    { userId: this.$store.state.userId }
                 )
             );
             this.orders = res.data.data.list || [];
@@ -228,7 +227,7 @@ export default {
         }
     },
     created () {
-        this.listOrder();
+        this.listGrowth();
         this.listAgent();
     }
 };
