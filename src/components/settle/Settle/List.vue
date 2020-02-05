@@ -17,6 +17,8 @@
 
         <div class="techIncome-table">
             <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="category" label="类型" width="100"></el-table-column>
+
                 <el-table-column prop="startTime" label="开始时间" width="180"></el-table-column>
 
                 <el-table-column prop="endTime" label="结束时间" width="180"></el-table-column>
@@ -31,7 +33,7 @@
 
                 <el-table-column prop="outSourceFee" label="来源分成支出"></el-table-column>
 
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="240">
                     <template slot-scope="scope">
                         <el-button type="primary" size="mini" @click="proxy(scope.row, scope.$index)" round>代理结算
                         </el-button>
@@ -88,15 +90,17 @@ export default {
         sizeChange (num) { },
         timeChange () { },
         proxy (row, index) {
-            this.$store.startTime = row.startTime
-            this.$store.endTime = row.endTime
+            this.$store.state.startTime = row.startTime
+            this.$store.state.endTime = row.endTime
+            this.$store.state.parentId = row._id
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/settle/settlement/proxy");
             window.open(href, "_blank");
         },
         channel (row, index) {
-            this.$store.startTime = row.startTime
-            this.$store.endTime = row.endTime
+            this.$store.state.startTime = row.startTime
+            this.$store.state.endTime = row.endTime
+            this.$store.state.parentId = row._id
             localStorage.setItem("store", JSON.stringify(this.$store.state));
             const { href } = this.$router.resolve("/settle/settlement/channel");
             window.open(href, "_blank");

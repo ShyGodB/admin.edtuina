@@ -7,7 +7,11 @@
         <el-col :span="21" v-if="tab==='settlement'">
             <settle-settlement v-if="model === 'list'"></settle-settlement>
             <settle-settlement-proxy v-if="model === 'proxy'"></settle-settlement-proxy>
+            <settle-settlement-proxyOrder v-if="model === 'proxyOrder'"></settle-settlement-proxyOrder>
             <settle-settlement-channel v-if="model === 'channel'"></settle-settlement-channel>
+            <settle-settlement-channelOrder v-if="model === 'channelOrder'"></settle-settlement-channelOrder>
+            <settle-settlement-tech v-if="model === 'tech'"></settle-settlement-tech>
+            <settle-settlement-techOrder v-if="model === 'techOrder'"></settle-settlement-techOrder>
         </el-col>
 
         <el-col :span="21" v-if="tab==='cash'">
@@ -42,6 +46,10 @@ import Refund from "../components/settle/Refund/List.vue";
 import SettleList from "../components/settle/Settle/List.vue";
 import SettleProxy from "../components/settle/Settle/Proxy.vue";
 import SettleChannel from "../components/settle/Settle/Channel.vue";
+import SettleProxyOrder from "../components/settle/Settle/ProxyOrder.vue";
+import SettleTechOrder from "../components/settle/Settle/TechOrder.vue";
+import SettleChannelOrder from "../components/settle/Settle/ChannelOrder.vue";
+import SettleTech from "../components/settle/Settle/Tech.vue";
 import TechIncome from "../components/settle/TechIncome/List.vue";
 
 export default {
@@ -54,7 +62,11 @@ export default {
         "settle-refund": Refund,
         "settle-settlement": SettleList,
         "settle-settlement-proxy": SettleProxy,
+        "settle-settlement-proxyOrder": SettleProxyOrder,
         "settle-settlement-channel": SettleChannel,
+        "settle-settlement-channelOrder": SettleChannelOrder,
+        "settle-settlement-tech": SettleTech,
+        "settle-settlement-techOrder": SettleTechOrder,
         "settle-techIncome": TechIncome
     },
     data () {
