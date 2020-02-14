@@ -27,7 +27,8 @@
 
             <el-table-column label="操作" width="280">
                 <template slot-scope="scope">
-                    <el-button size="mini" type="info" @click="edit(scope.row, scope.$index)" round>编辑</el-button>
+                    <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)" round>编辑</el-button>
+                    <el-button size="mini" type="danger" @click="del(scope.row, scope.$index)" round>删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -83,16 +84,15 @@
     </div>
 </template>
 
-
 <script>
-import util from "../../../../util";
+import util from '../../../../util'
 
 export default {
     inject: ['reload'],
-    name: "MenuConfig",
+    name: 'MenuConfig',
     watch: {
         filterText (val) {
-            this.$refs.tree.filter(val);
+            this.$refs.tree.filter(val)
         }
     },
     data () {
@@ -102,26 +102,26 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             ruleForm: {
-                name: ""
+                name: ''
             },
             loading: true,
-            ratio: "1",
+            ratio: '1',
             data: [],
             menus: [],
-            defaultProps: { children: "children", label: "name" },
-            filterText: "",
+            defaultProps: { children: 'children', label: 'name' },
+            filterText: '',
             dialogFormVisible: false,
             roleDialogEdit: false,
             form: {
-                name: "",
+                name: ''
             },
             editForm: {
-                name: "",
+                name: '',
                 _id: ''
             },
-            formLabelWidth: "120px",
+            formLabelWidth: '120px',
             defaultChecked: []
-        };
+        }
     },
     methods: {
         edit (row, index) {
@@ -131,105 +131,110 @@ export default {
             this.editForm._id = row._id
         },
         async editRole () {
-            this.roleDialogEdit = false;
-            const checkedNodes = this.$refs.etree.getCheckedNodes();
-            const menus = util.tool.checkMenus(this.data, checkedNodes);
-            const res = await this.$api.post("/role/edit", {
+            this.roleDialogEdit = false
+            const checkedNodes = this.$refs.etree.getCheckedNodes()
+            const menus = util.tool.checkMenus(this.data, checkedNodes)
+            const res = await this.$api.post('/role/edit', {
                 _id: this.editForm._id,
                 name: this.editForm.name,
                 menus: menus
-            });
+            })
             if (res.data.success) {
-                this.$message.success("编辑角色成功");
-                this.reload();
+                this.$message.success('编辑角色成功')
+                this.reload()
             } else {
-                this.$message.error("编辑角色失败，请联系技术人员！");
+                this.$message.error('编辑角色失败，请联系技术人员！')
             }
         },
         async addRole () {
-            this.dialogFormVisible = false;
-            const checkedNodes = this.$refs.tree.getCheckedNodes();
-            const menus = util.tool.checkMenus(this.data, checkedNodes);
-            const res = await this.$api.post("/role/add", {
-                name: this.form.name,
-                menus: menus,
-                addUserName: "测试F"
-            });
-            if (res.data.success) {
-                this.$message.success("新增角色成功");
-                this.reload();
-            } else {
-                this.$message.error("创建角色失败，请联系技术人员！");
-            }
+            this.dialogFormVisible = false
+            const checkedNodes = this.$refs.tree.getCheckedNodes()
+            const menus = util.tool.checkMenus(this.data, checkedNodes)
+            console.log(menus)
+            // const res = await this.$api.post('/role/add', {
+            //     name: this.form.name,
+            //     menus: menus,
+            //     addUserName: '测试F'
+            // })
+            // if (res.data.success) {
+            //     this.$message.success('新增角色成功')
+            //     this.reload()
+            // } else {
+            //     this.$message.error('创建角色失败，请联系技术人员！')
+            // }
+        },
+        async del (row, index) {
+            const res = await this.$api.post('/role/del', { _id: row._id })
+            this.$message.success('删除成功！')
+            this.reload()
         },
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.listRole();
+                    this.listRole()
                 } else {
-                    return false;
+                    return false
                 }
-            });
+            })
         },
         resetForm (formName) {
-            this.$refs[formName].resetFields();
-            this.listRole();
+            this.$refs[formName].resetFields()
+            this.listRole()
         },
         pageChange (num) {
-            this.pageIndex = num;
-            this.listRole();
+            this.pageIndex = num
+            this.listRole()
         },
         sizeChange (num) {
-            this.listRole();
+            this.listRole()
         },
         async listMenu (data) {
-            const res = await this.$api.post("/menu/list", {});
-            this.data = res.data.data || [];
+            const res = await this.$api.post('/menu/list', {})
+            this.data = res.data.data || []
         },
         async listRole (data) {
-            const res = await this.$api.post("/role/list", {});
-            this.roles = res.data.data.list || [];
+            const res = await this.$api.post('/role/list', {})
+            this.roles = res.data.data.list || []
             this.pageNum = Math.floor(
                 (res.data.data.count || 0) / this.pageSize
-            );
+            )
             if (res.data.data.count % this.pageSize !== 0) {
-                this.pageNum += 1;
+                this.pageNum += 1
             }
         },
         async listAgent () {
-            const res = await this.$api.get("/agent/getOptions", {});
-            this.agentOptions = res.data.data;
+            const res = await this.$api.get('/agent/getOptions', {})
+            this.agentOptions = res.data.data
         },
         checkAll () {
-            this.$refs.tree.setCheckedNodes(this.data);
-            const data = [];
+            this.$refs.tree.setCheckedNodes(this.data)
+            const data = []
             this.data.forEach(item => {
-                data.push(item._id);
-            });
-            this.$refs.tree.setCheckedKeys(data);
+                data.push(item._id)
+            })
+            this.$refs.tree.setCheckedKeys(data)
         },
         resetChecked () {
-            this.$refs.tree.setCheckedKeys([]);
+            this.$refs.tree.setCheckedKeys([])
         },
         handleNodeClick (data) {
             // console.log(data);
         },
         filterNode (value, data) {
-            if (!value) return true;
-            return data.name.indexOf(value) !== -1;
+            if (!value) return true
+            return data.name.indexOf(value) !== -1
         },
         async offChange (row) {
             await this.$api.post('/role/switch', { _id: row._id, off: !row.off })
             this.$message.success('修改状态成功')
-        },
+        }
     },
     created () {
-        this.listRole();
-        this.listMenu();
+        this.listRole()
+        this.listMenu()
     }
-};
+}
 </script>
-
 
 <style scoped>
 .role-tree {

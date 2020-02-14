@@ -24,8 +24,8 @@
             <setting-agentLevel></setting-agentLevel>
         </el-col>
 
-        <el-col :span="21" v-if="tab==='timeManage'">
-            <setting-timeManage></setting-timeManage>
+        <el-col :span="21" v-if="tab==='menu'">
+            <setting-menu-list></setting-menu-list>
         </el-col>
 
         <el-col :span="21" v-if="tab==='announce'">
@@ -53,7 +53,7 @@
 import Nav from "../components/SecondNav.vue";
 import UserList from "../components/setting/User/List.vue";
 import RoleConfig from "../components/setting/Role/Config.vue";
-import MenuConfig from "../components/setting/Menu/Config.vue";
+import MenuList from "../components/setting/Menu/List.vue";
 import TechMethod from "../components/setting/TechLabel/List.vue";
 import AgentLevel from "../components/setting/AgentLevel.vue";
 import TimeManage from "../components/setting/TimeManage.vue";
@@ -71,7 +71,7 @@ export default {
         "setting-nav": Nav,
         "setting-userList": UserList,
         "setting-roleConfig": RoleConfig,
-        "setting-menuConfig": MenuConfig,
+        "setting-menu-list": MenuList,
         "setting-techMethod": TechMethod,
         "setting-agentLevel": AgentLevel,
         "setting-timeManage": TimeManage,
